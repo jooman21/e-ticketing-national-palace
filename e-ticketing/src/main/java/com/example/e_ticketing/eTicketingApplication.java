@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ETicketingApplication {
+public class eTicketingApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ETicketingApplication.class, args);
+		SpringApplication.run(eTicketingApplication.class, args);
 	}
 
 }
