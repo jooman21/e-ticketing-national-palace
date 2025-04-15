@@ -4,18 +4,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 @Entity
-public class ticketType {
+public class VisitSchedule {
     @Id
     @GeneratedValue
     private Long id;
 
-    private String name;
-    private String description;
+    private LocalDate date;
+    private Boolean isOpen;
 
-    private Double basePrice;
-    private Boolean available;
+    private String reasonForClosing;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

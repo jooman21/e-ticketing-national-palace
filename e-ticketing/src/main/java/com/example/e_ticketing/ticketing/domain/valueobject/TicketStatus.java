@@ -1,4 +1,6 @@
 package com.example.e_ticketing.ticketing.domain.valueobject;
 
-public enum ticketStatus {
+public enum TicketStatus {
+
+    VALID, IN_VALID, EXPIRED
 }
