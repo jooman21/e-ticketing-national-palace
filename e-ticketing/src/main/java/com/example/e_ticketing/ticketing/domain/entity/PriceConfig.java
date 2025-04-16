@@ -6,12 +6,14 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class priceConfig {
+public class PriceConfig {
     @Id
     @GeneratedValue
     private Long id;
 
-    private Long ticketTypeId;
+    @ManyToOne
+    @JoinColumn(name = "ticket_type_id")
+    private TicketType ticketType;
 
     @Enumerated(EnumType.STRING)
     private Residency residency;
