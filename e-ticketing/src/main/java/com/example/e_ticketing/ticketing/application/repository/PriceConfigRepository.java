@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PriceConfigRepository extends JpaRepository<PriceConfig, Long> {
-    boolean existsByName(String name);
+    //boolean existsByName(String name);
 
     boolean existsByTicketTypeAndResidency(TicketType ticketType, Residency residency);
 }

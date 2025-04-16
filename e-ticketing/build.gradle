@@ -30,6 +30,12 @@ dependencies {
 	// Lombok for boilerplate code
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	// Flyway migration tool for PostgreSQL
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.flywaydb:flyway-database-postgresql'
+
+	// PostgreSQL JDBC driver
+	implementation 'org.postgresql:postgresql'
 }
 
 tasks.named('test') {
