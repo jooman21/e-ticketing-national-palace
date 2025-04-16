@@ -3,13 +3,20 @@ package com.example.e_ticketing.ticketing.domain.entity;
 import com.example.e_ticketing.ticketing.domain.valueobject.TicketStatus;
 import com.example.e_ticketing.user.domain.entity.Visitor;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "tickets")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Ticket {
-    @Id
-    @GeneratedValue
+     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -35,4 +42,6 @@ public class Ticket {
 
     private LocalDateTime issuedAt;
     private LocalDateTime expiresAt;
+
+
 }
