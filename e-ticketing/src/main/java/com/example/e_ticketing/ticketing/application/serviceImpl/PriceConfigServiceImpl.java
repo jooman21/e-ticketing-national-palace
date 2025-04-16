@@ -23,42 +23,42 @@ public class PriceConfigServiceImpl implements PriceConfigService {
     private final PriceConfigRepository priceConfigRepository;
     private final TicketTypeRepository ticketTypeRepository;
 
+
+
     @Override
-    public List<PriceConfigDto> createPriceConfigs(PriceConfigDto priceConfigDto) {
-        validatePriceConfigDto(priceConfigDto);
+    public List<PriceConfigDto> createPriceConfigs(List<PriceConfigDto> priceConfigDtos) {
+        List<PriceConfigDto> allSavedConfigs = new ArrayList<>();
 
-        // 1. Validate and fetch ticket type
-        TicketType ticketType = (TicketType) ticketTypeRepository.findByName(priceConfigDto.getName())
-                .orElseThrow(() -> new PriceConfigNotFoundException("Ticket Type '" + priceConfigDto.getName() + "' not found"));
+        for (PriceConfigDto dto : priceConfigDtos) {
+            validatePriceConfigDto(dto);
 
-        // 2. Create configs for both LOCAL and INTERNATIONAL
-        List<Residency> residencies = List.of(Residency.LOCAL, Residency.INTERNATIONAL);
-        List<PriceConfigDto> savedConfigs = new ArrayList<>();
+            TicketType ticketType = (TicketType) ticketTypeRepository.findByName(dto.getName())
+                    .orElseThrow(() -> new PriceConfigNotFoundException("Ticket Type '" + dto.getName() + "' not found"));
 
-        for (Residency residency : residencies) {
-            // 3. Check for duplicates
-            if (priceConfigRepository.existsByTicketTypeAndResidency(ticketType, residency)) {
-                throw new RuntimeException("Price config already exists for ticket type '" + ticketType.getName() + "' and residency '" + residency + "'");
+            List<Residency> residencies = List.of(Residency.LOCAL, Residency.INTERNATIONAL);
+
+            for (Residency residency : residencies) {
+                if (priceConfigRepository.existsByTicketTypeAndResidency(ticketType, residency)) {
+                    throw new RuntimeException("Price config already exists for ticket type '" + ticketType.getName() + "' and residency '" + residency + "'");
+                }
+
+                PriceConfigDto configForResidency = PriceConfigDto.builder()
+                        .name(ticketType.getName())
+                        .residency(residency)
+                        .currency(dto.getCurrency())
+                        .price(dto.getPrice())
+                        .active(true)
+                        .createdAt(LocalDateTime.now())
+                        .updatedAt(LocalDateTime.now())
+                        .build();
+
+                PriceConfig entity = PriceConfigMapper.MapPriceConfigDtoToPriceConfig(configForResidency, ticketType);
+                PriceConfig savedEntity = priceConfigRepository.save(entity);
+                allSavedConfigs.add(PriceConfigMapper.MapPriceConfigToPriceConfigDto(savedEntity));
             }
-
-            // 4. Build PriceConfigDto per residency
-            PriceConfigDto configForResidency = PriceConfigDto.builder()
-                    .name(ticketType.getName()) // always from the ticketType
-                    .residency(residency)
-                    .currency(priceConfigDto.getCurrency())
-                    .price(priceConfigDto.getPrice())
-                    .active(true)
-                    .createdAt(LocalDateTime.now())
-                    .updatedAt(LocalDateTime.now())
-                    .build();
-
-            // 5. Convert to entity and save
-            PriceConfig priceConfigEntity = PriceConfigMapper.MapPriceConfigDtoToPriceConfig(configForResidency, ticketType);
-            PriceConfig savedEntity = priceConfigRepository.save(priceConfigEntity);
-            savedConfigs.add(PriceConfigMapper.MapPriceConfigToPriceConfigDto(savedEntity));
         }
 
-        return savedConfigs;
+        return allSavedConfigs;
     }
 
     private void validatePriceConfigDto(PriceConfigDto dto) {
