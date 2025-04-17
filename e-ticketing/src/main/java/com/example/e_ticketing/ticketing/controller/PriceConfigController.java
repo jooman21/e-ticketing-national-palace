@@ -18,8 +18,13 @@ public class PriceConfigController {
     private final PriceConfigService priceConfigService;
 
 
-    @PostMapping
-    public List<PriceConfigDto> createPriceConfigs(@RequestBody List<PriceConfigDto> priceConfigDtos) {
-        return priceConfigService.createPriceConfigs(priceConfigDtos);
+    @PostMapping("/local")
+    public PriceConfigDto createLocalPriceConfig(@RequestBody PriceConfigDto priceConfigDto) {
+        return priceConfigService.createPriceConfig(priceConfigDto);
+    }
+
+    @PostMapping("/international")
+    public PriceConfigDto createInternationalPriceConfig(@RequestBody PriceConfigDto priceConfigDto) {
+        return priceConfigService.createPriceConfig(priceConfigDto);
     }
 }
