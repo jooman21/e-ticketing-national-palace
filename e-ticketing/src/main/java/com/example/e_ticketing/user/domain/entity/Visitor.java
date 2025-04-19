@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Table(name = "visitors")
 public class Visitor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +21,7 @@ public class Visitor {
     private String phone;
 
     @Enumerated(EnumType.STRING)
-    private Residency residency; // e.g., LOCAL, INTERNATIONAL
+    private Residency residency;
 
     private LocalDateTime registeredAt;
 

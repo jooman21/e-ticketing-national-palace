@@ -8,7 +8,6 @@ CREATE TABLE ticket_types (
                               id SERIAL PRIMARY KEY,
                               name VARCHAR(100) NOT NULL,
                               description TEXT,
-                              base_price DOUBLE PRECISION,
                               available BOOLEAN DEFAULT TRUE,
                               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                               updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

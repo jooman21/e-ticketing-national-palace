@@ -10,6 +10,7 @@ import com.example.e_ticketing.ticketing.domain.entity.TicketType;
 import com.example.e_ticketing.ticketing.domain.valueobject.Currency;
 import com.example.e_ticketing.ticketing.domain.valueobject.Residency;
 
+import com.example.e_ticketing.ticketing.excpetion.PriceConfigDoesNotFoundException;
 import com.example.e_ticketing.ticketing.excpetion.TicketTypeDoesNotExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -54,28 +55,28 @@ public class PriceConfigServiceImpl implements PriceConfigService {
 
     private void validatePriceConfigDto(PriceConfigDto dto) {
         if (dto.getName() == null || dto.getName().trim().isEmpty()) {
-            throw new IllegalArgumentException("Ticket type name must not be null or empty.");
+            throw new TicketTypeDoesNotExistException("Ticket type name must not be null or empty.");
         }
 
         if (dto.getCurrency() == null) {
-            throw new IllegalArgumentException("Currency must not be null.");
+            throw new PriceConfigDoesNotFoundException("Currency must not be null.");
         }
 
         if (dto.getResidency() == null) {
-            throw new IllegalArgumentException("Residency must not be null.");
+            throw new PriceConfigDoesNotFoundException("Residency must not be null.");
         }
 
         if (dto.getResidency() == Residency.LOCAL && dto.getCurrency() != Currency.ETB) {
-            throw new IllegalArgumentException("Local residency must use ETB currency.");
+            throw new PriceConfigDoesNotFoundException("Local residency must use ETB currency.");
         }
 
         if (dto.getResidency() == Residency.INTERNATIONAL &&
                 !(dto.getCurrency() == Currency.USD || dto.getCurrency() == Currency.EURO)) {
-            throw new IllegalArgumentException("International residency must use USD or EURO currency.");
+            throw new PriceConfigDoesNotFoundException("International residency must use USD or EURO currency.");
         }
 
         if (dto.getPrice() == null || dto.getPrice() <= 0) {
-            throw new IllegalArgumentException("Price must be a positive number.");
+            throw new PriceConfigDoesNotFoundException("Price must be a positive number.");
         }
     }
 

@@ -20,8 +20,6 @@ public class TicketType {
 
     private String name;
     private String description;
-
-    private Double basePrice;
     private Boolean available;
 
     @OneToMany(mappedBy = "ticketType")
