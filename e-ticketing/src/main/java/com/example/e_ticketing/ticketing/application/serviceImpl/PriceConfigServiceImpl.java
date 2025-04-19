@@ -10,6 +10,7 @@ import com.example.e_ticketing.ticketing.domain.entity.TicketType;
 import com.example.e_ticketing.ticketing.domain.valueobject.Currency;
 import com.example.e_ticketing.ticketing.domain.valueobject.Residency;
 
+import com.example.e_ticketing.ticketing.excpetion.InvalidPriceConfigException;
 import com.example.e_ticketing.ticketing.excpetion.PriceConfigDoesNotFoundException;
 import com.example.e_ticketing.ticketing.excpetion.TicketTypeDoesNotExistException;
 import lombok.RequiredArgsConstructor;
@@ -59,24 +60,24 @@ public class PriceConfigServiceImpl implements PriceConfigService {
         }
 
         if (dto.getCurrency() == null) {
-            throw new PriceConfigDoesNotFoundException("Currency must not be null.");
+            throw new InvalidPriceConfigException("Currency must not be null.");
         }
 
         if (dto.getResidency() == null) {
-            throw new PriceConfigDoesNotFoundException("Residency must not be null.");
+            throw new InvalidPriceConfigException("Residency must not be null.");
         }
 
         if (dto.getResidency() == Residency.LOCAL && dto.getCurrency() != Currency.ETB) {
-            throw new PriceConfigDoesNotFoundException("Local residency must use ETB currency.");
+            throw new InvalidPriceConfigException("Local residency must use ETB currency.");
         }
 
         if (dto.getResidency() == Residency.INTERNATIONAL &&
                 !(dto.getCurrency() == Currency.USD || dto.getCurrency() == Currency.EURO)) {
-            throw new PriceConfigDoesNotFoundException("International residency must use USD or EURO currency.");
+            throw new InvalidPriceConfigException("International residency must use USD or EURO currency.");
         }
 
         if (dto.getPrice() == null || dto.getPrice() <= 0) {
-            throw new PriceConfigDoesNotFoundException("Price must be a positive number.");
+            throw new InvalidPriceConfigException("Price must be a positive number.");
         }
     }
 

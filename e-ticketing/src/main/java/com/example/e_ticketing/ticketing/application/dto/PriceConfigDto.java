@@ -7,13 +7,15 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class PriceConfigDto {
-    private Long id;
+    private UUID id;
     private String name;
     private Residency residency;
     private Currency currency;

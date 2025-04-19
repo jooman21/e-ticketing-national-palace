@@ -5,7 +5,7 @@ CREATE TYPE ticket_status AS ENUM ('PENDING', 'CONFIRMED', 'CANCELLED'); -- exam
 
 -- TICKET TYPES
 CREATE TABLE ticket_types (
-                              id SERIAL PRIMARY KEY,
+                              id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                               name VARCHAR(100) NOT NULL,
                               description TEXT,
                               available BOOLEAN DEFAULT TRUE,
@@ -15,7 +15,7 @@ CREATE TABLE ticket_types (
 
 -- PRICE CONFIGS
 CREATE TABLE price_configs (
-                               id SERIAL PRIMARY KEY,
+                               id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                                ticket_type_id INTEGER REFERENCES ticket_types(id) ON DELETE CASCADE,
                                residency residency NOT NULL,
                                currency currency NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE price_configs (
 
 -- INVENTORIES
 CREATE TABLE inventories (
-                             id SERIAL PRIMARY KEY,
+                             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                              event_id BIGINT NOT NULL,
                              total INTEGER,
                              available INTEGER,
@@ -37,7 +37,7 @@ CREATE TABLE inventories (
 
 -- TIME SLOTS
 CREATE TABLE timeslots (
-                           id SERIAL PRIMARY KEY,
+                           id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                            start_time TIME NOT NULL,
                            end_time TIME NOT NULL,
                            is_active BOOLEAN DEFAULT TRUE,
@@ -47,7 +47,7 @@ CREATE TABLE timeslots (
 
 -- VISIT SCHEDULES
 CREATE TABLE visits_schedules (
-                                  id SERIAL PRIMARY KEY,
+                                  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                                   date DATE NOT NULL,
                                   is_open BOOLEAN DEFAULT TRUE,
                                   reason_for_closing TEXT,
@@ -57,7 +57,7 @@ CREATE TABLE visits_schedules (
 
 -- QUEUE ENTRIES
 CREATE TABLE queue_entries (
-                               id SERIAL PRIMARY KEY,
+                               id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                                visit_schedule_id INTEGER REFERENCES visits_schedules(id) ON DELETE CASCADE,
                                time_slot_id INTEGER REFERENCES timeslots(id) ON DELETE CASCADE,
                                queue_position INTEGER,
@@ -67,7 +67,7 @@ CREATE TABLE queue_entries (
 
 -- VISITORS (Assumed)
 CREATE TABLE visitors (
-                          id SERIAL PRIMARY KEY,
+                          id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                           full_name VARCHAR(150),
                           email VARCHAR(150),
                           phone_number VARCHAR(50)
@@ -76,7 +76,7 @@ CREATE TABLE visitors (
 
 -- TICKETS
 CREATE TABLE tickets (
-                         id SERIAL PRIMARY KEY,
+                         id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                          visitor_id INTEGER REFERENCES visitors(id) ON DELETE SET NULL,
                          ticket_type_id INTEGER REFERENCES ticket_types(id) ON DELETE CASCADE,
                          visit_schedule_id INTEGER REFERENCES visits_schedules(id) ON DELETE CASCADE,

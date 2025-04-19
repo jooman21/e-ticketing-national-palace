@@ -2,10 +2,12 @@ package com.example.e_ticketing.ticketing.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "visits_schedules")
@@ -16,8 +18,10 @@ import java.util.List;
 @Builder
 public class VisitSchedule {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(updatable = false, nullable = false)
+    private UUID id;
 
     private LocalDate date;
     private Boolean isOpen;

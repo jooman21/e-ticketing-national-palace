@@ -2,7 +2,6 @@ package com.example.e_ticketing.ticketing.controller;
 
 import com.example.e_ticketing.ticketing.application.dto.PriceConfigDto;
 import com.example.e_ticketing.ticketing.application.service.PriceConfigService;
-import com.example.e_ticketing.ticketing.domain.entity.PriceConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

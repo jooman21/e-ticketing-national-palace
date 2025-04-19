@@ -4,8 +4,10 @@ import com.example.e_ticketing.ticketing.domain.valueobject.TicketStatus;
 import com.example.e_ticketing.user.domain.entity.Visitor;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tickets")
@@ -15,9 +17,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class Ticket {
-     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(updatable = false, nullable = false)
+    private UUID id;
 
     @ManyToOne
     private Visitor visitor;
