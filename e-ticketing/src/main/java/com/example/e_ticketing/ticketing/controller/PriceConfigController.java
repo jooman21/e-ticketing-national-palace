@@ -6,10 +6,10 @@ import com.example.e_ticketing.ticketing.controller.GlobalResponse.GenericRespon
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,4 +34,29 @@ public class PriceConfigController {
                 .body(new GenericResponse(true, "Price Configuration created for International  Resident"));
     }
 
+
+    @GetMapping
+    public ResponseEntity<List<PriceConfigDto>> getAllPriceConfigs() {
+        return ResponseEntity.ok(priceConfigService.getAllPriceConfigs());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PriceConfigDto> getPriceConfigById(@PathVariable UUID id) {
+        return ResponseEntity.ok(priceConfigService.getPriceConfigById(id));
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<GenericResponse> updatePriceConfig(@PathVariable UUID id,
+                                                         @RequestBody PriceConfigDto dto) {
+        priceConfigService.updatePriceConfig(id, dto);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new GenericResponse (true, "Price config updated successfully."));
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<GenericResponse> deletePriceConfig(@PathVariable UUID id) {
+        priceConfigService.deletePriceConfig(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new GenericResponse (true, "Price config deactivated successfully."));
+    }
 }

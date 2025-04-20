@@ -18,6 +18,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -83,4 +86,49 @@ public class PriceConfigServiceImpl implements PriceConfigService {
     }
 
 
+    @Override
+    public List<PriceConfigDto> getAllPriceConfigs() {
+        return priceConfigRepository.findAll()
+                .stream()
+                .map(PriceConfigMapper::MapPriceConfigToPriceConfigDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public PriceConfigDto getPriceConfigById(UUID id) {
+        PriceConfig config = priceConfigRepository.findById(id)
+                .orElseThrow(() -> new PriceConfigDoesNotFoundException("Price config with ID " + id + " not found."));
+        return PriceConfigMapper.MapPriceConfigToPriceConfigDto(config);
+    }
+
+
+    @Override
+    public PriceConfigDto updatePriceConfig(UUID id, PriceConfigDto dto) {
+        validatePriceConfigDto(dto);
+
+        PriceConfig existing = priceConfigRepository.findById(id)
+                .orElseThrow(() -> new PriceConfigDoesNotFoundException("Price config with ID " + id + " not found."));
+
+        TicketType ticketType = (TicketType) ticketTypeRepository.findByName(dto.getName())
+                .orElseThrow(() -> new TicketTypeDoesNotExistException(
+                        "Ticket Type '" + dto.getName() + "' not found"));
+
+        existing.setCurrency(dto.getCurrency());
+        existing.setResidency(dto.getResidency());
+        existing.setPrice(dto.getPrice());
+        existing.setUpdatedAt(LocalDateTime.now());
+        existing.setTicketType(ticketType);
+
+        PriceConfig updated = priceConfigRepository.save(existing);
+        return PriceConfigMapper.MapPriceConfigToPriceConfigDto(updated);
+    }
+    @Override
+    public void deletePriceConfig(UUID id) {
+        PriceConfig config = priceConfigRepository.findById(id)
+                .orElseThrow(() -> new PriceConfigDoesNotFoundException("Price config with ID " + id + " not found."));
+
+        config.setActive(false);
+        config.setUpdatedAt(LocalDateTime.now());
+        priceConfigRepository.save(config);
+    }
 }
