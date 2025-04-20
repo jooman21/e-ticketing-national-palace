@@ -11,6 +11,7 @@ import com.example.e_ticketing.ticketing.domain.valueobject.Currency;
 import com.example.e_ticketing.ticketing.domain.valueobject.Residency;
 
 import com.example.e_ticketing.ticketing.excpetion.InvalidPriceConfigException;
+import com.example.e_ticketing.ticketing.excpetion.PriceConfigAlreadyExistsException;
 import com.example.e_ticketing.ticketing.excpetion.PriceConfigDoesNotFoundException;
 import com.example.e_ticketing.ticketing.excpetion.TicketTypeDoesNotExistException;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,7 @@ public class PriceConfigServiceImpl implements PriceConfigService {
 
         // Check for duplicate config
         if (priceConfigRepository.existsByTicketTypeAndResidency(ticketType, residency)) {
-            throw new RuntimeException("Price config already exists for ticket type '" +
+            throw new PriceConfigAlreadyExistsException("Price config already exists for ticket type '" +
                     ticketType.getName() + "' and residency '" + residency + "'");
         }
 

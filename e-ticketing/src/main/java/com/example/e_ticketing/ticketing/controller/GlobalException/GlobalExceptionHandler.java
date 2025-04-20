@@ -1,6 +1,8 @@
 package com.example.e_ticketing.ticketing.controller.GlobalException;
 
+import com.example.e_ticketing.ticketing.excpetion.PriceConfigAlreadyExistsException;
 import com.example.e_ticketing.ticketing.excpetion.PriceConfigDoesNotFoundException;
+import com.example.e_ticketing.ticketing.excpetion.TicketTypeAlreadyExistsException;
 import com.example.e_ticketing.ticketing.excpetion.TicketTypeDoesNotExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,4 +22,15 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(TicketTypeAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleTicketTypeAlreadyExistsException(TicketTypeAlreadyExistsException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+    @ExceptionHandler(PriceConfigAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handlePriceConfigAlreadyExistsException(PriceConfigAlreadyExistsException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
 }
