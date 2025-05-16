@@ -31,8 +31,15 @@ public class TicketTypeServiceImpl implements TicketTypeService {
 
         dto.setCreatedAt(LocalDateTime.now());
         dto.setUpdatedAt(LocalDateTime.now());
-        dto.setAvailable(true);
 
+        // based on the  admin's  preference or default to false
+        if (dto.getAvailable() == null) {
+            dto.setAvailable(false);
+        }
+
+        if (dto.getIsRecommended() == null) {
+            dto.setIsRecommended(false);
+        }
         TicketType entity = TicketTypeMapper.MapTicketTypeDtoToTicketType(dto);
         TicketType saved = ticketTypeRepository.save(entity);
 
@@ -61,27 +68,44 @@ public class TicketTypeServiceImpl implements TicketTypeService {
 
         ticketType.setAvailable(false);
         ticketType.setUpdatedAt(LocalDateTime.now());
-        ticketTypeRepository.save(ticketType);
+
+        TicketType saved = ticketTypeRepository.save(ticketType);
+
     }
+
 
     @Override
     public TicketTypeDto updateTicketType(UUID id, TicketTypeDto updatedDto) {
         TicketType ticketType = (TicketType) ticketTypeRepository.findById(id)
                 .orElseThrow(() -> new TicketTypeDoesNotExistException("Ticket type with ID " + id + " not found"));
 
-        // Optional: re-validate updated name and description
+        // Optional: validate if needed
         validateTicketTypeDto(updatedDto);
 
-        ticketType.setName(updatedDto.getName());
-        ticketType.setDescription(updatedDto.getDescription());
-        ticketType.setImage(updatedDto.getImage());
-        ticketType.setIsRecommended(updatedDto.getIsRecommended());
-        ticketType.setTargetPlaces(updatedDto.getTargetPlaces());
+        if (updatedDto.getName() != null)
+            ticketType.setName(updatedDto.getName());
+
+        if (updatedDto.getDescription() != null)
+            ticketType.setDescription(updatedDto.getDescription());
+
+        if (updatedDto.getImage() != null)
+            ticketType.setImage(updatedDto.getImage());
+
+        if (updatedDto.getIsRecommended() != null)
+            ticketType.setIsRecommended(updatedDto.getIsRecommended());
+
+        if (updatedDto.getAvailable() != null)
+            ticketType.setAvailable(updatedDto.getAvailable());
+
+        if (updatedDto.getTargetPlaces() != null)
+            ticketType.setTargetPlaces(updatedDto.getTargetPlaces());
+
         ticketType.setUpdatedAt(LocalDateTime.now());
 
         TicketType saved = ticketTypeRepository.save(ticketType);
         return TicketTypeMapper.MapTicketTypeToTicketTypeDto(saved);
     }
+
 
     private void validateTicketTypeDto(TicketTypeDto dto) {
         if (dto.getName() == null || dto.getName().trim().isEmpty()) {

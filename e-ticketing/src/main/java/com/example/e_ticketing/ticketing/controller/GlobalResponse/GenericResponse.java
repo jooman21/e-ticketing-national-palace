@@ -1,12 +1,19 @@
 package com.example.e_ticketing.ticketing.controller.GlobalResponse;
 
-public class GenericResponse {
+public class GenericResponse<T> {
     private boolean success;
     private String message;
+    private T data;
 
     public GenericResponse(boolean success, String message) {
         this.success = success;
         this.message = message;
+    }
+
+    public GenericResponse(boolean success, String message, T data) {
+        this.success = success;
+        this.message = message;
+        this.data = data;
     }
 
     // Getters and setters
@@ -26,4 +33,11 @@ public class GenericResponse {
         this.message = message;
     }
 
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 }

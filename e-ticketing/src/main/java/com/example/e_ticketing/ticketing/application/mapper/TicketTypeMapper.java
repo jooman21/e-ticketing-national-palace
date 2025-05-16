@@ -17,7 +17,7 @@ public class TicketTypeMapper {
                 .isRecommended(ticketType.getIsRecommended())
                 .available(ticketType.getAvailable())
                 .createdAt(ticketType.getCreatedAt())
-                .createdAt(ticketType.getUpdatedAt())
+                .updatedAt(ticketType.getUpdatedAt())
                 .build();
     }
     public static TicketType MapTicketTypeDtoToTicketType(TicketTypeDto dto) {
