@@ -8,9 +8,17 @@ CREATE TABLE ticket_types (
                               id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                               name VARCHAR(100) NOT NULL,
                               description TEXT,
+                              image Text,
+                              is_recommended BOOLEAN DEFAULT FALSE,
                               available BOOLEAN DEFAULT TRUE,
                               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                               updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE ticket_type_target_places (
+                                           ticket_type_id UUID REFERENCES ticket_types(id) ON DELETE CASCADE,
+                                           place TEXT NOT NULL,
+                                           PRIMARY KEY (ticket_type_id, place)
 );
 
 -- PRICE CONFIGS
@@ -85,4 +93,19 @@ CREATE TABLE tickets (
                          qr_code VARCHAR(255),
                          issued_at TIMESTAMP,
                          expires_at TIMESTAMP
+);
+
+CREATE TABLE announcement (
+                              id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                              subject VARCHAR(255) NOT NULL,
+                              message TEXT NOT NULL,
+                              created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                              updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE announcement_target_places (
+                                            announcement_id UUID REFERENCES announcement(id) ON DELETE CASCADE,
+                                            place TEXT NOT NULL,
+                                            PRIMARY KEY (announcement_id, place)
 );

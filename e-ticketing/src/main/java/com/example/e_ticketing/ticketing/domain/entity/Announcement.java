@@ -10,39 +10,27 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "ticket_types")
+@Table(name = "announcement")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TicketType {
+public class Announcement {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(updatable = false, nullable = false)
     private UUID id;
+    private String subject;
+    private String message;
 
-    private String name;
-    private String description;
-
-    private Boolean available = true;
-
-    @Column(name = "image", columnDefinition = "TEXT")
-    private String image;
-
-    @Column(name = "is_recommended")
-    private Boolean isRecommended = false;
     @ElementCollection
-    @CollectionTable(name = "ticket_type_target_places", joinColumns = @JoinColumn(name = "ticket_type_id"))
+    @CollectionTable(name = "announcement_target_places", joinColumns = @JoinColumn(name = "announcement_id"))
     @Column(name = "place")
     private List<String> targetPlaces = new ArrayList<>();
 
-    @OneToMany(mappedBy = "ticketType")
-    private List<PriceConfig> priceConfigs;
-
-    @OneToMany(mappedBy = "ticketType")
-    private List<Ticket> tickets;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
 }

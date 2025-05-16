@@ -5,9 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Repository
 public interface TicketTypeRepository extends JpaRepository<TicketType, Long> {
     Optional<Object> findByName(String name);
+
+    Optional<Object> findById(UUID id);
 }
