@@ -1,7 +1,7 @@
 package com.example.e_ticketing.ticketing.application.dto;
 
 
-import com.example.e_ticketing.ticketing.domain.entity.VisitPlace;
+
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -21,7 +21,7 @@ public class TicketTypeDto {
     private String image;
     private Boolean isRecommended;
     private Boolean available;
-    private List<VisitPlace> visitPlaces = new ArrayList<>();
+    private List<VisitPlaceDto> visitPlaces = new ArrayList<>();
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

@@ -38,7 +38,7 @@ public class Announcement {
     @Enumerated(EnumType.STRING)
     private AnnouncementType type;
 
-    private LocalDate effectiveDate;
+    private LocalDateTime effectiveDate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

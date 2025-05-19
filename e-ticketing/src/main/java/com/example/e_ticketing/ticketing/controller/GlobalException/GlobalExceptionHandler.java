@@ -1,9 +1,6 @@
 package com.example.e_ticketing.ticketing.controller.GlobalException;
 
-import com.example.e_ticketing.ticketing.excpetion.PriceConfigAlreadyExistsException;
-import com.example.e_ticketing.ticketing.excpetion.PriceConfigDoesNotFoundException;
-import com.example.e_ticketing.ticketing.excpetion.TicketTypeAlreadyExistsException;
-import com.example.e_ticketing.ticketing.excpetion.TicketTypeDoesNotExistException;
+import com.example.e_ticketing.ticketing.excpetion.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,6 +9,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(VisitPlaceDoesNotExistException.class)
+    public ResponseEntity<ErrorResponse> handleVisitPlaceDoesNotExistException(VisitPlaceDoesNotExistException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
     @ExceptionHandler(TicketTypeDoesNotExistException.class)
     public ResponseEntity<ErrorResponse> handleTicketTypeDoesNotExistException(TicketTypeDoesNotExistException ex) {
         ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());

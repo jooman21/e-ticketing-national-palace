@@ -50,6 +50,7 @@ CREATE TABLE announcements (
                                subject VARCHAR(255) NOT NULL,
                                announcement_type announcement_type NOT NULL,
                                message TEXT NOT NULL,
+                               effectiveDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

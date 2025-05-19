@@ -6,7 +6,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.util.List;
 import java.util.UUID;
-
 @Entity
 @Table(name = "Visit_places")
 @Getter

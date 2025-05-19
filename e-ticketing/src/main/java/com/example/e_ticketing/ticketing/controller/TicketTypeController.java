@@ -21,7 +21,7 @@ public class TicketTypeController {
         ticketTypeService.createTicketType(ticketTypeDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(new GenericResponse(true, "Ticket type created successfully."));
+                .body(new GenericResponse(true, "Ticket type created successfully.", ticketTypeDto));
     }
     @GetMapping
     public ResponseEntity<GenericResponse<List<TicketTypeDto>>> getAllTicketTypes() {
