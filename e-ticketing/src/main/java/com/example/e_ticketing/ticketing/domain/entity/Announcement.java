@@ -1,9 +1,11 @@
 package com.example.e_ticketing.ticketing.domain.entity;
 
+import com.example.e_ticketing.ticketing.domain.valueobject.AnnouncementType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +27,18 @@ public class Announcement {
     private String subject;
     private String message;
 
-    @ElementCollection
-    @CollectionTable(name = "announcement_target_places", joinColumns = @JoinColumn(name = "announcement_id"))
-    @Column(name = "place")
-    private List<String> targetPlaces = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "announcement_places",
+            joinColumns = @JoinColumn(name = "announcement_id"),
+            inverseJoinColumns = @JoinColumn(name = "Visit_place_id")
+    )
+    @Builder.Default
+    private List<VisitPlace> visitPlaces = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    private AnnouncementType type;
 
+    private LocalDate effectiveDate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

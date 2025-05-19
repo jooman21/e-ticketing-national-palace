@@ -50,7 +50,9 @@ public class PriceConfigServiceImpl implements PriceConfigService {
 
         dto.setCreatedAt(LocalDateTime.now());
         dto.setUpdatedAt(LocalDateTime.now());
-        dto.setActive(true);
+        if (dto.getActive() == null) {
+            dto.setActive(false);
+        }
 
         PriceConfig entity = PriceConfigMapper.MapPriceConfigDtoToPriceConfig(dto, ticketType);
         PriceConfig saved = priceConfigRepository.save(entity);
@@ -118,7 +120,7 @@ public class PriceConfigServiceImpl implements PriceConfigService {
         existing.setPrice(dto.getPrice());
         existing.setUpdatedAt(LocalDateTime.now());
         existing.setTicketType(ticketType);
-
+        existing.setActive(dto.getActive());
         PriceConfig updated = priceConfigRepository.save(existing);
         return PriceConfigMapper.MapPriceConfigToPriceConfigDto(updated);
     }

@@ -26,17 +26,24 @@ public class TicketType {
     private String name;
     private String description;
 
+    @Builder.Default
     private Boolean available = true;
 
     @Column(name = "image", columnDefinition = "TEXT")
     private String image;
 
-    @Column(name = "is_recommended")
+    @Builder.Default
     private Boolean isRecommended = false;
-    @ElementCollection
-    @CollectionTable(name = "ticket_type_target_places", joinColumns = @JoinColumn(name = "ticket_type_id"))
-    @Column(name = "place")
-    private List<String> targetPlaces = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "ticket_type_visit_place",
+            joinColumns = @JoinColumn(name = "ticket_type_id"),
+            inverseJoinColumns = @JoinColumn(name = "visit_place_id")
+    )
+    @Builder.Default
+    private List<VisitPlace> visitPlaces = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "ticketType")
     private List<PriceConfig> priceConfigs;

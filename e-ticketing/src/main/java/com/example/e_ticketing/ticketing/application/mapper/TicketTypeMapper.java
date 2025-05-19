@@ -13,7 +13,7 @@ public class TicketTypeMapper {
                 .name(ticketType.getName())
                 .description(ticketType.getDescription())
                 .image(ticketType.getImage())
-                .targetPlaces(ticketType.getTargetPlaces())
+                .visitPlaces(ticketType.getVisitPlaces())
                 .isRecommended(ticketType.getIsRecommended())
                 .available(ticketType.getAvailable())
                 .createdAt(ticketType.getCreatedAt())
@@ -27,7 +27,7 @@ public class TicketTypeMapper {
         type.setName(dto.getName());
         type.setDescription(dto.getDescription());
         type.setImage(dto.getImage());
-        type.setTargetPlaces(dto.getTargetPlaces());
+        type.setVisitPlaces(dto.getVisitPlaces());
         type.setIsRecommended(dto.getIsRecommended());
         type.setAvailable(dto.getAvailable());
         type.setCreatedAt(dto.getCreatedAt());

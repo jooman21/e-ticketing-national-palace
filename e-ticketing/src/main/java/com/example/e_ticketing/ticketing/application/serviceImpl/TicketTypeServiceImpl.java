@@ -97,8 +97,8 @@ public class TicketTypeServiceImpl implements TicketTypeService {
         if (updatedDto.getAvailable() != null)
             ticketType.setAvailable(updatedDto.getAvailable());
 
-        if (updatedDto.getTargetPlaces() != null)
-            ticketType.setTargetPlaces(updatedDto.getTargetPlaces());
+        if (updatedDto.getVisitPlaces() != null)
+            ticketType.setVisitPlaces(updatedDto.getVisitPlaces());
 
         ticketType.setUpdatedAt(LocalDateTime.now());
 
