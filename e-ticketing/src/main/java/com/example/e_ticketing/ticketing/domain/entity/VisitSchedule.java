@@ -35,15 +35,9 @@ public class VisitSchedule {
     @OneToMany(mappedBy = "visitSchedule")
     private List<QueueEntry> queueEntries;
 
-    @ManyToMany
-    @JoinTable(
-            name = "visit_schedule_places",
-            joinColumns = @JoinColumn(name = "visit_schedule_id"),
-            inverseJoinColumns = @JoinColumn(name = "visit_place_id")
-    )
-    @Builder.Default
-    private List<VisitPlace> visitPlaces = new ArrayList<>();
 
+    @OneToMany(mappedBy = "visitSchedule", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<VisitSchedulePlaceStatus> placeStatuses = new ArrayList<>();
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

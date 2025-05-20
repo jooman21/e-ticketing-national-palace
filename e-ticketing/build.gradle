@@ -27,6 +27,8 @@ dependencies {
 	// Spring Boot Starter for JPA (Hibernate)
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
+
+
 	// Lombok for boilerplate code
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

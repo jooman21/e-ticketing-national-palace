@@ -1,9 +1,9 @@
 package com.example.e_ticketing.ticketing.application.dto;
 
-import com.example.e_ticketing.ticketing.domain.entity.TicketType;
+
 import com.example.e_ticketing.ticketing.domain.valueobject.Currency;
 import com.example.e_ticketing.ticketing.domain.valueobject.Residency;
-import jakarta.persistence.*;
+
 import lombok.*;
 
 import java.time.LocalDateTime;

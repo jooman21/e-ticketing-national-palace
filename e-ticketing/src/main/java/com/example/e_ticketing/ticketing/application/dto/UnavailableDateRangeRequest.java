@@ -1,21 +1,21 @@
 package com.example.e_ticketing.ticketing.application.dto;
 
-
 import lombok.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class VisitScheduleDto {
-    private UUID id;
-    private LocalDate date;
-    private Boolean isOpen;
+public class UnavailableDateRangeRequest {
+    @NotNull
+    private LocalDate startDate;
+
+    @NotNull
+    private LocalDate endDate;
+
     private String reasonForClosing;
-    private List<UUID> visitPlaceIds;
 }

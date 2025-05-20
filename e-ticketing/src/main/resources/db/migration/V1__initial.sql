@@ -35,6 +35,7 @@ CREATE TABLE timeslots (
 );
 
 -- Visit Places Table
+
 CREATE TABLE visit_places (
                               id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                               name VARCHAR(100) NOT NULL,
@@ -43,17 +44,8 @@ CREATE TABLE visit_places (
                               updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Announcements Table
-CREATE TABLE announcements (
-                               id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-                               subject VARCHAR(255) NOT NULL,
-                               announcement_type announcement_type NOT NULL,
-                               message TEXT NOT NULL,
-                               effectiveDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                               updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
 
+--visit schedule table
 CREATE TABLE visits_schedules (
                                   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                                   date DATE NOT NULL,
@@ -61,6 +53,36 @@ CREATE TABLE visits_schedules (
                                   reason_for_closing TEXT,
                                   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Announcements Table
+CREATE TABLE announcements (
+                               id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                               subject VARCHAR(255) NOT NULL,
+                               announcement_type announcement_type NOT NULL,
+                               message TEXT NOT NULL,
+                               visit_schedule_id UUID,
+                               effectiveDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                               updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                               FOREIGN KEY (visit_schedule_id) REFERENCES visits_schedules(id) ON DELETE SET NULL
+);
+
+
+
+
+
+
+CREATE TABLE visit_schedule_place_status (
+                                             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                                             visit_schedule_id UUID NOT NULL,
+                                             visit_place_id UUID NOT NULL,
+                                             is_open BOOLEAN DEFAULT TRUE,
+                                             reason_for_closing TEXT,
+                                             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                             FOREIGN KEY (visit_schedule_id) REFERENCES visits_schedules(id) ON DELETE CASCADE,
+                                             FOREIGN KEY (visit_place_id) REFERENCES visit_places(id) ON DELETE CASCADE
 );
 
 CREATE TABLE tickets (

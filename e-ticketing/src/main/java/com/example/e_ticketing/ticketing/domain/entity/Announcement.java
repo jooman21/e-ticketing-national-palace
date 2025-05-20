@@ -31,12 +31,17 @@ public class Announcement {
     @JoinTable(
             name = "announcement_places",
             joinColumns = @JoinColumn(name = "announcement_id"),
-            inverseJoinColumns = @JoinColumn(name = "Visit_place_id")
+            inverseJoinColumns = @JoinColumn(name = "visit_place_id")
     )
     @Builder.Default
     private List<VisitPlace> visitPlaces = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     private AnnouncementType type;
+
+    @ManyToOne
+    @JoinColumn(name = "visit_schedule_id")
+    private VisitSchedule visitSchedule; // optional - applies to a specific date
+
 
     private LocalDateTime effectiveDate;
     private LocalDateTime createdAt;

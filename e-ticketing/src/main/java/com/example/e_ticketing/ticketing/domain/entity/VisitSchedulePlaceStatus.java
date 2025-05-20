@@ -5,31 +5,33 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
+
 @Entity
-@Table(name = "Visit_places")
+@Table(name = "visit_schedule_place_status")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+public class VisitSchedulePlaceStatus {
 
-public class VisitPlace {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    private String name; // e.g., "Museum", "Gallery", "Garden"
+    @ManyToOne
+    @JoinColumn(name = "visit_schedule_id", nullable = false)
+    private VisitSchedule visitSchedule;
 
-    private Boolean isAvailable = true;
+    @ManyToOne
+    @JoinColumn(name = "visit_place_id", nullable = false)
+    private VisitPlace visitPlace;
 
-    @ManyToMany(mappedBy = "visitPlaces")
-    private List<TicketType> ticketTypes;
+    private Boolean isOpen = true;
 
-    @OneToMany(mappedBy = "visitPlace")
-    private List<VisitSchedulePlaceStatus> scheduleStatuses;
+    private String reasonForClosing;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
