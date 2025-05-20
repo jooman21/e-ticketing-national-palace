@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 @Entity
@@ -23,9 +24,13 @@ public class VisitPlace {
 
     private String name; // e.g., "Museum", "Gallery", "Garden"
 
+    private Boolean isAvailable = true;
+
     @ManyToMany(mappedBy = "visitPlaces")
     private List<VisitSchedule> visitSchedules;
 
     @ManyToMany(mappedBy = "visitPlaces")
     private List<TicketType> ticketTypes;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

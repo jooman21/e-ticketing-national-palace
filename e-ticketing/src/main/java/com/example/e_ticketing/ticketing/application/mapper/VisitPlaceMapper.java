@@ -12,6 +12,9 @@ public class VisitPlaceMapper {
             return VisitPlaceDto.builder()
                     .id(visitPlace.getId())
                     .name(visitPlace.getName())
+                    .available(visitPlace.getIsAvailable())
+                    .createdAt(visitPlace.getCreatedAt())
+                    .updatedAt(visitPlace.getUpdatedAt())
                     .build();
         }
         public static VisitPlace MapVisitPlaceDtoToVisitPlace(VisitPlaceDto dto) {
@@ -19,6 +22,9 @@ public class VisitPlaceMapper {
             VisitPlace place = new VisitPlace();
             place.setId(dto.getId());
             place.setName(dto.getName());
+            place.setIsAvailable(dto.getAvailable());
+            place.setCreatedAt(dto.getCreatedAt());
+            place.setUpdatedAt(dto.getUpdatedAt());
             return place;
         }
     }
