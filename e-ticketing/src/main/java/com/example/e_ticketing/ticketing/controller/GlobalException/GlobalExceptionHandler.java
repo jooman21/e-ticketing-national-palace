@@ -1,10 +1,14 @@
 package com.example.e_ticketing.ticketing.controller.GlobalException;
 
 import com.example.e_ticketing.ticketing.excpetion.*;
+import com.example.e_ticketing.ticketing.excpetion.announcmentCustomException.PartialAnnouncementConflictException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -40,5 +44,16 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler(PartialAnnouncementConflictException.class)
+    public ResponseEntity<Map<String, Object>> handlePartialConflict(PartialAnnouncementConflictException ex) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("status", 207); // Or 409
+        body.put("message", "Conflicts found on the following dates.");
+        body.put("conflictedDates", ex.getConflictedDates());
+
+        return ResponseEntity.status(207).body(body); // Multi-Status
+    }
+
 
 }

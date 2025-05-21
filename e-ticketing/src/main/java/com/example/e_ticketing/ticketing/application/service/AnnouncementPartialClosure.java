@@ -6,8 +6,9 @@ import jakarta.transaction.Transactional;
 
 import java.util.List;
 
-public interface AnnouncementService {
+public interface AnnouncementPartialClosure {
     @Transactional
-    List<Announcement> createAnnouncement(AnnouncementDto dto);
+    List<Announcement> createPartialAvailabilityAnnouncement(AnnouncementDto dto);
 
+    //List<Announcement> create(AnnouncementDto dto);
 }

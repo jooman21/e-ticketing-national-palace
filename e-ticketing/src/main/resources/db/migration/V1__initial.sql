@@ -4,7 +4,7 @@ EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TYPE residency AS ENUM ('LOCAL', 'INTERNATIONAL');
 CREATE TYPE currency AS ENUM ('ETB', 'USD', 'EURO'); -- extend if needed
 CREATE TYPE ticket_status AS ENUM ('PENDING', 'CONFIRMED', 'CANCELLED'); -- example statuses
-CREATE TYPE announcement_type as ENUM (' CLOSURE, AVAILABILITY');
+CREATE TYPE announcement_type as ENUM (' PARTIAL_AVAILABILITY , TOTAL_CLOSURE');
 
 
 

@@ -18,7 +18,7 @@ public class AnnouncementMapper {
         announcement.setId(dto.getId());
         announcement.setSubject(dto.getSubject());
         announcement.setMessage(dto.getMessage());
-        announcement.setType(dto.getAnnouncementType());
+        announcement.setAnnouncementType(dto.getAnnouncementType());
 
         // Just use the first date as representative in entity (entity still supports one date)
         if (dto.getEffectiveDates() != null && !dto.getEffectiveDates().isEmpty()) {
@@ -43,7 +43,7 @@ public class AnnouncementMapper {
         dto.setId(announcement.getId());
         dto.setSubject(announcement.getSubject());
         dto.setMessage(announcement.getMessage());
-        dto.setAnnouncementType(announcement.getType());
+        dto.setAnnouncementType(announcement.getAnnouncementType());
 
         // Wrap single effectiveDate into a list
         if (announcement.getEffectiveDate() != null) {

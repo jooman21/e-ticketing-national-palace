@@ -36,7 +36,7 @@ public class Announcement {
     @Builder.Default
     private List<VisitPlace> visitPlaces = new ArrayList<>();
     @Enumerated(EnumType.STRING)
-    private AnnouncementType type;
+    private AnnouncementType announcementType;
 
     @ManyToOne
     @JoinColumn(name = "visit_schedule_id")

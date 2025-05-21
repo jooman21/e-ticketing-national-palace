@@ -6,7 +6,7 @@ import com.example.e_ticketing.ticketing.application.repository.AnnouncementRepo
 import com.example.e_ticketing.ticketing.application.repository.VisitPlaceRepository;
 import com.example.e_ticketing.ticketing.application.repository.VisitSchedulePlaceStatusRepository;
 import com.example.e_ticketing.ticketing.application.repository.VisitScheduleRepository;
-import com.example.e_ticketing.ticketing.application.service.AnnouncementService;
+import com.example.e_ticketing.ticketing.application.service.AnnouncementPartialClosure;
 import com.example.e_ticketing.ticketing.domain.entity.Announcement;
 import com.example.e_ticketing.ticketing.domain.entity.VisitPlace;
 import com.example.e_ticketing.ticketing.domain.entity.VisitSchedule;
@@ -19,14 +19,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AnnouncementServiceImpl implements AnnouncementService {
+public class PartialAvailabilityAnnouncementServiceImpl implements AnnouncementPartialClosure {
 
     private final AnnouncementRepository announcementRepository;
     private final VisitPlaceRepository visitPlaceRepository;
@@ -35,14 +33,14 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     @Transactional
-    public List<Announcement> createAnnouncement(AnnouncementDto dto) {
+    public List<Announcement> createPartialAvailabilityAnnouncement(AnnouncementDto dto) {
         List<Announcement> createdAnnouncements = new ArrayList<>();
         List<LocalDate> conflictingDates = new ArrayList<>();
 
         for (LocalDateTime effectiveDate : dto.getEffectiveDates()) {
             LocalDate closureDate = effectiveDate.toLocalDate();
 
-            if (dto.getAnnouncementType() == AnnouncementType.CLOSURE) {
+            if (dto.getAnnouncementType() == AnnouncementType.PARTIAL_AVAILABILITY) {
                 Optional<VisitSchedule> optionalSchedule = visitScheduleRepository.findByDate(closureDate);
                 if (optionalSchedule.isPresent() && !optionalSchedule.get().getIsOpen()) {
                     conflictingDates.add(closureDate);
@@ -67,7 +65,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
             announcement.setCreatedAt(LocalDateTime.now());
             announcement.setUpdatedAt(LocalDateTime.now());
 
-            if (dto.getAnnouncementType() == AnnouncementType.CLOSURE) {
+            if (dto.getAnnouncementType() == AnnouncementType.PARTIAL_AVAILABILITY) {
                 LocalDate closureDate = effectiveDate.toLocalDate();
 
                 VisitSchedule schedule = visitScheduleRepository.findByDate(closureDate)
@@ -117,8 +115,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
         return createdAnnouncements;
     }
-
-
 
 
 }
