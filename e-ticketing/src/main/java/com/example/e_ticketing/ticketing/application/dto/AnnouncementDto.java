@@ -16,6 +16,9 @@ public class AnnouncementDto {
     private String subject;
     private String message;
     private AnnouncementType announcementType;
-    private LocalDateTime effectiveDate;
+
+    // Changed from single effectiveDate to a list of dates
+    private List<LocalDateTime> effectiveDates;
+
     private List<UUID> visitPlaceIds;
 }

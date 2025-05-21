@@ -4,6 +4,7 @@ import com.example.e_ticketing.ticketing.application.dto.AnnouncementDto;
 import com.example.e_ticketing.ticketing.application.mapper.AnnouncementMapper;
 import com.example.e_ticketing.ticketing.application.repository.AnnouncementRepository;
 import com.example.e_ticketing.ticketing.application.repository.VisitPlaceRepository;
+import com.example.e_ticketing.ticketing.application.repository.VisitSchedulePlaceStatusRepository;
 import com.example.e_ticketing.ticketing.application.repository.VisitScheduleRepository;
 import com.example.e_ticketing.ticketing.application.service.AnnouncementService;
 import com.example.e_ticketing.ticketing.domain.entity.Announcement;
@@ -27,55 +28,72 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     private final AnnouncementRepository announcementRepository;
     private final VisitPlaceRepository visitPlaceRepository;
     private final VisitScheduleRepository visitScheduleRepository;
+    private final VisitSchedulePlaceStatusRepository visitSchedulePlaceStatusRepository;
 
     @Override
     @Transactional
-    public Announcement createAnnouncement(AnnouncementDto dto) {
-        List<VisitPlace> places = visitPlaceRepository.findAllById(dto.getVisitPlaceIds());
-        Announcement announcement = AnnouncementMapper.toEntity(dto, places);
+    public List<Announcement> createAnnouncement(AnnouncementDto dto) {
+        List<Announcement> createdAnnouncements = new ArrayList<>();
 
-        // Handle museum closure
-        if (dto.getAnnouncementType() == AnnouncementType.CLOSURE) {
-            LocalDate date = dto.getEffectiveDate().toLocalDate();
+        for (LocalDateTime effectiveDate : dto.getEffectiveDates()) {
+            // Map DTO to a fresh entity for each date
+            Announcement announcement = AnnouncementMapper.toEntity(dto, visitPlaceRepository::findAllById);
+            announcement.setEffectiveDate(effectiveDate);
+            announcement.setCreatedAt(LocalDateTime.now());
+            announcement.setUpdatedAt(LocalDateTime.now());
 
-            // Create or fetch schedule for the closure date
-            VisitSchedule schedule = visitScheduleRepository.findByDate(date)
-                    .orElseGet(() -> {
-                        VisitSchedule newSchedule = new VisitSchedule();
-                        newSchedule.setDate(date);
-                        newSchedule.setPlaceStatuses(new ArrayList<>());
-                        return newSchedule;
-                    });
+            if (dto.getAnnouncementType() == AnnouncementType.CLOSURE) {
+                LocalDate closureDate = effectiveDate.toLocalDate();
 
-            schedule.setIsOpen(false); // Mark the museum as closed
-            schedule.setReasonForClosing("Closed due to announcement: " + dto.getSubject());
+                VisitSchedule schedule = visitScheduleRepository.findByDate(closureDate)
+                        .orElseGet(() -> VisitSchedule.builder()
+                                .date(closureDate)
+                                .isOpen(false)
+                                .reasonForClosing("Closed due to announcement: " + dto.getSubject())
+                                .createdAt(LocalDateTime.now())
+                                .updatedAt(LocalDateTime.now())
+                                .build()
+                        );
 
-            // For each place, mark as unavailable in place statuses
-            for (VisitPlace place : places) {
-                boolean exists = schedule.getPlaceStatuses().stream()
-                        .anyMatch(ps -> ps.getVisitPlace().getId().equals(place.getId()));
-
-                if (!exists) {
-                    VisitSchedulePlaceStatus status = VisitSchedulePlaceStatus.builder()
-                            .visitPlace(place)
-                            .visitSchedule(schedule)
-                           // .status("UNAVAILABLE")
-                            .isOpen(false)
-                            .reasonForClosing("Closed due to announcement")
-                            .build();
-                    schedule.getPlaceStatuses().add(status);
+                if (schedule.getId() == null) {
+                    visitScheduleRepository.save(schedule);
+                } else {
+                    schedule.setIsOpen(false);
+                    schedule.setReasonForClosing("Closed due to announcement: " + dto.getSubject());
+                    schedule.setUpdatedAt(LocalDateTime.now());
                 }
+
+                // Initialize placeStatuses if null to avoid NPE
+                if (schedule.getPlaceStatuses() == null) {
+                    schedule.setPlaceStatuses(new ArrayList<>());
+                }
+
+                for (VisitPlace place : announcement.getVisitPlaces()) {
+                    boolean alreadyExists = schedule.getPlaceStatuses().stream()
+                            .anyMatch(status -> status.getVisitPlace().getId().equals(place.getId()));
+
+                    if (!alreadyExists) {
+                        VisitSchedulePlaceStatus status = VisitSchedulePlaceStatus.builder()
+                                .visitSchedule(schedule)
+                                .visitPlace(place)
+                                .isOpen(false)
+                                .reasonForClosing("Closed due to announcement: " + dto.getSubject())
+                                .createdAt(LocalDateTime.now())
+                                .updatedAt(LocalDateTime.now())
+                                .build();
+                        visitSchedulePlaceStatusRepository.save(status);
+                    }
+                }
+
+                announcement.setVisitSchedule(schedule);
             }
 
-            visitScheduleRepository.save(schedule);
-
-            // Link the schedule to the announcement
-            announcement.setVisitSchedule(schedule);
+            Announcement saved = announcementRepository.save(announcement);
+            createdAnnouncements.add(saved);
         }
 
-        announcement.setCreatedAt(LocalDateTime.now());
-        announcement.setUpdatedAt(LocalDateTime.now());
-
-        return announcementRepository.save(announcement);
+        return createdAnnouncements;
     }
+
+
 }
