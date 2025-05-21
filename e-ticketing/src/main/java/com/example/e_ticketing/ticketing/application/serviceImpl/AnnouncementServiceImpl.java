@@ -12,6 +12,7 @@ import com.example.e_ticketing.ticketing.domain.entity.VisitPlace;
 import com.example.e_ticketing.ticketing.domain.entity.VisitSchedule;
 import com.example.e_ticketing.ticketing.domain.entity.VisitSchedulePlaceStatus;
 import com.example.e_ticketing.ticketing.domain.valueobject.AnnouncementType;
+import com.example.e_ticketing.ticketing.excpetion.ClosureDateAlreadyAssignedException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +38,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         List<Announcement> createdAnnouncements = new ArrayList<>();
 
         for (LocalDateTime effectiveDate : dto.getEffectiveDates()) {
-            // Map DTO to a fresh entity for each date
             Announcement announcement = AnnouncementMapper.toEntity(dto, visitPlaceRepository::findAllById);
             announcement.setEffectiveDate(effectiveDate);
             announcement.setCreatedAt(LocalDateTime.now());
@@ -45,15 +46,27 @@ public class AnnouncementServiceImpl implements AnnouncementService {
             if (dto.getAnnouncementType() == AnnouncementType.CLOSURE) {
                 LocalDate closureDate = effectiveDate.toLocalDate();
 
-                VisitSchedule schedule = visitScheduleRepository.findByDate(closureDate)
-                        .orElseGet(() -> VisitSchedule.builder()
-                                .date(closureDate)
-                                .isOpen(false)
-                                .reasonForClosing("Closed due to announcement: " + dto.getSubject())
-                                .createdAt(LocalDateTime.now())
-                                .updatedAt(LocalDateTime.now())
-                                .build()
+                Optional<VisitSchedule> optionalSchedule = visitScheduleRepository.findByDate(closureDate);
+
+                if (optionalSchedule.isPresent()) {
+                    VisitSchedule existingSchedule = optionalSchedule.get();
+
+                    // 🚫 If schedule is already closed, reject this closure announcement
+                    if (!existingSchedule.getIsOpen()) {
+                        throw new ClosureDateAlreadyAssignedException(
+                                String.format("Closure already exists for date: %s", closureDate)
                         );
+                    }
+                }
+
+                VisitSchedule schedule = optionalSchedule.orElseGet(() -> VisitSchedule.builder()
+                        .date(closureDate)
+                        .isOpen(false)
+                        .reasonForClosing("Closed due to announcement: " + dto.getSubject())
+                        .createdAt(LocalDateTime.now())
+                        .updatedAt(LocalDateTime.now())
+                        .build()
+                );
 
                 if (schedule.getId() == null) {
                     visitScheduleRepository.save(schedule);
@@ -63,7 +76,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                     schedule.setUpdatedAt(LocalDateTime.now());
                 }
 
-                // Initialize placeStatuses if null to avoid NPE
                 if (schedule.getPlaceStatuses() == null) {
                     schedule.setPlaceStatuses(new ArrayList<>());
                 }
@@ -94,6 +106,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
         return createdAnnouncements;
     }
+
 
 
 }

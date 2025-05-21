@@ -4,6 +4,7 @@ package com.example.e_ticketing.ticketing.controller;
 import com.example.e_ticketing.ticketing.application.dto.AnnouncementDto;
 import com.example.e_ticketing.ticketing.application.mapper.AnnouncementMapper;
 import com.example.e_ticketing.ticketing.application.service.AnnouncementService;
+import com.example.e_ticketing.ticketing.controller.GlobalResponse.GenericResponse;
 import com.example.e_ticketing.ticketing.domain.entity.Announcement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,12 +23,19 @@ public class AnnouncementController {
 
 
     @PostMapping
-    public ResponseEntity<List<AnnouncementDto>> createAnnouncements(@RequestBody AnnouncementDto dto) {
+    public ResponseEntity<GenericResponse> createAnnouncements(@RequestBody AnnouncementDto dto) {
         List<Announcement> announcements = announcementService.createAnnouncement(dto);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(announcements.stream()
-                        .map(AnnouncementMapper::toDto)
-                        .toList());
+        List<AnnouncementDto> responseDtos = announcements.stream()
+                .map(AnnouncementMapper::toDto)
+                .toList();
+
+        GenericResponse response = new GenericResponse(
+                true,
+                "Announcements created successfully.",
+                responseDtos
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 
