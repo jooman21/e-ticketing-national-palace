@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +37,30 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     @Transactional
     public List<Announcement> createAnnouncement(AnnouncementDto dto) {
         List<Announcement> createdAnnouncements = new ArrayList<>();
+        List<LocalDate> conflictingDates = new ArrayList<>();
 
+        for (LocalDateTime effectiveDate : dto.getEffectiveDates()) {
+            LocalDate closureDate = effectiveDate.toLocalDate();
+
+            if (dto.getAnnouncementType() == AnnouncementType.CLOSURE) {
+                Optional<VisitSchedule> optionalSchedule = visitScheduleRepository.findByDate(closureDate);
+                if (optionalSchedule.isPresent() && !optionalSchedule.get().getIsOpen()) {
+                    conflictingDates.add(closureDate);
+                    continue; // Skip processing this date
+                }
+            }
+        }
+
+        if (!conflictingDates.isEmpty()) {
+            String dates = conflictingDates.stream()
+                    .map(LocalDate::toString)
+                    .collect(Collectors.joining(", "));
+            throw new ClosureDateAlreadyAssignedException(
+                    String.format("Closure already exists for the following dates: %s", dates)
+            );
+        }
+
+        // Proceed with processing valid dates
         for (LocalDateTime effectiveDate : dto.getEffectiveDates()) {
             Announcement announcement = AnnouncementMapper.toEntity(dto, visitPlaceRepository::findAllById);
             announcement.setEffectiveDate(effectiveDate);
@@ -46,27 +70,14 @@ public class AnnouncementServiceImpl implements AnnouncementService {
             if (dto.getAnnouncementType() == AnnouncementType.CLOSURE) {
                 LocalDate closureDate = effectiveDate.toLocalDate();
 
-                Optional<VisitSchedule> optionalSchedule = visitScheduleRepository.findByDate(closureDate);
-
-                if (optionalSchedule.isPresent()) {
-                    VisitSchedule existingSchedule = optionalSchedule.get();
-
-                    // 🚫 If schedule is already closed, reject this closure announcement
-                    if (!existingSchedule.getIsOpen()) {
-                        throw new ClosureDateAlreadyAssignedException(
-                                String.format("Closure already exists for date: %s", closureDate)
-                        );
-                    }
-                }
-
-                VisitSchedule schedule = optionalSchedule.orElseGet(() -> VisitSchedule.builder()
-                        .date(closureDate)
-                        .isOpen(false)
-                        .reasonForClosing("Closed due to announcement: " + dto.getSubject())
-                        .createdAt(LocalDateTime.now())
-                        .updatedAt(LocalDateTime.now())
-                        .build()
-                );
+                VisitSchedule schedule = visitScheduleRepository.findByDate(closureDate)
+                        .orElseGet(() -> VisitSchedule.builder()
+                                .date(closureDate)
+                                .isOpen(false)
+                                .reasonForClosing("Closed due to announcement: " + dto.getSubject())
+                                .createdAt(LocalDateTime.now())
+                                .updatedAt(LocalDateTime.now())
+                                .build());
 
                 if (schedule.getId() == null) {
                     visitScheduleRepository.save(schedule);
@@ -106,6 +117,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
         return createdAnnouncements;
     }
+
 
 
 
