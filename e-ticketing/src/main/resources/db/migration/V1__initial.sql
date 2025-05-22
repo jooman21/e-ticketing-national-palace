@@ -28,6 +28,7 @@ CREATE TABLE ticket_types (
 CREATE TABLE timeslots (
                            id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                            start_time TIME NOT NULL,
+                            maxTickets INTEGER NOT NULL,
                            end_time TIME NOT NULL,
                            is_active BOOLEAN DEFAULT TRUE,
                            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

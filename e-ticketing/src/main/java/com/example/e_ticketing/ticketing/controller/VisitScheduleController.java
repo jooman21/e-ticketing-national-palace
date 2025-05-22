@@ -1,8 +1,5 @@
 package com.example.e_ticketing.ticketing.controller;
 
-import com.example.e_ticketing.ticketing.application.dto.UnavailableDateRangeRequest;
-import com.example.e_ticketing.ticketing.application.dto.UnavailableDateRequest;
-import com.example.e_ticketing.ticketing.application.dto.UnavailableDatesRequest;
 import com.example.e_ticketing.ticketing.application.service.VisitScheduleService;
 import com.example.e_ticketing.ticketing.controller.GlobalResponse.GenericResponse;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/visit-schedules")

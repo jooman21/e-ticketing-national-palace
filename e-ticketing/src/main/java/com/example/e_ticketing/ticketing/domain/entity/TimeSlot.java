@@ -31,6 +31,8 @@ public class TimeSlot {
     @OneToMany(mappedBy = "timeSlot")
     private List<Ticket> tickets;
 
+    private int maxTickets;
+
     @OneToMany(mappedBy = "timeSlot")
     private List<QueueEntry> queueEntries;
 
