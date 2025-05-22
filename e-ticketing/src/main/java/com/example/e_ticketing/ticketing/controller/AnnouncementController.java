@@ -9,14 +9,15 @@ import com.example.e_ticketing.ticketing.controller.GlobalResponse.GenericRespon
 import com.example.e_ticketing.ticketing.domain.entity.Announcement;
 import com.example.e_ticketing.ticketing.domain.valueobject.AnnouncementType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/announcements")
@@ -61,5 +62,35 @@ public class AnnouncementController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @GetMapping("/partial-availability")
+    public ResponseEntity<GenericResponse> getPartialAvailabilityAnnouncements(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam(required = false) UUID visitPlaceId
+    ) {
+        List<AnnouncementDto> announcements = announcementPartialClosure.getPartialAvailabilityAnnouncements(date, visitPlaceId);
+
+        GenericResponse response = new GenericResponse(
+                true,
+                "Partial availability announcements fetched successfully.",
+                announcements
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/total-closure")
+    public ResponseEntity<GenericResponse> getTotalClosureAnnouncements(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
+    ) {
+        List<AnnouncementDto> announcements = announcementTotalClosure.getTotalClosureAnnouncements(date);
+
+        GenericResponse response = new GenericResponse(
+                true,
+                "Total Closure announcements fetched successfully.",
+                announcements
+        );
+
+        return ResponseEntity.ok(response);
+    }
 }
 

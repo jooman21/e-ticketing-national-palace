@@ -4,14 +4,13 @@ import com.example.e_ticketing.ticketing.application.dto.AnnouncementDto;
 import com.example.e_ticketing.ticketing.application.mapper.AnnouncementMapper;
 import com.example.e_ticketing.ticketing.application.repository.AnnouncementRepository;
 import com.example.e_ticketing.ticketing.application.repository.VisitPlaceRepository;
-import com.example.e_ticketing.ticketing.application.repository.VisitSchedulePlaceStatusRepository;
+
 import com.example.e_ticketing.ticketing.application.repository.VisitScheduleRepository;
 import com.example.e_ticketing.ticketing.application.service.AnnouncementTotalClosure;
 import com.example.e_ticketing.ticketing.domain.entity.Announcement;
-import com.example.e_ticketing.ticketing.domain.entity.VisitPlace;
 import com.example.e_ticketing.ticketing.domain.entity.VisitSchedule;
-import com.example.e_ticketing.ticketing.domain.entity.VisitSchedulePlaceStatus;
 import com.example.e_ticketing.ticketing.domain.valueobject.AnnouncementType;
+import com.example.e_ticketing.ticketing.excpetion.AnnouncementNotFoundException;
 import com.example.e_ticketing.ticketing.excpetion.AvailabilityConflictException;
 import com.example.e_ticketing.ticketing.excpetion.ClosureDateAlreadyAssignedException;
 import com.example.e_ticketing.ticketing.excpetion.InvalidVisitPlaceException;
@@ -36,7 +35,7 @@ public class TotalClosureAnnouncementServiceImpl implements AnnouncementTotalClo
     private final AnnouncementRepository announcementRepository;
     private final VisitPlaceRepository visitPlaceRepository;
     private final VisitScheduleRepository visitScheduleRepository;
-    private final VisitSchedulePlaceStatusRepository visitSchedulePlaceStatusRepository;
+
 
     @Override
     @Transactional
@@ -121,7 +120,29 @@ public class TotalClosureAnnouncementServiceImpl implements AnnouncementTotalClo
         return createdAnnouncements;
     }
 
+    @Override
+    public List<AnnouncementDto> getTotalClosureAnnouncements(LocalDate date) {
+        List<Announcement> announcements;
 
+        if (date != null) {
+            announcements = announcementRepository.findByTypeAndDate(
+                    AnnouncementType.TOTAL_CLOSURE, date);
+        } else if (date != null) {
+            announcements = announcementRepository.findByTypeAndDate(
+                    AnnouncementType.PARTIAL_AVAILABILITY, date);
+        }
+        else {
+            announcements = announcementRepository.findByAnnouncementType(AnnouncementType.TOTAL_CLOSURE);
+        }
+
+        if (announcements.isEmpty()) {
+            throw new AnnouncementNotFoundException("No  Total closure announcements found for the given filters.");
+        }
+
+        return announcements.stream()
+                .map(AnnouncementMapper::toDto)
+                .collect(Collectors.toList());
+    }
 }
 
 
