@@ -92,5 +92,19 @@ public class AnnouncementController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping
+    public ResponseEntity<GenericResponse> getAllAnnouncements() {
+        List<AnnouncementDto> announcements = announcementTotalClosure.getAllAnnouncements();
+
+        GenericResponse response = new GenericResponse(
+                true,
+                "All announcements fetched successfully.",
+                announcements
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
 }
 

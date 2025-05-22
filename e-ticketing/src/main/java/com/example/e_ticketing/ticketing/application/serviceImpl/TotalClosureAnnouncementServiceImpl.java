@@ -127,22 +127,32 @@ public class TotalClosureAnnouncementServiceImpl implements AnnouncementTotalClo
         if (date != null) {
             announcements = announcementRepository.findByTypeAndDate(
                     AnnouncementType.TOTAL_CLOSURE, date);
-        } else if (date != null) {
-            announcements = announcementRepository.findByTypeAndDate(
-                    AnnouncementType.PARTIAL_AVAILABILITY, date);
-        }
-        else {
+        } else {
             announcements = announcementRepository.findByAnnouncementType(AnnouncementType.TOTAL_CLOSURE);
         }
 
         if (announcements.isEmpty()) {
-            throw new AnnouncementNotFoundException("No  Total closure announcements found for the given filters.");
+            throw new AnnouncementNotFoundException("No Total closure announcements found for the given filters.");
         }
 
         return announcements.stream()
                 .map(AnnouncementMapper::toDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<AnnouncementDto> getAllAnnouncements() {
+        List<Announcement> announcements = announcementRepository.findAll();
+
+        if (announcements.isEmpty()) {
+            throw new AnnouncementNotFoundException("No announcements found.");
+        }
+
+        return announcements.stream()
+                .map(AnnouncementMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
 }
 
 

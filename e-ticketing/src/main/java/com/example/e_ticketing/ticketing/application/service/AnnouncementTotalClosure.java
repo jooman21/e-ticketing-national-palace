@@ -12,4 +12,6 @@ public interface AnnouncementTotalClosure {
     List<Announcement> create(AnnouncementDto dto);
 
     List<AnnouncementDto> getTotalClosureAnnouncements(LocalDate date);
+
+    List<AnnouncementDto> getAllAnnouncements();
 }
