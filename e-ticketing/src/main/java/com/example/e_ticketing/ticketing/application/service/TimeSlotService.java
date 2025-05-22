@@ -9,4 +9,6 @@ public interface TimeSlotService {
 
     @Transactional
     List<TimeslotDto> createDailyTimeSlots(Integer maxTickets);
+
+    List<TimeslotDto> getAllActiveTimeSlots();
 }

@@ -6,10 +6,7 @@ import com.example.e_ticketing.ticketing.application.service.TimeSlotService;
 import com.example.e_ticketing.ticketing.controller.GlobalResponse.GenericResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +23,18 @@ public class TimeSotController {
         GenericResponse response = new GenericResponse(
                 true,
                 "Daily time slots created successfully.",
+                slots
+        );
+
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/active")
+    public ResponseEntity<GenericResponse> getAllActiveTimeSlots() {
+        List<TimeslotDto> slots = timeSlotService.getAllActiveTimeSlots();
+
+        GenericResponse response = new GenericResponse(
+                true,
+                "Active time slots fetched successfully.",
                 slots
         );
 

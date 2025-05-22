@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 @Component
 public class TimeSlotMapper {
-    public TimeSlot MaoTimeSlotDtoToEntity(TimeslotDto dto) {
+    public TimeSlot MapTimeSlotDtoToEntity(TimeslotDto dto) {
         TimeSlot timeSlot = new TimeSlot();
         timeSlot.setStartTime(dto.getStartTime());
         timeSlot.setEndTime(dto.getEndTime());

@@ -8,12 +8,14 @@ import com.example.e_ticketing.ticketing.domain.entity.TimeSlot;
 import com.example.e_ticketing.ticketing.excpetion.InvalidTimeSlotException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -52,6 +54,16 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 
             return result;
         }
+
+    @Override
+    public List<TimeslotDto> getAllActiveTimeSlots() {
+        return timeSlotRepository.findByIsActiveTrueOrderByStartTimeAsc()
+                .stream()
+                .map(timeSlotMapper::MapTimeSlotEntityToTimeSlotDto)  // instance method ref
+                .collect(Collectors.toList());
+    }
+
+
 }
 
 
