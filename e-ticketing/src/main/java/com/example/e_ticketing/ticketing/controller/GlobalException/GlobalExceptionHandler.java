@@ -62,4 +62,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
+
+    @ExceptionHandler(NoMuseumClosedDateFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNoGateClosedDateFoundException(NoMuseumClosedDateFoundException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }

@@ -8,15 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface VisitScheduleService  {
+    List<LocalDate> getAllGateClosedDates();
 
 
-    void markDateAsUnavailable(UUID visitPlaceId, LocalDate date, String reason);
-
-    void markDateRangeAsUnavailable(UUID visitPlaceId, LocalDate start, LocalDate end, String reason);
-
-    void markMultipleDatesAsUnavailable(UUID visitPlaceId, List<LocalDate> dates, String reason);
-
-    List<LocalDate> getClosedDatesByVisitPlace(UUID visitPlaceId);
-
-//    List<UnavailableDateDto> getUnavailableDates(UUID visitPlaceId, YearMonth month);
 }
