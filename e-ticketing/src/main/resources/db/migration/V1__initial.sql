@@ -111,6 +111,16 @@ CREATE TABLE price_configs (
                                UNIQUE (ticket_type_id, residency)
 );
 
+
+--Ticket Policy
+CREATE TABLE ticket-policy (
+                             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                             validityDays INTEGER NOT NULL,
+                             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+);
+
 -- INVENTORIES
 CREATE TABLE inventories (
                              id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
