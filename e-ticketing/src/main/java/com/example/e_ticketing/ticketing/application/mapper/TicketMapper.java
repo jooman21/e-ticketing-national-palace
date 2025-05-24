@@ -20,7 +20,7 @@ public class TicketMapper {
         // TicketType info
         dto.setTicketTypeId(ticket.getTicketType().getId());
         dto.setTicketTypeName(ticket.getTicketType().getName());
-
+        dto.setTicketPolicyId(ticket.);
         // VisitSchedule info
         dto.setVisitScheduleId(ticket.getVisitSchedule().getId());
         dto.setVisitDate(ticket.getVisitSchedule().getDate());

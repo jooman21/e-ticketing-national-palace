@@ -15,6 +15,7 @@ import java.util.UUID;
 public class TicketDto {
     private UUID id;
     private UUID ticketTypeId;
+    private UUID ticketPolicyId;
     private String ticketTypeName;
 
     private UUID visitScheduleId;

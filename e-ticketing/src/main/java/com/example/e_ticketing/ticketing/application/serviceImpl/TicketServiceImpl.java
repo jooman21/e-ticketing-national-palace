@@ -3,10 +3,7 @@ package com.example.e_ticketing.ticketing.application.serviceImpl;
 import com.example.e_ticketing.ticketing.application.dto.TicketDto;
 import com.example.e_ticketing.ticketing.application.repository.*;
 import com.example.e_ticketing.ticketing.application.service.TicketService;
-import com.example.e_ticketing.ticketing.domain.entity.Ticket;
-import com.example.e_ticketing.ticketing.domain.entity.TicketType;
-import com.example.e_ticketing.ticketing.domain.entity.TimeSlot;
-import com.example.e_ticketing.ticketing.domain.entity.VisitSchedule;
+import com.example.e_ticketing.ticketing.domain.entity.*;
 import com.example.e_ticketing.ticketing.domain.valueobject.TicketStatus;
 import com.example.e_ticketing.ticketing.excpetion.*;
 import jakarta.transaction.Transactional;
@@ -23,6 +20,7 @@ public class TicketServiceImpl  implements TicketService {
     private final TimeSlotRepository timeSlotRepository;
     private final TicketTypeRepository ticketTypeRepository;
     private final QueueEntryRepository queueEntryRepository;
+    private final TicketPolicyRepository ticketPolicyRepository;
 
     @Transactional
     @Override
@@ -55,6 +53,11 @@ public class TicketServiceImpl  implements TicketService {
         TicketType ticketType = (TicketType) ticketTypeRepository.findById(ticketDto.getTicketTypeId())
                 .orElseThrow(() -> new InvalidTicketTypeException("Ticket type not found"));
 
+        // 🧠 Expiration logic
+        TicketPolicy policy = ticketPolicyRepository.findById(ticketDto.getTicketPolicyId())
+                .orElseThrow(() -> new RuntimeException("Ticket policy not found"));
+
+
         // 6. Create and save Ticket
         Ticket ticket = new Ticket();
         ticket.setTicketType(ticketType);
@@ -62,7 +65,7 @@ public class TicketServiceImpl  implements TicketService {
         ticket.setTimeSlot(timeSlot);
         ticket.setTicketStatus(TicketStatus.VALID); // assuming enum exists
         ticket.setIssuedAt(LocalDateTime.now());
-       // LocalDateTime expiresAt = issuedAt.plusDays(ticketPolicy.getValidityDays());
+        ticket.setExpiresAt(expiresAt);
 
         return ticketRepository.save(ticket);
     }
