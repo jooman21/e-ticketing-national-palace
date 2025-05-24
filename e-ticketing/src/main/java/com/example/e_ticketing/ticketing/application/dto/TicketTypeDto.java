@@ -21,6 +21,7 @@ public class TicketTypeDto {
     private String image;
     private Boolean isRecommended;
     private Boolean available;
+    private UUID ticketPolicyId;
     private List<VisitPlaceDto> visitPlaces = new ArrayList<>();
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

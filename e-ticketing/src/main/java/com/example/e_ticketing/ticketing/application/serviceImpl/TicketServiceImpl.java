@@ -1,6 +1,7 @@
 package com.example.e_ticketing.ticketing.application.serviceImpl;
 
 import com.example.e_ticketing.ticketing.application.dto.TicketDto;
+import com.example.e_ticketing.ticketing.application.mapper.TicketMapper;
 import com.example.e_ticketing.ticketing.application.repository.*;
 import com.example.e_ticketing.ticketing.application.service.TicketService;
 import com.example.e_ticketing.ticketing.domain.entity.*;
@@ -21,6 +22,7 @@ public class TicketServiceImpl  implements TicketService {
     private final TicketTypeRepository ticketTypeRepository;
     private final QueueEntryRepository queueEntryRepository;
     private final TicketPolicyRepository ticketPolicyRepository;
+    private final TicketMapper ticketMapper;
 
     @Transactional
     @Override
@@ -55,17 +57,11 @@ public class TicketServiceImpl  implements TicketService {
 
         // 🧠 Expiration logic
         TicketPolicy policy = ticketPolicyRepository.findById(ticketDto.getTicketPolicyId())
-                .orElseThrow(() -> new RuntimeException("Ticket policy not found"));
+                .orElseThrow(() -> new TicketPolicyNotFoundException("Ticket policy not found"));
 
 
-        // 6. Create and save Ticket
-        Ticket ticket = new Ticket();
-        ticket.setTicketType(ticketType);
-        ticket.setVisitSchedule(visitSchedule);
-        ticket.setTimeSlot(timeSlot);
-        ticket.setTicketStatus(TicketStatus.VALID); // assuming enum exists
-        ticket.setIssuedAt(LocalDateTime.now());
-        ticket.setExpiresAt(expiresAt);
+        // 5. Create Ticket
+        Ticket ticket = ticketMapper.MapTicketDtoToEntity(ticketDto, ticketType, visitSchedule, timeSlot, policy);
 
         return ticketRepository.save(ticket);
     }

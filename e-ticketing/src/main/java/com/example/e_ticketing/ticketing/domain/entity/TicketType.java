@@ -44,6 +44,8 @@ public class TicketType {
     @Builder.Default
     private List<VisitPlace> visitPlaces = new ArrayList<>();
 
+    @ManyToOne
+    private TicketPolicy ticketPolicy;
 
     @OneToMany(mappedBy = "ticketType")
     private List<PriceConfig> priceConfigs;

@@ -2,11 +2,9 @@ package com.example.e_ticketing.ticketing.application.mapper;
 
 import com.example.e_ticketing.ticketing.application.dto.TicketDto;
 import com.example.e_ticketing.ticketing.application.dto.TicketRequestDto;
-import com.example.e_ticketing.ticketing.domain.entity.Ticket;
-import com.example.e_ticketing.ticketing.domain.entity.TicketType;
-import com.example.e_ticketing.ticketing.domain.entity.TimeSlot;
-import com.example.e_ticketing.ticketing.domain.entity.VisitSchedule;
+import com.example.e_ticketing.ticketing.domain.entity.*;
 import com.example.e_ticketing.ticketing.domain.valueobject.TicketStatus;
+import com.example.e_ticketing.ticketing.excpetion.TicketPolicyNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -20,7 +18,10 @@ public class TicketMapper {
         // TicketType info
         dto.setTicketTypeId(ticket.getTicketType().getId());
         dto.setTicketTypeName(ticket.getTicketType().getName());
-        dto.setTicketPolicyId(ticket.);
+        // TicketPolicy ID (assuming it's fetched via TicketType → TicketPolicy)
+        if (ticket.getTicketType().getTicketPolicy() != null) {
+            dto.setTicketPolicyId(ticket.getTicketType().getTicketPolicy().getId());
+        }
         // VisitSchedule info
         dto.setVisitScheduleId(ticket.getVisitSchedule().getId());
         dto.setVisitDate(ticket.getVisitSchedule().getDate());
@@ -38,14 +39,24 @@ public class TicketMapper {
         return dto;
     }
 
-    public Ticket MapTicketDtoToEntity(TicketRequestDto requestDto, TicketType ticketType, VisitSchedule schedule, TimeSlot slot) {
+    public Ticket MapTicketDtoToEntity(TicketDto ticketDto, TicketType ticketType, VisitSchedule schedule, TimeSlot slot, TicketPolicy policy) {
         Ticket ticket = new Ticket();
         ticket.setTicketType(ticketType);
         ticket.setVisitSchedule(schedule);
         ticket.setTimeSlot(slot);
         ticket.setTicketStatus(TicketStatus.VALID);
         ticket.setIssuedAt(LocalDateTime.now());
-        ticket.setExpiresAt(schedule.getDate().atTime(slot.getEndTime()));
+        LocalDateTime issuedAt = LocalDateTime.now();
+        ticket.setIssuedAt(issuedAt);
+
+        if (policy != null && policy.getValidityDays() != null) {
+            LocalDateTime expiresAt = issuedAt.plusDays(policy.getValidityDays());
+            ticket.setExpiresAt(expiresAt);
+        } else {
+            // Handle the case where policy is missing (optional: throw or set a default expiration)
+            throw new TicketPolicyNotFoundException("Ticket policy or its validityDays must not be null");
+        }
+
         return ticket;
     }
 }

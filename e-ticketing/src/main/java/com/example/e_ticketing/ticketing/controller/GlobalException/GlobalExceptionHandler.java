@@ -88,4 +88,18 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+
+
+    @ExceptionHandler(TicketPolicyNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleTicketPolicyNotFoundException(TicketPolicyNotFoundException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+
+    @ExceptionHandler(TicketPolicyAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleTicketPolicyAlreadyExistsException(TicketPolicyAlreadyExistsException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
 }
