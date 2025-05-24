@@ -1,13 +1,16 @@
 package com.example.e_ticketing.ticketing.controller;
 
 import com.example.e_ticketing.ticketing.application.dto.MaxTicketRequest;
+import com.example.e_ticketing.ticketing.application.dto.TimeSlotAvailabilityDto;
 import com.example.e_ticketing.ticketing.application.dto.TimeslotDto;
 import com.example.e_ticketing.ticketing.application.service.TimeSlotService;
 import com.example.e_ticketing.ticketing.controller.GlobalResponse.GenericResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -38,6 +41,12 @@ public class TimeSotController {
                 slots
         );
 
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/availability")
+    public ResponseEntity<GenericResponse> getAvailableTimeSlots(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        List<TimeSlotAvailabilityDto> availability = timeSlotService.getAvailableTimeSlotsForDay(date);
+        GenericResponse response = new GenericResponse(true, "Time slot availability fetched.", availability);
         return ResponseEntity.ok(response);
     }
 

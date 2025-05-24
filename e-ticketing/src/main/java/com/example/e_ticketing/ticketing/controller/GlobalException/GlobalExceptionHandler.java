@@ -70,9 +70,22 @@ public class GlobalExceptionHandler {
     }
 
 
+
     @ExceptionHandler(InvalidTimeSlotException.class)
     public ResponseEntity<ErrorResponse> handleInvalidTimeSlotException(InvalidTimeSlotException ex) {
         ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(InvalidDateException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidDateException(InvalidDateException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ActiveTimeSlotNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleActiveTimeSlotNotFoundException(ActiveTimeSlotNotFoundException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 }

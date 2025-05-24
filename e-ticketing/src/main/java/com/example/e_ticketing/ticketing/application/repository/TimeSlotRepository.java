@@ -12,4 +12,6 @@ import java.util.UUID;
 public interface TimeSlotRepository extends JpaRepository<TimeSlot, UUID> {
 
     List<TimeSlot> findByIsActiveTrueOrderByStartTimeAsc();
+
+    List<TimeSlot> findAllByIsActiveTrue();
 }

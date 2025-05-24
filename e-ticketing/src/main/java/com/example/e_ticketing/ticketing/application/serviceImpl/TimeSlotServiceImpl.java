@@ -1,16 +1,21 @@
 package com.example.e_ticketing.ticketing.application.serviceImpl;
 
+import com.example.e_ticketing.ticketing.application.dto.TimeSlotAvailabilityDto;
 import com.example.e_ticketing.ticketing.application.dto.TimeslotDto;
 import com.example.e_ticketing.ticketing.application.mapper.TimeSlotMapper;
+import com.example.e_ticketing.ticketing.application.repository.QueueEntryRepository;
+import com.example.e_ticketing.ticketing.application.repository.TicketRepository;
 import com.example.e_ticketing.ticketing.application.repository.TimeSlotRepository;
 import com.example.e_ticketing.ticketing.application.service.TimeSlotService;
 import com.example.e_ticketing.ticketing.domain.entity.TimeSlot;
+import com.example.e_ticketing.ticketing.excpetion.ActiveTimeSlotNotFoundException;
+import com.example.e_ticketing.ticketing.excpetion.InvalidDateException;
 import com.example.e_ticketing.ticketing.excpetion.InvalidTimeSlotException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -22,6 +27,8 @@ import java.util.stream.Collectors;
 public class TimeSlotServiceImpl implements TimeSlotService {
     private final TimeSlotRepository timeSlotRepository;
     private final TimeSlotMapper timeSlotMapper;
+    private final QueueEntryRepository queueEntryRepository;
+    private final TicketRepository ticketRepository;
 
 
         private static final LocalTime OPEN_TIME = LocalTime.of(9, 0);   // 9:00 AM
@@ -61,6 +68,73 @@ public class TimeSlotServiceImpl implements TimeSlotService {
                 .stream()
                 .map(timeSlotMapper::MapTimeSlotEntityToTimeSlotDto)  // instance method ref
                 .collect(Collectors.toList());
+    }
+
+
+
+
+
+
+
+
+    /**
+     * Retrieves a list of available time slots for a specific date along with their availability status.
+     *
+     * This method performs the following steps:
+     * 1. Validates that the provided date is not null; otherwise, throws an InvalidDateException.
+     * 2. Fetches all active time slots from the repository. If no active time slots are found,
+     *    throws an ActiveTimeSlotNotFoundException.
+     * 3. For each active time slot:
+     *    - Counts the number of tickets already sold for that time slot on the given date.
+     *    - Counts the number of queue entries (e.g., people on a waiting list) for the same time slot and date.
+     *    - Calculates the total number of people (tickets + queue entries) using that time slot.
+     *    - Constructs a TimeSlotAvailabilityDto with:
+     *        - Time slot details (id, start time, end time, max tickets).
+     *        - Current usage count (currentTickets).
+     *        - Active status (from the entity).
+     *        - Availability status (computed dynamically as true if total usage is less than max tickets).
+     *
+     * Note:
+     * - `isAvailable` is **not stored** in the TimeSlot entity because it depends on runtime conditions
+     *   (number of bookings on a specific date) and must be computed dynamically.
+     * - `isActive` is a static attribute stored in the database, indicating if a time slot is enabled.
+     *
+     * @param date the date for which availability is to be checked
+     * @return list of TimeSlotAvailabilityDto containing availability information for each time slot
+     * @throws InvalidDateException if the input date is null
+     * @throws ActiveTimeSlotNotFoundException if no active time slots are configured
+     */
+
+
+
+
+    @Override
+    public List<TimeSlotAvailabilityDto> getAvailableTimeSlotsForDay(LocalDate date) {
+        if (date == null) {
+            throw new InvalidDateException("Date must be provided");
+        }
+
+        List<TimeSlot> timeSlots = timeSlotRepository.findAllByIsActiveTrue();
+
+        if (timeSlots.isEmpty()) {
+            throw new ActiveTimeSlotNotFoundException("No active time slots found");
+        }
+
+        return timeSlots.stream().map(slot -> {
+            int ticketCount = ticketRepository.countByTimeSlotAndVisitSchedule_Date(slot, date);
+            int queueCount = queueEntryRepository.countByTimeSlotAndVisitSchedule_Date(slot, date);
+            int total = ticketCount + queueCount;
+
+            TimeSlotAvailabilityDto dto = new TimeSlotAvailabilityDto();
+            dto.setId(slot.getId());
+            dto.setStartTime(slot.getStartTime());
+            dto.setEndTime(slot.getEndTime());
+            dto.setMaxTickets(slot.getMaxTickets());
+            dto.setCurrentTickets(total);
+            dto.setIsActive(slot.getIsActive());
+            dto.setIsAvailable(total < slot.getMaxTickets());
+            return dto;
+        }).collect(Collectors.toList());
     }
 
 
