@@ -14,4 +14,6 @@ public interface TimeSlotRepository extends JpaRepository<TimeSlot, UUID> {
     List<TimeSlot> findByIsActiveTrueOrderByStartTimeAsc();
 
     List<TimeSlot> findAllByIsActiveTrue();
+
+    List<TimeSlot> findAllByIsActiveTrueOrderByStartTime();
 }

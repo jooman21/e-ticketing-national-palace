@@ -62,6 +62,31 @@ public class TimeSlotServiceImpl implements TimeSlotService {
             return result;
         }
 
+
+    // 🔽 Add this method here
+    @Override
+    public TimeSlot findNextAvailableTimeSlot(LocalDate date, TimeSlot currentSlot) {
+        List<TimeSlot> slots = timeSlotRepository.findAllByIsActiveTrueOrderByStartTime();
+
+        boolean passedCurrent = false;
+        for (TimeSlot slot : slots) {
+            if (slot.getStartTime().equals(currentSlot.getStartTime())) {
+                passedCurrent = true;
+                continue;
+            }
+            if (passedCurrent) {
+                int count = ticketRepository.countByTimeSlotAndVisitSchedule_Date(slot, date);
+                int queueCount = queueEntryRepository.countByTimeSlotAndVisitSchedule_Date(slot, date);
+                if (count + queueCount < slot.getMaxTickets()) {
+                    return slot;
+                }
+            }
+        }
+
+        // Try next day
+        return findNextAvailableTimeSlot(date.plusDays(1), new TimeSlot()); // optionally handle base case to avoid infinite recursion
+    }
+
     @Override
     public List<TimeslotDto> getAllActiveTimeSlots() {
         return timeSlotRepository.findByIsActiveTrueOrderByStartTimeAsc()
