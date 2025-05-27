@@ -45,7 +45,7 @@ public class TicketTypeMapper {
                 .map(dtoPlace -> {
                     VisitPlace place = new VisitPlace();
                     place.setId(dtoPlace.getId());
-                    place.setName(dtoPlace.getName())
+                    place.setName(dtoPlace.getName());
                     return place;
                 })
                 .collect(Collectors.toList());
