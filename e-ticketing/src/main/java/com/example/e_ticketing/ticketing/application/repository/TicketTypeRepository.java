@@ -9,8 +9,8 @@ import java.util.UUID;
 
 
 @Repository
-public interface TicketTypeRepository extends JpaRepository<TicketType, Long> {
+public interface TicketTypeRepository extends JpaRepository<TicketType, UUID> {
     Optional<Object> findByName(String name);
 
-    Optional<Object> findById(UUID id);
+
 }

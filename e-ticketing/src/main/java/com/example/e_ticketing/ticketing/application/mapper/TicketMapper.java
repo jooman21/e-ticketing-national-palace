@@ -1,7 +1,9 @@
 package com.example.e_ticketing.ticketing.application.mapper;
 
+import com.example.e_ticketing.ticketing.application.dto.TicketBookingDto;
 import com.example.e_ticketing.ticketing.application.dto.TicketDto;
 import com.example.e_ticketing.ticketing.application.dto.TicketRequestDto;
+import com.example.e_ticketing.ticketing.application.dto.VisitorDto;
 import com.example.e_ticketing.ticketing.domain.entity.*;
 import com.example.e_ticketing.ticketing.domain.valueobject.TicketStatus;
 import com.example.e_ticketing.ticketing.excpetion.TicketPolicyNotFoundException;
@@ -38,25 +40,25 @@ public class TicketMapper {
 
         return dto;
     }
-
-    public Ticket MapTicketDtoToEntity(TicketDto ticketDto, TicketType ticketType, VisitSchedule schedule, TimeSlot slot, TicketPolicy policy) {
-        Ticket ticket = new Ticket();
-        ticket.setTicketType(ticketType);
-        ticket.setVisitSchedule(schedule);
-        ticket.setTimeSlot(slot);
-        ticket.setTicketStatus(TicketStatus.VALID);
-        ticket.setIssuedAt(LocalDateTime.now());
+    // Map from booking request + dependencies to Ticket entity
+    public Ticket mapBookingRequestToTicket(
+            TicketBookingDto ticketBookingDto,
+            TicketType ticketType,
+            VisitSchedule schedule,
+            TimeSlot slot,
+            TicketPolicy policy,
+            Visitor visitor
+    ) {
         LocalDateTime issuedAt = LocalDateTime.now();
-        ticket.setIssuedAt(issuedAt);
 
-        if (policy != null && policy.getValidityDays() != null) {
-            LocalDateTime expiresAt = issuedAt.plusDays(policy.getValidityDays());
-            ticket.setExpiresAt(expiresAt);
-        } else {
-            // Handle the case where policy is missing (optional: throw or set a default expiration)
-            throw new TicketPolicyNotFoundException("Ticket policy or its validityDays must not be null");
-        }
-
-        return ticket;
+        return Ticket.builder()
+                .ticketType(ticketType)
+                .visitSchedule(schedule)
+                .timeSlot(slot)
+                .ticketStatus(TicketStatus.VALID)
+                .issuedAt(issuedAt)
+                .expiresAt(issuedAt.plusDays(policy.getValidityDays()))
+                .visitor(visitor)
+                .build();
     }
 }

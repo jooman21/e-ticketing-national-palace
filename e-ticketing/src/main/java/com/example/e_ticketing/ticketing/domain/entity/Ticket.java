@@ -1,7 +1,7 @@
 package com.example.e_ticketing.ticketing.domain.entity;
 
 import com.example.e_ticketing.ticketing.domain.valueobject.TicketStatus;
-import com.example.e_ticketing.user.domain.entity.Visitor;
+import com.example.e_ticketing.ticketing.domain.entity.Visitor;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -24,7 +24,9 @@ public class Ticket {
     private UUID id;
 
     @ManyToOne
+    @JoinColumn(name = "visitor_id", nullable = false)
     private Visitor visitor;
+
 
     @ManyToOne
     @JoinColumn(name = "ticket_type_id")

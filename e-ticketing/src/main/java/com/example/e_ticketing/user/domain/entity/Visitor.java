@@ -7,24 +7,24 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name = "visitors")
-public class Visitor {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String fullName;
-
-    private String email;
-
-    private String phone;
-
-    @Enumerated(EnumType.STRING)
-    private Residency residency;
-
-    private LocalDateTime registeredAt;
-
-    @OneToMany(mappedBy = "visitor", cascade = CascadeType.ALL)
-    private List<Ticket> tickets;
-}
+//@Entity
+//@Table(name = "visitors")
+//public class Visitor {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+//
+//    private String fullName;
+//
+//    private String email;
+//
+//    private String phone;
+//
+//    @Enumerated(EnumType.STRING)
+//    private Residency residency;
+//
+//    private LocalDateTime registeredAt;
+//
+//    @OneToMany(mappedBy = "visitor", cascade = CascadeType.ALL)
+//    private List<Ticket> tickets;
+//}
