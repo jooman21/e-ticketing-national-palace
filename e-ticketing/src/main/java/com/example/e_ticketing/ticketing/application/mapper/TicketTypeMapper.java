@@ -34,7 +34,7 @@ public class TicketTypeMapper {
                 .ticketPolicyId(ticketType.getTicketPolicy().getId())
                 .available(ticketType.getAvailable())
                 .createdAt(ticketType.getCreatedAt())
-                .updatedAt(ticketType.getUpdatedAt()
+                .updatedAt(ticketType.getUpdatedAt())
                 .build();
     }
 
