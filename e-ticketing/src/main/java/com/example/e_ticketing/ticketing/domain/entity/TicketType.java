@@ -46,8 +46,9 @@ public class TicketType {
     @Builder.Default
     private List<VisitPlace> visitPlaces = new ArrayList<>();
 
-//    @ManyToOne
-//    private TicketPolicy ticketPolicy;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "ticket_policy_id")
+    private TicketPolicy ticketPolicy;
 
     @OneToMany(mappedBy = "ticketType")
     private List<PriceConfig> priceConfigs;

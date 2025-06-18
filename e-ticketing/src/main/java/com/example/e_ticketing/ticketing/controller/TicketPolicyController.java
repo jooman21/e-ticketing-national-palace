@@ -19,7 +19,7 @@ public class TicketPolicyController {
         return ResponseEntity.ok(ticketPolicyService.createPolicy(dto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<TicketPolicyDto> updatePolicy(@PathVariable UUID id,
                                                         @RequestBody TicketPolicyDto dto) {
         return ResponseEntity.ok(ticketPolicyService.updatePolicy(id, dto));
@@ -28,5 +28,11 @@ public class TicketPolicyController {
     @GetMapping("/{id}")
     public ResponseEntity<TicketPolicyDto> getPolicy(@PathVariable UUID id) {
         return ResponseEntity.ok(ticketPolicyService.getPolicy(id));
+    }
+
+    @DeleteMapping("/remove/{id}")
+    public ResponseEntity<Void> deletePolicy(@PathVariable UUID id) {
+        ticketPolicyService.deletePolicy(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -10,6 +10,7 @@ import com.example.e_ticketing.ticketing.excpetion.TicketPolicyNotFoundException
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -22,23 +23,19 @@ public class TicketPolicyServiceImpl implements TicketPolicyService {
 
     @Override
     public TicketPolicyDto createPolicy(TicketPolicyDto dto) {
-        // Check if the policy ID already exists
+        // Prevent duplicate creation if ID is supplied
         if (dto.getId() != null && ticketPolicyRepository.existsById(dto.getId())) {
             throw new TicketPolicyAlreadyExistsException("Ticket policy with this ID already exists");
         }
 
-        // Convert DTO to entity
+        // Map DTO to entity (do not manually set ID)
         TicketPolicy entity = ticketPolicyMapper.MapTicketPolicyDtoToTicketPolicyEntity(dto);
 
-        // Generate a new UUID if not set
-        if (entity.getId() == null) {
-            entity.setId(UUID.randomUUID());
-        }
-
-        // Save and return the mapped DTO
+        // Save and return DTO
         TicketPolicy saved = ticketPolicyRepository.save(entity);
         return ticketPolicyMapper.MapTicketEntityToTicketPolicyDto(saved);
     }
+
 
 
     @Override
@@ -49,6 +46,16 @@ public class TicketPolicyServiceImpl implements TicketPolicyService {
     }
 
     @Override
+    public List<TicketPolicyDto> getAllPolicies() {
+        List<TicketPolicy> policies = ticketPolicyRepository.findAll();
+
+        return policies.stream()
+                .map(ticketPolicyMapper::MapTicketEntityToTicketPolicyDto)
+                .toList();
+    }
+
+
+    @Override
     public TicketPolicyDto updatePolicy(UUID id, TicketPolicyDto dto) {
         TicketPolicy policy = ticketPolicyRepository.findById(id)
                 .orElseThrow(() -> new TicketPolicyNotFoundException("Ticket policy not found"));
@@ -56,5 +63,11 @@ public class TicketPolicyServiceImpl implements TicketPolicyService {
         return ticketPolicyMapper.MapTicketEntityToTicketPolicyDto(ticketPolicyRepository.save(policy));
     }
 
+    @Override
+    public void deletePolicy(UUID id) {
+        TicketPolicy policy = ticketPolicyRepository.findById(id)
+                .orElseThrow(() -> new TicketPolicyNotFoundException("Ticket policy not found"));
+        ticketPolicyRepository.delete(policy);
+    }
 
 }
