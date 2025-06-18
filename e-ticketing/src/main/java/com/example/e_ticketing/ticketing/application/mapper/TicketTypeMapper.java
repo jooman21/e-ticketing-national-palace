@@ -31,7 +31,7 @@ public class TicketTypeMapper {
                 .image(ticketType.getImage())
                 .visitPlaces(visitPlaceDtos)
                 .isRecommended(ticketType.getIsRecommended())
-                .ticketPolicyId(ticketType.getTicketPolicy().getId())
+                //.ticketPolicyId(ticketType.getTicketPolicy().getId())
                 .available(ticketType.getAvailable())
                 .createdAt(ticketType.getCreatedAt())
                 .updatedAt(ticketType.getUpdatedAt())

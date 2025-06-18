@@ -2,7 +2,9 @@ package com.example.e_ticketing.ticketing.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -44,14 +46,19 @@ public class TicketType {
     @Builder.Default
     private List<VisitPlace> visitPlaces = new ArrayList<>();
 
-    @ManyToOne
-    private TicketPolicy ticketPolicy;
+//    @ManyToOne
+//    private TicketPolicy ticketPolicy;
 
     @OneToMany(mappedBy = "ticketType")
     private List<PriceConfig> priceConfigs;
 
     @OneToMany(mappedBy = "ticketType")
     private List<Ticket> tickets;
+
+    @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 }

@@ -21,9 +21,9 @@ public class TicketMapper {
         dto.setTicketTypeId(ticket.getTicketType().getId());
         dto.setTicketTypeName(ticket.getTicketType().getName());
         // TicketPolicy ID (assuming it's fetched via TicketType → TicketPolicy)
-        if (ticket.getTicketType().getTicketPolicy() != null) {
-            dto.setTicketPolicyId(ticket.getTicketType().getTicketPolicy().getId());
-        }
+//        if (ticket.getTicketType().getTicketPolicy() != null) {
+//            dto.setTicketPolicyId(ticket.getTicketType().getTicketPolicy().getId());
+//        }
         // VisitSchedule info
         dto.setVisitScheduleId(ticket.getVisitSchedule().getId());
         dto.setVisitDate(ticket.getVisitSchedule().getDate());

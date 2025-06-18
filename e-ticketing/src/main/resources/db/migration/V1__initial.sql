@@ -21,9 +21,9 @@ CREATE TABLE ticket_types (
                               available BOOLEAN DEFAULT TRUE,
                               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                               updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                              CONSTRAINT fk_ticket_policy
-                                  FOREIGN KEY (ticket_policy_id)
-                                      REFERENCES ticket_policy(id)
+--                               CONSTRAINT fk_ticket_policy
+--                                   FOREIGN KEY (ticket_policy_id)
+--                                       REFERENCES ticket_policy(id)
 );
 
 
