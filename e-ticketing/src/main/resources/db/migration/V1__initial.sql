@@ -14,7 +14,7 @@ CREATE TYPE announcement_type as ENUM (' PARTIAL_AVAILABILITY' , 'TOTAL_CLOSURE'
 -- Ticket Types Table
 CREATE TABLE ticket_types (
                               id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-                              name VARCHAR(100) NOT NULL,
+                              name VARCHAR(100) NOT NULL UNIQUE,
                               description TEXT,
                               image TEXT,
                               is_recommended BOOLEAN DEFAULT FALSE,

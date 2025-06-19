@@ -4,6 +4,7 @@ package com.example.e_ticketing.ticketing.application.mapper;
 import com.example.e_ticketing.ticketing.application.dto.TicketTypeDto;
 
 import com.example.e_ticketing.ticketing.application.dto.VisitPlaceDto;
+import com.example.e_ticketing.ticketing.domain.entity.TicketPolicy;
 import com.example.e_ticketing.ticketing.domain.entity.TicketType;
 import com.example.e_ticketing.ticketing.domain.entity.VisitPlace;
 
@@ -31,14 +32,14 @@ public class TicketTypeMapper {
                 .image(ticketType.getImage())
                 .visitPlaces(visitPlaceDtos)
                 .isRecommended(ticketType.getIsRecommended())
-                //.ticketPolicyId(ticketType.getTicketPolicy().getId())
+                .ticketPolicyId(ticketType.getTicketPolicy() != null ? ticketType.getTicketPolicy().getId() : null)
                 .available(ticketType.getAvailable())
                 .createdAt(ticketType.getCreatedAt())
                 .updatedAt(ticketType.getUpdatedAt())
                 .build();
     }
 
-    public static TicketType MapTicketTypeDtoToTicketType(TicketTypeDto dto) {
+    public static TicketType MapTicketTypeDtoToTicketType(TicketTypeDto dto, TicketPolicy ticketPolicy) {
         // Converts the TicketTypeDto (received from the client) into a TicketType entity to save into the database.
         List<VisitPlace> visitPlaces = dto.getVisitPlaces()
                 .stream()
@@ -57,6 +58,8 @@ public class TicketTypeMapper {
         type.setImage(dto.getImage());
         type.setVisitPlaces(visitPlaces);
         type.setIsRecommended(dto.getIsRecommended());
+        // ✅ Set the mapped TicketPolicy
+        type.setTicketPolicy(ticketPolicy);
         type.setAvailable(dto.getAvailable());
         type.setCreatedAt(dto.getCreatedAt());
         type.setUpdatedAt(dto.getUpdatedAt());

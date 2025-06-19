@@ -2,15 +2,14 @@ package com.example.e_ticketing.ticketing.application.serviceImpl;
 import com.example.e_ticketing.ticketing.application.dto.TicketTypeDto;
 import com.example.e_ticketing.ticketing.application.dto.VisitPlaceDto;
 import com.example.e_ticketing.ticketing.application.mapper.TicketTypeMapper;
+import com.example.e_ticketing.ticketing.application.repository.TicketPolicyRepository;
 import com.example.e_ticketing.ticketing.application.repository.TicketTypeRepository;
 import com.example.e_ticketing.ticketing.application.repository.VisitPlaceRepository;
 import com.example.e_ticketing.ticketing.application.service.TicketTypeService;
+import com.example.e_ticketing.ticketing.domain.entity.TicketPolicy;
 import com.example.e_ticketing.ticketing.domain.entity.TicketType;
 import com.example.e_ticketing.ticketing.domain.entity.VisitPlace;
-import com.example.e_ticketing.ticketing.excpetion.InvalidTicketTypeException;
-import com.example.e_ticketing.ticketing.excpetion.TicketTypeAlreadyExistsException;
-import com.example.e_ticketing.ticketing.excpetion.TicketTypeDoesNotExistException;
-import com.example.e_ticketing.ticketing.excpetion.VisitPlaceDoesNotExistException;
+import com.example.e_ticketing.ticketing.excpetion.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -27,6 +27,7 @@ public class TicketTypeServiceImpl implements TicketTypeService {
 
     private final TicketTypeRepository ticketTypeRepository;
     private final VisitPlaceRepository visitPlaceRepository;
+    private final TicketPolicyRepository ticketPolicyRepository;
 
     @Override
     @Transactional
@@ -37,7 +38,7 @@ public class TicketTypeServiceImpl implements TicketTypeService {
             throw new TicketTypeAlreadyExistsException("Ticket Type '" + dto.getName() + "' already exists.");
         });
 
-        // Load the actual persisted VisitPlace entities
+        // Load actual persisted VisitPlace entities
         List<VisitPlace> persistedVisitPlaces = new ArrayList<>();
         for (VisitPlaceDto visitPlaceDto : dto.getVisitPlaces()) {
             VisitPlace persisted = (VisitPlace) visitPlaceRepository.findByName(visitPlaceDto.getName())
@@ -46,11 +47,17 @@ public class TicketTypeServiceImpl implements TicketTypeService {
             persistedVisitPlaces.add(persisted);
         }
 
-        // Set actual VisitPlace entities into a new TicketType instance (not into DTO)
-        TicketType entity = TicketTypeMapper.MapTicketTypeDtoToTicketType(dto);
+        // Load persisted TicketPolicy
+        TicketPolicy persistedTicketPolicy = ticketPolicyRepository.findById(dto.getTicketPolicyId())
+                .orElseThrow(() -> new TicketPolicyNotFoundException("Ticket Policy with ID " + dto.getTicketPolicyId() + " not found."));
+
+        // Map DTO to entity with policy
+        TicketType entity = TicketTypeMapper.MapTicketTypeDtoToTicketType(dto, persistedTicketPolicy);
+
+        // Override visit places with the fully fetched ones
         entity.setVisitPlaces(persistedVisitPlaces);
 
-        // Set timestamps and defaults
+        // Set timestamps and default values
         entity.setCreatedAt(LocalDateTime.now());
         entity.setUpdatedAt(LocalDateTime.now());
 
@@ -65,6 +72,7 @@ public class TicketTypeServiceImpl implements TicketTypeService {
         TicketType saved = ticketTypeRepository.save(entity);
         return TicketTypeMapper.MapTicketTypeToTicketTypeDto(saved);
     }
+
 
     @Override
     public List<TicketTypeDto> getAllTicketTypes() {
@@ -96,14 +104,24 @@ public class TicketTypeServiceImpl implements TicketTypeService {
 
     @Override
     public TicketTypeDto updateTicketType(UUID id, TicketTypeDto updatedDto) {
-        TicketType ticketType = (TicketType) ticketTypeRepository.findById(id)
+        TicketType ticketType = ticketTypeRepository.findById(id)
                 .orElseThrow(() -> new TicketTypeDoesNotExistException("Ticket type with ID " + id + " not found"));
 
-        // Optional: validate if needed
+        // Optional: validate fields of updatedDto
         validateTicketTypeDto(updatedDto);
 
-        if (updatedDto.getName() != null)
+
+        // Validate unique name if the name is being updated and changed
+        if (updatedDto.getName() != null && !updatedDto.getName().equals(ticketType.getName())) {
+            Optional<TicketType> existingWithName = ticketTypeRepository.findByName(updatedDto.getName());
+            System.out.println("Checking for existing ticket type with name: " + updatedDto.getName());
+            System.out.println("Found: " + existingWithName.isPresent());
+
+            if (existingWithName.isPresent() && !existingWithName.get().getId().equals(ticketType.getId())) {
+                throw new TicketTypeAlreadyExistsException("Ticket Type '" + updatedDto.getName() + "' already exists.");
+            }
             ticketType.setName(updatedDto.getName());
+        }
 
         if (updatedDto.getDescription() != null)
             ticketType.setDescription(updatedDto.getDescription());
@@ -117,6 +135,7 @@ public class TicketTypeServiceImpl implements TicketTypeService {
         if (updatedDto.getAvailable() != null)
             ticketType.setAvailable(updatedDto.getAvailable());
 
+        // Update VisitPlaces
         if (updatedDto.getVisitPlaces() != null) {
             List<VisitPlace> updatedVisitPlaces = new ArrayList<>();
             for (VisitPlaceDto visitPlaceDto : updatedDto.getVisitPlaces()) {
@@ -128,12 +147,20 @@ public class TicketTypeServiceImpl implements TicketTypeService {
             ticketType.setVisitPlaces(updatedVisitPlaces);
         }
 
+        // Update TicketPolicy
+        if (updatedDto.getTicketPolicyId() != null) {
+            TicketPolicy persistedTicketPolicy = ticketPolicyRepository.findById(updatedDto.getTicketPolicyId())
+                    .orElseThrow(() -> new RuntimeException("Ticket Policy with ID " + updatedDto.getTicketPolicyId() + " not found."));
+            ticketType.setTicketPolicy(persistedTicketPolicy);
+        }
 
+        // Set update timestamp
         ticketType.setUpdatedAt(LocalDateTime.now());
 
         TicketType saved = ticketTypeRepository.save(ticketType);
         return TicketTypeMapper.MapTicketTypeToTicketTypeDto(saved);
     }
+
 
 
     private void validateTicketTypeDto(TicketTypeDto dto) {
