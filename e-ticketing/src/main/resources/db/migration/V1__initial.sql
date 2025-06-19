@@ -5,6 +5,8 @@ CREATE TYPE residency AS ENUM ('LOCAL', 'INTERNATIONAL');
 CREATE TYPE currency AS ENUM ('ETB', 'USD', 'EURO'); -- extend if needed
 CREATE TYPE ticket_status AS ENUM ('PENDING', 'CONFIRMED', 'CANCELLED'); -- example statuses
 CREATE TYPE announcement_type as ENUM (' PARTIAL_AVAILABILITY' , 'TOTAL_CLOSURE');
+CREATE TYPE studentType as ENUM (' COLLEGE' , 'KG_TO_12');
+
 
 
 
@@ -118,6 +120,7 @@ CREATE TABLE price_configs (
                                id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                                ticket_type_id UUID REFERENCES ticket_types(id) ON DELETE CASCADE,
                                residency residency NOT NULL,
+                               studentType studentType NOT NULL,
                                currency currency NOT NULL,
                                price DOUBLE PRECISION NOT NULL,
                                active BOOLEAN DEFAULT TRUE,

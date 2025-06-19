@@ -2,6 +2,7 @@ package com.example.e_ticketing.ticketing.domain.entity;
 
 import com.example.e_ticketing.ticketing.domain.valueobject.Currency;
 import com.example.e_ticketing.ticketing.domain.valueobject.Residency;
+import com.example.e_ticketing.ticketing.domain.valueobject.StudentType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -29,6 +30,9 @@ public class PriceConfig {
 
     @Enumerated(EnumType.STRING)
     private Residency residency;
+
+    @Enumerated(EnumType.STRING)
+    private StudentType studentType;
 
     @Enumerated(EnumType.STRING)
     private Currency currency;
