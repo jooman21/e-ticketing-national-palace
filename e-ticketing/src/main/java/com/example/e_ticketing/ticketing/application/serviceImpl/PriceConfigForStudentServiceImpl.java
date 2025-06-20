@@ -1,6 +1,5 @@
 package com.example.e_ticketing.ticketing.application.serviceImpl;
 
-import com.example.e_ticketing.ticketing.application.dto.PriceConfigDto;
 import com.example.e_ticketing.ticketing.application.dto.PriceConfigForStudentDto;
 import com.example.e_ticketing.ticketing.application.mapper.PriceConfigForStudentMapper;
 import com.example.e_ticketing.ticketing.application.repository.PriceConfigRepository;
@@ -9,15 +8,18 @@ import com.example.e_ticketing.ticketing.application.service.PriceConfigForStude
 import com.example.e_ticketing.ticketing.domain.entity.PriceConfig;
 import com.example.e_ticketing.ticketing.domain.entity.TicketType;
 import com.example.e_ticketing.ticketing.domain.valueobject.Currency;
-import com.example.e_ticketing.ticketing.domain.valueobject.Residency;
 import com.example.e_ticketing.ticketing.domain.valueobject.StudentType;
 import com.example.e_ticketing.ticketing.excpetion.InvalidPriceConfigException;
 import com.example.e_ticketing.ticketing.excpetion.PriceConfigAlreadyExistsException;
+import com.example.e_ticketing.ticketing.excpetion.PriceConfigDoesNotFoundException;
 import com.example.e_ticketing.ticketing.excpetion.TicketTypeDoesNotExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,33 +28,70 @@ public class PriceConfigForStudentServiceImpl implements PriceConfigForStudentSe
     private final TicketTypeRepository ticketTypeRepository;
 
     @Override
-    public PriceConfigDto createPriceConfigForStudent(PriceConfigForStudentDto dto) {
+    public PriceConfigForStudentDto createPriceConfigForStudent(PriceConfigForStudentDto dto) {
         validatePriceConfigDto(dto);
 
-        TicketType ticketType = (TicketType) ticketTypeRepository.findByName(dto.getName())
-                .orElseThrow(() -> new TicketTypeDoesNotExistException(
-                        "Ticket Type '" + dto.getName() + "' not found"));
+        TicketType ticketType = getTicketTypeByName(dto.getName());
 
-        StudentType studentType = dto.getStudentType();
-
-        // Check for duplicate config
-        if (priceConfigRepository.existsByTicketTypeAndStudentType(ticketType, studentType)) {
-            throw new PriceConfigAlreadyExistsException("Price config for student already exists for this  ticket type '" +
-                    ticketType.getName() + "' and residency '" + studentType + "'");
+        if (priceConfigRepository.existsByTicketTypeAndStudentType(ticketType, dto.getStudentType())) {
+            throw new PriceConfigAlreadyExistsException(
+                    "Price config already exists for ticket type '" + ticketType.getName() + "' and student type '" + dto.getStudentType() + "'");
         }
 
-        dto.setCreatedAt(LocalDateTime.now());
-        dto.setUpdatedAt(LocalDateTime.now());
-        if (dto.getActive() == null) {
-            dto.setActive(false);
-        }
+        fillDefaults(dto);
 
-        PriceConfig entity = PriceConfigForStudentMapper.MapPriceConfigForStudentDtoToPriceConfigForStudent(dto, ticketType);
-        PriceConfig saved = priceConfigRepository.save(entity);
+        PriceConfig saved = priceConfigRepository.save(
+                PriceConfigForStudentMapper.MapPriceConfigForStudentDtoToPriceConfigForStudent(dto, ticketType)
+        );
 
         return PriceConfigForStudentMapper.MapPriceConfigForStudentToPriceConfigForStudentDto(saved);
     }
 
+    @Override
+    public List<PriceConfigForStudentDto> getAllPriceConfigs() {
+        return priceConfigRepository.findAll().stream()
+                .map(PriceConfigForStudentMapper::MapPriceConfigForStudentToPriceConfigForStudentDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public PriceConfigForStudentDto getPriceConfigForStudentById(UUID id) {
+        return PriceConfigForStudentMapper.MapPriceConfigForStudentToPriceConfigForStudentDto(getPriceConfigById(id));
+    }
+
+    @Override
+    public PriceConfigForStudentDto updatePriceConfig(UUID id, PriceConfigForStudentDto dto) {
+        validatePriceConfigDto(dto);
+
+        PriceConfig existing = getPriceConfigById(id);
+        TicketType ticketType = getTicketTypeByName(dto.getName());
+
+        existing.setCurrency(dto.getCurrency());
+        existing.setStudentType(dto.getStudentType());
+        existing.setPrice(dto.getPrice());
+        existing.setUpdatedAt(LocalDateTime.now());
+        existing.setTicketType(ticketType);
+        if (dto.getActive() == null) {
+            existing.setActive(true);
+        } else {
+            existing.setActive(dto.getActive());
+        }
+        existing.setUpdatedAt(LocalDateTime.now());
+        PriceConfig updated = priceConfigRepository.save(existing);
+        return PriceConfigForStudentMapper.MapPriceConfigForStudentToPriceConfigForStudentDto(updated);
+    }
+
+    @Override
+    public void deletePriceConfigForStudent(UUID id) {
+        PriceConfig config = getPriceConfigById(id);
+        config.setActive(false);
+        config.setUpdatedAt(LocalDateTime.now());
+        priceConfigRepository.save(config);
+    }
+
+    // ---------------------------
+    // 🔁 Reusable Private Methods
+    // ---------------------------
 
     private void validatePriceConfigDto(PriceConfigForStudentDto dto) {
         if (dto.getName() == null || dto.getName().trim().isEmpty()) {
@@ -67,7 +106,6 @@ public class PriceConfigForStudentServiceImpl implements PriceConfigForStudentSe
             throw new InvalidPriceConfigException("Student type must not be null.");
         }
 
-        // ✅ Enforce ETB for all student types
         if ((dto.getStudentType() == StudentType.KG_TO_12 || dto.getStudentType() == StudentType.COLLEGE)
                 && dto.getCurrency() != Currency.ETB) {
             throw new InvalidPriceConfigException("Student ticket types must use ETB currency only.");
@@ -78,5 +116,21 @@ public class PriceConfigForStudentServiceImpl implements PriceConfigForStudentSe
         }
     }
 
+    private TicketType getTicketTypeByName(String name) {
+        return ticketTypeRepository.findByName(name)
+                .orElseThrow(() -> new TicketTypeDoesNotExistException("Ticket Type '" + name + "' not found"));
+    }
 
+    private PriceConfig getPriceConfigById(UUID id) {
+        return priceConfigRepository.findById(id)
+                .orElseThrow(() -> new PriceConfigDoesNotFoundException("Price config with ID " + id + " not found."));
+    }
+
+    private void fillDefaults(PriceConfigForStudentDto dto) {
+        dto.setCreatedAt(LocalDateTime.now());
+        if (dto.getActive() == null) {
+            dto.setActive(true);
+        }
+    }
 }
+

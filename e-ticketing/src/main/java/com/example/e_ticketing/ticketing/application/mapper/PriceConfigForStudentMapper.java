@@ -7,11 +7,11 @@ import com.example.e_ticketing.ticketing.domain.entity.TicketType;
 
 public class PriceConfigForStudentMapper {
     //Converts the PriceConfig entity (from the DB) into a PriceConfigDto to send back to the client.
-    public static PriceConfigDto MapPriceConfigForStudentToPriceConfigForStudentDto(PriceConfig priceConfig) {
-        return PriceConfigDto.builder()
+    public static PriceConfigForStudentDto MapPriceConfigForStudentToPriceConfigForStudentDto(PriceConfig priceConfig) {
+        return PriceConfigForStudentDto.builder()
                 .id(priceConfig.getId())
                 .name(priceConfig.getTicketType() != null ? priceConfig.getTicketType().getName() : null)
-                .residency(priceConfig.getResidency())
+                .studentType(priceConfig.getStudentType())
                 .currency(priceConfig.getCurrency())
                 .price(priceConfig.getPrice())
                 .active(priceConfig.getActive())
