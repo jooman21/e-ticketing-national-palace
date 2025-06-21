@@ -14,18 +14,19 @@ import java.util.UUID;
 @Builder
 public class TicketDto {
     private UUID id;
+
     private UUID ticketTypeId;
-    private UUID ticketPolicyId;
     private String ticketTypeName;
 
     private UUID visitScheduleId;
-    private LocalDate visitDate;
-
     private UUID timeSlotId;
-    private LocalTime startTime;
-    private LocalTime endTime;
 
     private TicketStatus ticketStatus;
+
     private LocalDateTime issuedAt;
     private LocalDateTime expiresAt;
+
+    private String qrCode;
+
+    private VisitorDto visitor;
 }

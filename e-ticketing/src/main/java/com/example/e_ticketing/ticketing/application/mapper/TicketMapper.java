@@ -13,52 +13,37 @@ import java.time.LocalDateTime;
 
 @Component
 public class TicketMapper {
-    public TicketDto MapTicketEntityToTicketDto(Ticket ticket) {
-        TicketDto dto = new TicketDto();
-        dto.setId(ticket.getId());
 
-        // TicketType info
-        dto.setTicketTypeId(ticket.getTicketType().getId());
-        dto.setTicketTypeName(ticket.getTicketType().getName());
-        // TicketPolicy ID (assuming it's fetched via TicketType → TicketPolicy)
-//        if (ticket.getTicketType().getTicketPolicy() != null) {
-//            dto.setTicketPolicyId(ticket.getTicketType().getTicketPolicy().getId());
-//        }
-        // VisitSchedule info
-        dto.setVisitScheduleId(ticket.getVisitSchedule().getId());
-        dto.setVisitDate(ticket.getVisitSchedule().getDate());
+    public static TicketDto MapTicketEntityToTicketDto(Ticket ticket) {
+        if (ticket == null) return null;
 
-        // TimeSlot info
-        dto.setTimeSlotId(ticket.getTimeSlot().getId());
-        dto.setStartTime(ticket.getTimeSlot().getStartTime());
-        dto.setEndTime(ticket.getTimeSlot().getEndTime());
-
-        // Ticket status and time info
-        dto.setTicketStatus(ticket.getTicketStatus());
-        dto.setIssuedAt(ticket.getIssuedAt());
-        dto.setExpiresAt(ticket.getExpiresAt());
-
-        return dto;
+        return TicketDto.builder()
+                .id(ticket.getId())
+                .ticketTypeId(ticket.getTicketType().getId())
+                .ticketTypeName(ticket.getTicketType().getName())
+                .visitScheduleId(ticket.getVisitSchedule().getId())
+                .timeSlotId(ticket.getTimeSlot().getId())
+                .ticketStatus(ticket.getTicketStatus())
+                .issuedAt(ticket.getIssuedAt())
+                .expiresAt(ticket.getExpiresAt())
+                .qrCode(ticket.getQrCode())
+                .visitor(VisitorMapper.MapVisitorEntityToVisitorDto(ticket.getVisitor()))
+                .build();
     }
-    // Map from booking request + dependencies to Ticket entity
-    public Ticket mapBookingRequestToTicket(
-            TicketBookingDto ticketBookingDto,
-            TicketType ticketType,
-            VisitSchedule schedule,
-            TimeSlot slot,
-            TicketPolicy policy,
-            Visitor visitor
-    ) {
-        LocalDateTime issuedAt = LocalDateTime.now();
+
+    public static Ticket MapTicketDTOtoEntity(TicketDto dto, Visitor visitor, TicketType ticketType, VisitSchedule visitSchedule, TimeSlot timeSlot) {
+        if (dto == null) return null;
 
         return Ticket.builder()
                 .ticketType(ticketType)
-                .visitSchedule(schedule)
-                .timeSlot(slot)
-                .ticketStatus(TicketStatus.VALID)
-                .issuedAt(issuedAt)
-                .expiresAt(issuedAt.plusDays(policy.getValidityDays()))
                 .visitor(visitor)
+                .visitSchedule(visitSchedule)
+                .timeSlot(timeSlot)
+                .ticketStatus(dto.getTicketStatus())
+                .issuedAt(dto.getIssuedAt())
+                .expiresAt(dto.getExpiresAt())
+                .qrCode(dto.getQrCode())
                 .build();
     }
 }
+

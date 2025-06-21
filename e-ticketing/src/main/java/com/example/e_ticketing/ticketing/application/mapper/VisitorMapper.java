@@ -4,9 +4,11 @@ import com.example.e_ticketing.ticketing.application.dto.VisitorDto;
 import com.example.e_ticketing.ticketing.domain.entity.Visitor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class VisitorMapper {
-    public VisitorDto MapVisitorEntityToVisitorDto(Visitor visitor) {
+    public static VisitorDto  MapVisitorEntityToVisitorDto(Visitor visitor) {
         if (visitor == null) return null;
 
         return VisitorDto.builder()
@@ -21,18 +23,17 @@ public class VisitorMapper {
                 .build();
     }
 
-    public Visitor MapVisitorDtoToVisitorEntity(VisitorDto dto) {
+    public static Visitor VisitorDtoToVisitorEntity(VisitorDto dto) {
         if (dto == null) return null;
 
-        Visitor visitor = new Visitor();
-        visitor.setId(dto.getId());
-        visitor.setFullName(dto.getFullName());
-        visitor.setEmail(dto.getEmail());
-        visitor.setPhoneNumber(dto.getPhoneNumber());
-        visitor.setNationality(dto.getNationality());
-        visitor.setResidency(dto.getResidency());
-        visitor.setCreatedAt(dto.getCreatedAt());
-        visitor.setUpdatedAt(dto.getUpdatedAt());
-        return visitor;
+        return Visitor.builder()
+                .fullName(dto.getFullName())
+                .email(dto.getEmail())
+                .phoneNumber(dto.getPhoneNumber())
+                .nationality(dto.getNationality())
+                .residency(dto.getResidency())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
     }
 }
