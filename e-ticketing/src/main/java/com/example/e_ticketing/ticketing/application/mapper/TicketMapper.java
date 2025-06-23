@@ -1,15 +1,8 @@
 package com.example.e_ticketing.ticketing.application.mapper;
 
-import com.example.e_ticketing.ticketing.application.dto.TicketBookingDto;
 import com.example.e_ticketing.ticketing.application.dto.TicketDto;
-import com.example.e_ticketing.ticketing.application.dto.TicketRequestDto;
-import com.example.e_ticketing.ticketing.application.dto.VisitorDto;
 import com.example.e_ticketing.ticketing.domain.entity.*;
-import com.example.e_ticketing.ticketing.domain.valueobject.TicketStatus;
-import com.example.e_ticketing.ticketing.excpetion.TicketPolicyNotFoundException;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
 
 @Component
 public class TicketMapper {

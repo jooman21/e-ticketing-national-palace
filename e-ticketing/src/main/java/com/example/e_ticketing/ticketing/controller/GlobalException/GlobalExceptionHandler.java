@@ -108,4 +108,12 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
+
+
+
+    @ExceptionHandler(TicketNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleTicketNotFoundException(TicketNotFoundException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }
