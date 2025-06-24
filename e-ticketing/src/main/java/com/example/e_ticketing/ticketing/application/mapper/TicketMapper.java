@@ -14,7 +14,7 @@ public class TicketMapper {
                 .id(ticket.getId())
                 .ticketTypeId(ticket.getTicketType().getId())
                 .ticketTypeName(ticket.getTicketType().getName())
-                .visitScheduleId(ticket.getVisitSchedule().getId())
+                .visitDate(ticket.getVisitDate()) // ✅ now safe and direct
                 .timeSlotId(ticket.getTimeSlot().getId())
                 .ticketStatus(ticket.getTicketStatus())
                 .issuedAt(ticket.getIssuedAt())
@@ -30,8 +30,9 @@ public class TicketMapper {
         return Ticket.builder()
                 .ticketType(ticketType)
                 .visitor(visitor)
-                .visitSchedule(visitSchedule)
+                .visitSchedule(visitSchedule) // nullable
                 .timeSlot(timeSlot)
+                .visitDate(dto.getVisitDate()) // ✅ map directly
                 .ticketStatus(dto.getTicketStatus())
                 .issuedAt(dto.getIssuedAt())
                 .expiresAt(dto.getExpiresAt())
@@ -39,4 +40,3 @@ public class TicketMapper {
                 .build();
     }
 }
-

@@ -12,8 +12,10 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -32,25 +34,31 @@ public class TicketServiceImpl  implements TicketService {
 
     @Transactional
     @Override
-    public Ticket bookTicket(TicketDto ticketDto) {
+    public TicketDto bookTicket(TicketDto ticketDto) {
         // 1. Handle visitor (create or fetch existing)
         Visitor visitor = visitorService.handleVisitor(ticketDto.getVisitor());
 
-        // 2. Fetch visit schedule
-        VisitSchedule visitSchedule = visitScheduleRepository.findById(ticketDto.getVisitScheduleId())
-                .orElseThrow(() -> new VisitScheduleNotFoundException("Visit Schedule not found with ID: " + ticketDto.getVisitScheduleId()));
+        // 2. Fetch visit schedule if any (closure days are saved here)
+        Optional<VisitSchedule> visitScheduleOpt = visitScheduleRepository.findByDate(ticketDto.getVisitDate());
 
-        if (!visitSchedule.getIsOpen()) {
-            throw new InvalidBookingException("Tickets cannot be booked for a closed day.");
+        if (visitScheduleOpt.isPresent()) {
+            VisitSchedule visitSchedule = visitScheduleOpt.get();
+            if (!visitSchedule.getIsOpen()) {
+                throw new InvalidBookingException("Tickets cannot be booked for a closed day.");
+            }
+            // Proceed with visitSchedule for booking
         }
+        // else: no VisitSchedule means open day, so no exception and visitSchedule will be null
 
         // 3. Fetch time slot
         TimeSlot timeSlot = timeSlotRepository.findById(ticketDto.getTimeSlotId())
                 .orElseThrow(() -> new InvalidTimeSlotException("Time slot not found"));
 
         // 4. Validate capacity
-        int totalBooked = ticketRepository.countByTimeSlotAndVisitSchedule_Date(timeSlot, visitSchedule.getDate())
-                + queueEntryRepository.countByTimeSlotAndVisitSchedule_Date(timeSlot, visitSchedule.getDate());
+        LocalDate visitDate = ticketDto.getVisitDate();
+
+        int totalBooked = ticketRepository.countByTimeSlotAndVisitSchedule_Date(timeSlot, visitDate)
+                + queueEntryRepository.countByTimeSlotAndVisitSchedule_Date(timeSlot, visitDate);
 
         if (totalBooked >= timeSlot.getMaxTickets()) {
             throw new TimeSlotFullException("Selected time slot is fully booked.");
@@ -66,15 +74,28 @@ public class TicketServiceImpl  implements TicketService {
             throw new TicketPolicyNotFoundException("No ticket policy attached to ticket type.");
         }
 
-        // 7. Update DTO with issuedAt, expiresAt, ticket status
+        // 7. Update DTO
         ticketDto.setIssuedAt(LocalDateTime.now());
         ticketDto.setExpiresAt(LocalDateTime.now().plusDays(policy.getValidityDays()));
-        ticketDto.setTicketStatus(TicketStatus.PENDING); // default before payment
+        ticketDto.setTicketStatus(TicketStatus.PENDING);
 
-        // 8. Map to entity and save
+        // 8. Map to entity, pass visitSchedule or null
+        VisitSchedule visitSchedule = visitScheduleOpt.orElse(null);
+
         Ticket ticket = ticketMapper.MapTicketDTOtoEntity(ticketDto, visitor, ticketType, visitSchedule, timeSlot);
-        return ticketRepository.save(ticket);
+
+        // --- IMPORTANT: Set visitDate explicitly on Ticket entity ---
+        ticket.setVisitDate(visitDate);
+
+        Ticket saved = ticketRepository.save(ticket);
+
+        // 9. Return mapped DTO
+        return ticketMapper.MapTicketEntityToTicketDto(saved);
     }
+
+
+
+
 
     @Override
     public TicketDto getTicketById(UUID id) {
@@ -92,6 +113,12 @@ public class TicketServiceImpl  implements TicketService {
     }
 
 
-
+    @Override
+    public List<TicketDto> getTicketsByStatus(TicketStatus status) {
+        return ticketRepository.findByTicketStatus(status)
+                .stream()
+                .map(TicketMapper::MapTicketEntityToTicketDto)
+                .collect(Collectors.toList());
+}
 
 }

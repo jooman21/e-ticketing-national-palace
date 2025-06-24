@@ -98,6 +98,7 @@ CREATE TABLE tickets (
                          visit_schedule_id UUID REFERENCES visits_schedules(id) ON DELETE CASCADE,
                          time_slot_id UUID REFERENCES timeslots(id) ON DELETE CASCADE,
                          ticket_status ticket_status NOT NULL,
+                         visit_date DATE NOT NULL,
                          qr_code VARCHAR(255),
                          issued_at TIMESTAMP,
                          expires_at TIMESTAMP

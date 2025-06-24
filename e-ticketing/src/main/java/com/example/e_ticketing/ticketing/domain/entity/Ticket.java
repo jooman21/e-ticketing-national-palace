@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -35,6 +36,9 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "visit_schedule_id")
     private VisitSchedule visitSchedule;
+
+    @Column(nullable = false)
+    private LocalDate visitDate;
 
     @ManyToOne
     @JoinColumn(name = "time_slot_id")

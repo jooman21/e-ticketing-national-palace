@@ -24,6 +24,7 @@ public class VisitSchedule {
     @Column(updatable = false, nullable = false)
     private UUID id;
 
+    @Column(nullable = false)
     private LocalDate date;
 
     private Boolean isOpen = true;

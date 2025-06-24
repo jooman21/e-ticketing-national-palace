@@ -18,7 +18,8 @@ public class TicketDto {
     private UUID ticketTypeId;
     private String ticketTypeName;
 
-    private UUID visitScheduleId;
+    private LocalDate visitDate;
+
     private UUID timeSlotId;
 
     private TicketStatus ticketStatus;

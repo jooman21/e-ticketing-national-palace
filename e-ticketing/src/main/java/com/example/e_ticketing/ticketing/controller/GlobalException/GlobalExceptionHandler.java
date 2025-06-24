@@ -109,6 +109,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(InvalidBookingException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidBookingException(InvalidBookingException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
 
 
     @ExceptionHandler(TicketNotFoundException.class)
