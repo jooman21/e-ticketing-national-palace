@@ -56,7 +56,8 @@ public class TicketServiceImpl  implements TicketService {
         // 4. Validate capacity
         LocalDate visitDate = ticketDto.getVisitDate();
 
-        int totalBooked = ticketRepository.countByTimeSlotAndVisitDate(timeSlot, visitDate)
+        int totalBooked = ticketRepository.countByTimeSlotAndVisitDateAndTicketStatus(
+                timeSlot, visitDate, TicketStatus.VALID)
                 + queueEntryRepository.countByTimeSlotAndVisitSchedule_Date(timeSlot, visitDate);
 
         if (totalBooked >= timeSlot.getMaxTickets()) {

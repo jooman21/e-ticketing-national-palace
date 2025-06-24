@@ -8,6 +8,7 @@ import com.example.e_ticketing.ticketing.application.repository.TicketRepository
 import com.example.e_ticketing.ticketing.application.repository.TimeSlotRepository;
 import com.example.e_ticketing.ticketing.application.service.TimeSlotService;
 import com.example.e_ticketing.ticketing.domain.entity.TimeSlot;
+import com.example.e_ticketing.ticketing.domain.valueobject.TicketStatus;
 import com.example.e_ticketing.ticketing.excpetion.ActiveTimeSlotNotFoundException;
 import com.example.e_ticketing.ticketing.excpetion.InvalidDateException;
 import com.example.e_ticketing.ticketing.excpetion.InvalidTimeSlotException;
@@ -75,7 +76,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
                 continue;
             }
             if (passedCurrent) {
-                int count = ticketRepository.countByTimeSlotAndVisitDate(slot, date);
+                int count = ticketRepository.countByTimeSlotAndVisitDateAndTicketStatus(slot, date, TicketStatus.VALID);
                 int queueCount = queueEntryRepository.countByTimeSlotAndVisitSchedule_Date(slot, date);
                 if (count + queueCount < slot.getMaxTickets()) {
                     return slot;
@@ -146,7 +147,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
         }
 
         return timeSlots.stream().map(slot -> {
-            int ticketCount = ticketRepository.countByTimeSlotAndVisitDate(slot, date);
+            int ticketCount =  ticketRepository.countByTimeSlotAndVisitDateAndTicketStatus(slot, date, TicketStatus.VALID);
             int queueCount = queueEntryRepository.countByTimeSlotAndVisitSchedule_Date(slot, date);
             int total = ticketCount + queueCount;
 

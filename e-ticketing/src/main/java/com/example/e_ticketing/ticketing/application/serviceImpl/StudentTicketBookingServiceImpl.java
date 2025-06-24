@@ -27,7 +27,6 @@ public class StudentTicketBookingServiceImpl implements StudentBookingService {
     private final TimeSlotRepository timeSlotRepository;
     private final TicketTypeRepository ticketTypeRepository;
     private final PriceConfigRepository priceConfigRepository;
-    private final TicketMapper ticketMapper;
     @Transactional
     @Override
     public TicketGroupBookingResponse bookStudentGroupTicket(StudentGroupBookingDto dto) {
@@ -45,7 +44,9 @@ public class StudentTicketBookingServiceImpl implements StudentBookingService {
         TimeSlot slot = timeSlotRepository.findById(dto.getTimeSlotId())
                 .orElseThrow(() -> new InvalidTimeSlotException("Time slot not found"));
 
-        int currentBookings = ticketRepository.countByTimeSlotAndVisitDate(slot, dto.getVisitDate());
+        int currentBookings = ticketRepository.countByTimeSlotAndVisitDateAndTicketStatus(
+                slot, dto.getVisitDate(), TicketStatus.VALID);
+
         if (currentBookings + dto.getQuantity() > slot.getMaxTickets()) {
             throw new TimeSlotFullException("Not enough capacity for the selected time slot.");
         }
