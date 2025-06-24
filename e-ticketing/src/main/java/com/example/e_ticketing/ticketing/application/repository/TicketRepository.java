@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, UUID> {
-    int countByTimeSlotAndVisitSchedule_Date(TimeSlot slot, LocalDate date);
+    int countByTimeSlotAndVisitDate(TimeSlot slot, LocalDate visitDate);
 
     List<Ticket> findByTicketStatus(TicketStatus status);
 }

@@ -33,9 +33,9 @@ public class Ticket {
     @JoinColumn(name = "ticket_type_id")
     private TicketType ticketType;
 
-    @ManyToOne
-    @JoinColumn(name = "visit_schedule_id")
-    private VisitSchedule visitSchedule;
+//    @ManyToOne
+//    @JoinColumn(name = "visit_schedule_id")
+//    private VisitSchedule visitSchedule;
 
     @Column(nullable = false)
     private LocalDate visitDate;

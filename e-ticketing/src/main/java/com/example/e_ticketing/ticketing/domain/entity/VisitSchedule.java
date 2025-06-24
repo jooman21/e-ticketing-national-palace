@@ -30,8 +30,8 @@ public class VisitSchedule {
     private Boolean isOpen = true;
 
     private String reasonForClosing;
-    @OneToMany(mappedBy = "visitSchedule")
-    private List<Ticket> tickets;
+//    @OneToMany(mappedBy = "visitSchedule")
+//    private List<Ticket> tickets;
 
     @OneToMany(mappedBy = "visitSchedule")
     private List<QueueEntry> queueEntries;

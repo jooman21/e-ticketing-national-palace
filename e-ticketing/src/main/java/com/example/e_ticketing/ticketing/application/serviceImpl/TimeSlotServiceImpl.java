@@ -75,7 +75,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
                 continue;
             }
             if (passedCurrent) {
-                int count = ticketRepository.countByTimeSlotAndVisitSchedule_Date(slot, date);
+                int count = ticketRepository.countByTimeSlotAndVisitDate(slot, date);
                 int queueCount = queueEntryRepository.countByTimeSlotAndVisitSchedule_Date(slot, date);
                 if (count + queueCount < slot.getMaxTickets()) {
                     return slot;
@@ -146,7 +146,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
         }
 
         return timeSlots.stream().map(slot -> {
-            int ticketCount = ticketRepository.countByTimeSlotAndVisitSchedule_Date(slot, date);
+            int ticketCount = ticketRepository.countByTimeSlotAndVisitDate(slot, date);
             int queueCount = queueEntryRepository.countByTimeSlotAndVisitSchedule_Date(slot, date);
             int total = ticketCount + queueCount;
 

@@ -28,7 +28,6 @@ public class TicketServiceImpl  implements TicketService {
     private final TimeSlotRepository timeSlotRepository;
     private final TicketTypeRepository ticketTypeRepository;
     private final QueueEntryRepository queueEntryRepository;
-    private final TicketPolicyRepository ticketPolicyRepository;
     private final TicketMapper ticketMapper;
 
 
@@ -57,7 +56,7 @@ public class TicketServiceImpl  implements TicketService {
         // 4. Validate capacity
         LocalDate visitDate = ticketDto.getVisitDate();
 
-        int totalBooked = ticketRepository.countByTimeSlotAndVisitSchedule_Date(timeSlot, visitDate)
+        int totalBooked = ticketRepository.countByTimeSlotAndVisitDate(timeSlot, visitDate)
                 + queueEntryRepository.countByTimeSlotAndVisitSchedule_Date(timeSlot, visitDate);
 
         if (totalBooked >= timeSlot.getMaxTickets()) {

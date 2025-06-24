@@ -30,7 +30,7 @@ public class TicketMapper {
         return Ticket.builder()
                 .ticketType(ticketType)
                 .visitor(visitor)
-                .visitSchedule(visitSchedule) // nullable
+//                .visitSchedule(visitSchedule) // nullable
                 .timeSlot(timeSlot)
                 .visitDate(dto.getVisitDate()) // ✅ map directly
                 .ticketStatus(dto.getTicketStatus())

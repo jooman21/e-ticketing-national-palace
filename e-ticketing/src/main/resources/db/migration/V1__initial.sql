@@ -95,7 +95,7 @@ CREATE TABLE tickets (
                          id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                          visitor_id UUID REFERENCES visitors(id) ON DELETE CASCADE,
                          ticket_type_id UUID REFERENCES ticket_types(id) ON DELETE CASCADE,
-                         visit_schedule_id UUID REFERENCES visits_schedules(id) ON DELETE CASCADE,
+--                          visit_schedule_id UUID REFERENCES visits_schedules(id) ON DELETE CASCADE,
                          time_slot_id UUID REFERENCES timeslots(id) ON DELETE CASCADE,
                          ticket_status ticket_status NOT NULL,
                          visit_date DATE NOT NULL,
