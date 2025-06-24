@@ -106,7 +106,7 @@ CREATE TABLE tickets (
 CREATE TABLE visitors (
                           id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                           full_name VARCHAR(100) NOT NULL,
-                          email VARCHAR(100) NOT NULL,
+                          email VARCHAR(100) ,
                           phone_number VARCHAR(20),
                           nationality VARCHAR(100),
                           residency VARCHAR(20) NOT NULL, -- e.g., 'LOCAL' or 'INTERNATIONAL'

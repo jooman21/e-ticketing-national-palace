@@ -7,6 +7,7 @@ import com.example.e_ticketing.ticketing.domain.valueobject.StudentType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -16,4 +17,6 @@ public interface PriceConfigRepository extends JpaRepository<PriceConfig, UUID> 
     boolean existsByTicketTypeAndResidency(TicketType ticketType, Residency residency);
 
     boolean existsByTicketTypeAndStudentType(TicketType ticketType, StudentType studentType);
+
+    Optional<PriceConfig> findByTicketTypeAndStudentType(TicketType type, StudentType studentType);
 }
