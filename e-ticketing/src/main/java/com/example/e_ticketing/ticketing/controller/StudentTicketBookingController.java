@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudentTicketBookingController {
     private final StudentBookingService studentBookingService;
 
-    @PostMapping("/book-group")
+    @PostMapping("/student-group")
     public ResponseEntity<?> bookStudentGroupTicket(
             @RequestBody StudentGroupBookingDto bookingDto) {
         try {

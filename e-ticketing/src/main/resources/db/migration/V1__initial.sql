@@ -93,7 +93,7 @@ CREATE TABLE visit_schedule_place_status (
 
 CREATE TABLE tickets (
                          id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-                         visitor_id UUID REFERENCES visitors(id) ON DELETE CASCADE,
+                         visitor_id UUID NULL REFERENCES visitors(id) ON DELETE CASCADE,
                          ticket_type_id UUID REFERENCES ticket_types(id) ON DELETE CASCADE,
 --                          visit_schedule_id UUID REFERENCES visits_schedules(id) ON DELETE CASCADE,
                          time_slot_id UUID REFERENCES timeslots(id) ON DELETE CASCADE,
@@ -106,7 +106,7 @@ CREATE TABLE tickets (
 CREATE TABLE visitors (
                           id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                           full_name VARCHAR(100) NOT NULL,
-                          email VARCHAR(100) ,
+                          email VARCHAR(100)  NOT NULL,
                           phone_number VARCHAR(20),
                           nationality VARCHAR(100),
                           residency VARCHAR(20) NOT NULL, -- e.g., 'LOCAL' or 'INTERNATIONAL'

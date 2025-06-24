@@ -24,8 +24,8 @@ public class Ticket {
     @Column(updatable = false, nullable = false)
     private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name = "visitor_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "visitor_id", nullable = true) // ✅ allow null in DB
     private Visitor visitor;
 
 

@@ -8,10 +8,7 @@ import com.example.e_ticketing.ticketing.application.service.StudentBookingServi
 import com.example.e_ticketing.ticketing.application.service.VisitorService;
 import com.example.e_ticketing.ticketing.domain.entity.*;
 import com.example.e_ticketing.ticketing.domain.valueobject.TicketStatus;
-import com.example.e_ticketing.ticketing.excpetion.InvalidBookingException;
-import com.example.e_ticketing.ticketing.excpetion.InvalidTicketTypeException;
-import com.example.e_ticketing.ticketing.excpetion.InvalidTimeSlotException;
-import com.example.e_ticketing.ticketing.excpetion.TimeSlotFullException;
+import com.example.e_ticketing.ticketing.excpetion.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +22,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class StudentTicketBookingServiceImpl implements StudentBookingService {
-    private final VisitorService visitorService;
     private final TicketRepository ticketRepository;
     private final VisitScheduleRepository visitScheduleRepository;
     private final TimeSlotRepository timeSlotRepository;
@@ -57,7 +53,7 @@ public class StudentTicketBookingServiceImpl implements StudentBookingService {
         // 4. Get matching price config
         PriceConfig priceConfig = priceConfigRepository
                 .findByTicketTypeAndStudentType(ticketType, dto.getStudentType())
-                .orElseThrow(() -> new RuntimeException("Price config not found for this student type."));
+                .orElseThrow(() -> new PriceConfigDoesNotFoundException("Price config not found for this student type."));
 
         BigDecimal totalPrice = BigDecimal.valueOf(priceConfig.getPrice())
                 .multiply(BigDecimal.valueOf(dto.getQuantity()));
@@ -67,15 +63,9 @@ public class StudentTicketBookingServiceImpl implements StudentBookingService {
         List<Ticket> tickets = new ArrayList<>();
 
         for (int i = 0; i < dto.getQuantity(); i++) {
-            Visitor visitor = visitorService.handleVisitor(dto.getVisitors() != null && i < dto.getVisitors().size()
-                    ? dto.getVisitors().get(i)
-                    : null); // Optional if you want to track individual students
-
             Ticket ticket = Ticket.builder()
                     .ticketType(ticketType)
-                    .visitor(visitor)
                     .visitDate(dto.getVisitDate())
-//                    .visitSchedule(visitScheduleOpt.orElse(null))
                     .timeSlot(slot)
                     .ticketStatus(TicketStatus.PENDING)
                     .issuedAt(LocalDateTime.now())

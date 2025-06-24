@@ -18,6 +18,4 @@ public class StudentGroupBookingDto {
     private UUID timeSlotId;
     private StudentType studentType;
     private int quantity;                 // Number of students
-
-    private List<VisitorDto> visitors;
 }
