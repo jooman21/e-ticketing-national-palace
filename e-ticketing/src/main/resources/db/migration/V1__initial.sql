@@ -18,7 +18,6 @@ CREATE TABLE ticket_types (
                               id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                               name VARCHAR(100) NOT NULL UNIQUE,
                               description TEXT,
-                              image TEXT,
                               is_recommended BOOLEAN DEFAULT FALSE,
                               available BOOLEAN DEFAULT TRUE,
                               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

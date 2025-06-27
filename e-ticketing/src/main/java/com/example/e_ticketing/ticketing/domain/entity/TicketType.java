@@ -31,8 +31,7 @@ public class TicketType {
     @Builder.Default
     private Boolean available = true;
 
-    @Column(name = "image", columnDefinition = "TEXT")
-    private String image;
+
 
     @Builder.Default
     private Boolean isRecommended = false;

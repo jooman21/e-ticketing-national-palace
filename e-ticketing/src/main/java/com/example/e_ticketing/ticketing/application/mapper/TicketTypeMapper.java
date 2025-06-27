@@ -29,7 +29,6 @@ public class TicketTypeMapper {
                 .id(ticketType.getId())
                 .name(ticketType.getName())
                 .description(ticketType.getDescription())
-                .image(ticketType.getImage())
                 .visitPlaces(visitPlaceDtos)
                 .isRecommended(ticketType.getIsRecommended())
                 .ticketPolicyId(ticketType.getTicketPolicy() != null ? ticketType.getTicketPolicy().getId() : null)
@@ -55,7 +54,6 @@ public class TicketTypeMapper {
         type.setId(dto.getId());
         type.setName(dto.getName());
         type.setDescription(dto.getDescription());
-        type.setImage(dto.getImage());
         type.setVisitPlaces(visitPlaces);
         type.setIsRecommended(dto.getIsRecommended());
         // ✅ Set the mapped TicketPolicy

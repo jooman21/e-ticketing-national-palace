@@ -129,8 +129,7 @@ public class TicketTypeServiceImpl implements TicketTypeService {
         if (updatedDto.getDescription() != null)
             ticketType.setDescription(updatedDto.getDescription());
 
-        if (updatedDto.getImage() != null)
-            ticketType.setImage(updatedDto.getImage());
+
 
         if (updatedDto.getIsRecommended() != null)
             ticketType.setIsRecommended(updatedDto.getIsRecommended());

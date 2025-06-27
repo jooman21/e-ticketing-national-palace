@@ -18,7 +18,6 @@ public class TicketTypeDto {
     private UUID id;
     private String name;
     private String description;
-    private String image;
     private Boolean isRecommended;
     private Boolean available;
     private UUID ticketPolicyId;
