@@ -5,6 +5,7 @@ import com.example.e_ticketing.ticketing.application.dto.TimeSlotAvailabilityDto
 import com.example.e_ticketing.ticketing.application.dto.TimeslotDto;
 import com.example.e_ticketing.ticketing.application.service.TimeSlotService;
 import com.example.e_ticketing.ticketing.controller.GlobalResponse.GenericResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class TimeSotController {
     private final TimeSlotService timeSlotService;
 
     @PostMapping("/daily")
-    public ResponseEntity<GenericResponse> createDailyTimeSlots(@RequestBody MaxTicketRequest request) {
+    public ResponseEntity<GenericResponse> createDailyTimeSlots(@Valid  @RequestBody MaxTicketRequest request) {
         List<TimeslotDto> slots = timeSlotService.createDailyTimeSlots(request.getMaxTickets());
 
         GenericResponse response = new GenericResponse(
@@ -44,7 +45,7 @@ public class TimeSotController {
         return ResponseEntity.ok(response);
     }
     @GetMapping("/availability")
-    public ResponseEntity<GenericResponse> getAvailableTimeSlots(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public ResponseEntity<GenericResponse> getAvailableTimeSlots(@RequestParam @Valid  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         List<TimeSlotAvailabilityDto> availability = timeSlotService.getAvailableTimeSlotsForDay(date);
         GenericResponse response = new GenericResponse(true, "Time slot availability fetched.", availability);
         return ResponseEntity.ok(response);

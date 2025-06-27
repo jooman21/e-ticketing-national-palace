@@ -6,6 +6,7 @@ import com.example.e_ticketing.ticketing.application.service.TicketTypeService;
 import com.example.e_ticketing.ticketing.application.service.VisitPlaceService;
 import com.example.e_ticketing.ticketing.controller.GlobalResponse.GenericResponse;
 import com.example.e_ticketing.ticketing.domain.entity.VisitPlace;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class VisitPlaceController {
     private final VisitPlaceService visitPlaceService;
 
     @PostMapping("/batch")
-    public ResponseEntity<GenericResponse> createVisitPlaces(@RequestBody List<VisitPlaceDto> visitPlaceDtos) {
+    public ResponseEntity<GenericResponse> createVisitPlaces(@Valid  @RequestBody List<VisitPlaceDto> visitPlaceDtos) {
         List<VisitPlaceDto> saved = visitPlaceService.createVisitPlaces(visitPlaceDtos);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -30,7 +31,7 @@ public class VisitPlaceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GenericResponse<VisitPlaceDto>> getVisitPlaceById(@PathVariable UUID id) {
+    public ResponseEntity<GenericResponse<VisitPlaceDto>> getVisitPlaceById( @PathVariable @Valid UUID id) {
         VisitPlaceDto dto = visitPlaceService.getVisitPlaceById(id);
         return ResponseEntity.ok(new GenericResponse<>(true, "Visit place fetched successfully.", dto));
     }
@@ -42,15 +43,16 @@ public class VisitPlaceController {
     }
     @PatchMapping("/{id}")
     public ResponseEntity<GenericResponse<VisitPlaceDto>> updateVisitPlace(
+
             @PathVariable UUID id,
-            @RequestBody VisitPlaceDto updatedDto) {
+            @RequestBody @Valid VisitPlaceDto updatedDto) {
 
         VisitPlaceDto visitPlace = visitPlaceService.updateVisitPlace(id, updatedDto);
         return ResponseEntity.ok(new GenericResponse<>(true, "Visit place updated successfully.", visitPlace));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GenericResponse<Void>> deleteVisitPlace(@PathVariable UUID id) {
+    public ResponseEntity<GenericResponse<Void>> deleteVisitPlace(@PathVariable @Valid  UUID id) {
         visitPlaceService.deleteVisitPlace(id);
         return ResponseEntity.ok(new GenericResponse<>(true, "Visit place deleted successfully.", null));
     }

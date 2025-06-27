@@ -3,6 +3,7 @@ package com.example.e_ticketing.ticketing.controller;
 import com.example.e_ticketing.ticketing.application.dto.TicketTypeDto;
 import com.example.e_ticketing.ticketing.application.service.TicketTypeService;
 import com.example.e_ticketing.ticketing.controller.GlobalResponse.GenericResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import java.util.UUID;
 public class TicketTypeController {
     private final TicketTypeService ticketTypeService;
     @PostMapping()
-    public ResponseEntity<GenericResponse> createTicketType(@RequestBody TicketTypeDto ticketTypeDto) {
+    public ResponseEntity<GenericResponse> createTicketType(@Valid  @RequestBody TicketTypeDto ticketTypeDto) {
         ticketTypeService.createTicketType(ticketTypeDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -33,7 +34,7 @@ public class TicketTypeController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<GenericResponse<TicketTypeDto>> getTicketTypeById(@PathVariable UUID id) {
+    public ResponseEntity<GenericResponse<TicketTypeDto>> getTicketTypeById(@PathVariable @Valid  UUID id) {
         TicketTypeDto dto = ticketTypeService.getTicketTypeById(id);
         return ResponseEntity.ok(new GenericResponse<>(true, "Ticket type fetched successfully.", dto));
     }
@@ -41,6 +42,7 @@ public class TicketTypeController {
     @PatchMapping("/{id}")
     public ResponseEntity<GenericResponse<TicketTypeDto>> updateTicketType(
             @PathVariable UUID id,
+            @Valid
             @RequestBody TicketTypeDto updatedDto) {
 
         TicketTypeDto dto = ticketTypeService.updateTicketType(id, updatedDto);
@@ -51,7 +53,7 @@ public class TicketTypeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GenericResponse<Void>> deactivateTicketType(@PathVariable UUID id) {
+    public ResponseEntity<GenericResponse<Void>> deactivateTicketType( @PathVariable @Valid UUID id) {
         ticketTypeService.deactivateTicketType(id);
         return ResponseEntity.ok(new GenericResponse<>(true, "Ticket type deactivated successfully.", null));
     }

@@ -9,6 +9,7 @@ import com.example.e_ticketing.ticketing.excpetion.InvalidBookingException;
 import com.example.e_ticketing.ticketing.excpetion.InvalidTicketTypeException;
 import com.example.e_ticketing.ticketing.excpetion.InvalidTimeSlotException;
 import com.example.e_ticketing.ticketing.excpetion.TimeSlotFullException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class StudentTicketBookingController {
     private final StudentBookingService studentBookingService;
 
     @PostMapping("/student-group")
-    public ResponseEntity<?> bookStudentGroupTicket(
+    public ResponseEntity<?> bookStudentGroupTicket(@Valid
             @RequestBody StudentGroupBookingDto bookingDto) {
         try {
             TicketGroupBookingResponse response = studentBookingService.bookStudentGroupTicket(bookingDto);

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -47,11 +48,10 @@ public class TicketPolicyServiceImpl implements TicketPolicyService {
 
     @Override
     public List<TicketPolicyDto> getAllPolicies() {
-        List<TicketPolicy> policies = ticketPolicyRepository.findAll();
-
+        List<TicketPolicy> policies = ticketPolicyRepository.findAllByOrderByCreatedAtDesc();
         return policies.stream()
                 .map(ticketPolicyMapper::MapTicketEntityToTicketPolicyDto)
-                .toList();
+                .collect(Collectors.toList());
     }
 
 

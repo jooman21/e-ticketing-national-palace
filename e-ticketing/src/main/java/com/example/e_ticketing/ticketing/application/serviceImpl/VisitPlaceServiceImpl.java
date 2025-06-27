@@ -71,7 +71,7 @@ private final VisitPlaceRepository visitPlaceRepository;
 
     @Override
     public List<VisitPlaceDto> getAllVisitPlaces() {
-        List<VisitPlace> visitPlaces = visitPlaceRepository.findAll();
+        List<VisitPlace> visitPlaces = visitPlaceRepository.findAllByOrderByCreatedAtDesc();
         return visitPlaces.stream()
                 .map(VisitPlaceMapper::MapVisitPlaceToVisitPlaceDto)
                 .collect(Collectors.toList());

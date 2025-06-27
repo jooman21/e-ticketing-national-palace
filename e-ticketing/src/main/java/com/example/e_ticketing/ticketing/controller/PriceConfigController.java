@@ -3,6 +3,7 @@ package com.example.e_ticketing.ticketing.controller;
 import com.example.e_ticketing.ticketing.application.dto.PriceConfigDto;
 import com.example.e_ticketing.ticketing.application.service.PriceConfigService;
 import com.example.e_ticketing.ticketing.controller.GlobalResponse.GenericResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class PriceConfigController {
 
 
     @PostMapping("/local")
-    public ResponseEntity<GenericResponse> createLocalPriceConfig(@RequestBody PriceConfigDto priceConfigDto) {
+    public ResponseEntity<GenericResponse> createLocalPriceConfig(@Valid  @RequestBody PriceConfigDto priceConfigDto) {
          priceConfigService.createPriceConfig(priceConfigDto);
          return ResponseEntity
                  .status(HttpStatus.CREATED)
@@ -27,7 +28,7 @@ public class PriceConfigController {
     }
 
     @PostMapping("/international")
-    public ResponseEntity<GenericResponse> createInternationalPriceConfig(@RequestBody PriceConfigDto priceConfigDto) {
+    public ResponseEntity<GenericResponse> createInternationalPriceConfig( @Valid @RequestBody PriceConfigDto priceConfigDto) {
          priceConfigService.createPriceConfig(priceConfigDto);
         return ResponseEntity
                  .status(HttpStatus.CREATED)
@@ -41,11 +42,11 @@ public class PriceConfigController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PriceConfigDto> getPriceConfigById(@PathVariable UUID id) {
+    public ResponseEntity<PriceConfigDto> getPriceConfigById( @PathVariable @Valid UUID id) {
         return ResponseEntity.ok(priceConfigService.getPriceConfigById(id));
     }
     @PutMapping("/{id}")
-    public ResponseEntity<GenericResponse> updatePriceConfig(@PathVariable UUID id,
+    public ResponseEntity<GenericResponse> updatePriceConfig( @PathVariable @Valid UUID id,
                                                          @RequestBody PriceConfigDto dto) {
         priceConfigService.updatePriceConfig(id, dto);
         return ResponseEntity
@@ -53,7 +54,7 @@ public class PriceConfigController {
                 .body(new GenericResponse (true, "Price config updated successfully."));
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<GenericResponse> deletePriceConfig(@PathVariable UUID id) {
+    public ResponseEntity<GenericResponse> deletePriceConfig(@PathVariable @Valid  UUID id) {
         priceConfigService.deletePriceConfig(id);
         return ResponseEntity
                 .status(HttpStatus.OK)

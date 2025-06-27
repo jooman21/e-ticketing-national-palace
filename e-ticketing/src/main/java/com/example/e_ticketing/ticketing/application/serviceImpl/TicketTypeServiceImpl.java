@@ -15,10 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -76,11 +73,17 @@ public class TicketTypeServiceImpl implements TicketTypeService {
 
     @Override
     public List<TicketTypeDto> getAllTicketTypes() {
-        return ticketTypeRepository.findAll()
-                .stream()
+        List<TicketType> ticketTypes = ticketTypeRepository.findAllByOrderByCreatedAtDesc();
+
+        if (ticketTypes == null || ticketTypes.isEmpty()) {
+            return List.of(); // or Collections.emptyList()
+        }
+
+        return ticketTypes.stream()
                 .map(TicketTypeMapper::MapTicketTypeToTicketTypeDto)
                 .collect(Collectors.toList());
     }
+
 
     @Override
     public TicketTypeDto getTicketTypeById(UUID id) {

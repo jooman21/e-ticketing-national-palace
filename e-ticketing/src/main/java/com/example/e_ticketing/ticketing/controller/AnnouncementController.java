@@ -8,6 +8,7 @@ import com.example.e_ticketing.ticketing.application.service.AnnouncementTotalCl
 import com.example.e_ticketing.ticketing.controller.GlobalResponse.GenericResponse;
 import com.example.e_ticketing.ticketing.domain.entity.Announcement;
 import com.example.e_ticketing.ticketing.domain.valueobject.AnnouncementType;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class AnnouncementController {
     private final AnnouncementTotalClosure announcementTotalClosure;
 
     @PostMapping("/total-closure")
-    public ResponseEntity<GenericResponse> createTotalClosure(@RequestBody AnnouncementDto dto) {
+    public ResponseEntity<GenericResponse> createTotalClosure(@Valid @RequestBody AnnouncementDto dto) {
         dto.setAnnouncementType(AnnouncementType.TOTAL_CLOSURE);
 
         List<Announcement> announcements = announcementTotalClosure.create(dto);
@@ -45,7 +46,7 @@ public class AnnouncementController {
     }
 
     @PostMapping("/partial-availability")
-    public ResponseEntity<GenericResponse> createPartialAvailabilityAnnouncement(@RequestBody AnnouncementDto dto) {
+    public ResponseEntity<GenericResponse> createPartialAvailabilityAnnouncement(@Valid @RequestBody AnnouncementDto dto) {
         dto.setAnnouncementType(AnnouncementType.PARTIAL_AVAILABILITY);
 
         List<Announcement> announcements = announcementPartialClosure.createPartialAvailabilityAnnouncement(dto);
@@ -80,7 +81,7 @@ public class AnnouncementController {
 
     @GetMapping("/total-closure")
     public ResponseEntity<GenericResponse> getTotalClosureAnnouncements(
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
+            @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         List<AnnouncementDto> announcements = announcementTotalClosure.getTotalClosureAnnouncements(date);
 
@@ -94,7 +95,7 @@ public class AnnouncementController {
     }
 
     @GetMapping
-    public ResponseEntity<GenericResponse> getAllAnnouncements() {
+    public ResponseEntity<GenericResponse> getAllAnnouncements() { @Valid
         List<AnnouncementDto> announcements = announcementTotalClosure.getAllAnnouncements();
 
         GenericResponse response = new GenericResponse(

@@ -5,6 +5,7 @@ import com.example.e_ticketing.ticketing.application.service.TicketService;
 import com.example.e_ticketing.ticketing.controller.GlobalResponse.GenericResponse;
 import com.example.e_ticketing.ticketing.domain.entity.Ticket;
 import com.example.e_ticketing.ticketing.domain.valueobject.TicketStatus;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class TicketController {
 
     // 1. Book Ticket
     @PostMapping("/book")
-    public ResponseEntity<GenericResponse<TicketDto>> bookTicket(@RequestBody TicketDto ticketDto) {
+    public ResponseEntity<GenericResponse<TicketDto>> bookTicket(@Valid  @RequestBody TicketDto ticketDto) {
         TicketDto bookedTicket = ticketService.bookTicket(ticketDto);
         return ResponseEntity.ok(
                 new GenericResponse<>(true, "Ticket booked successfully", bookedTicket)
@@ -31,7 +32,7 @@ public class TicketController {
     // 2. Get Ticket by ID
 
     @GetMapping("/{id}")
-    public ResponseEntity<GenericResponse<TicketDto>> getTicketById(@PathVariable UUID id) {
+    public ResponseEntity<GenericResponse<TicketDto>> getTicketById( @PathVariable @Valid UUID id) {
         TicketDto ticket = ticketService.getTicketById(id);
         return ResponseEntity.ok(
                 new GenericResponse<>(true, "Ticket fetched successfully", ticket)
@@ -49,7 +50,7 @@ public class TicketController {
 
     // 4. Get Tickets by Status
     @GetMapping("/status")
-    public ResponseEntity<GenericResponse<List<TicketDto>>> getTicketsByStatus(@RequestParam TicketStatus status) {
+    public ResponseEntity<GenericResponse<List<TicketDto>>> getTicketsByStatus( @RequestParam @Valid TicketStatus status) {
         List<TicketDto> tickets = ticketService.getTicketsByStatus(status);
         return ResponseEntity.ok(
                 new GenericResponse<>(true, "Tickets by status fetched successfully", tickets)

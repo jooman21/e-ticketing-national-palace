@@ -16,4 +16,5 @@ public interface VisitPlaceRepository extends JpaRepository<VisitPlace, UUID> {
     Optional<Object> findByName(String name);
 
 
+    List<VisitPlace> findAllByOrderByCreatedAtDesc();
 }
