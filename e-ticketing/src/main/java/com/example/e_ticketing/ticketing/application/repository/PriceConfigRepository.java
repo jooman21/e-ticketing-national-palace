@@ -4,9 +4,11 @@ import com.example.e_ticketing.ticketing.domain.entity.PriceConfig;
 import com.example.e_ticketing.ticketing.domain.entity.TicketType;
 import com.example.e_ticketing.ticketing.domain.valueobject.Residency;
 import com.example.e_ticketing.ticketing.domain.valueobject.StudentType;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,4 +21,7 @@ public interface PriceConfigRepository extends JpaRepository<PriceConfig, UUID> 
     boolean existsByTicketTypeAndStudentType(TicketType ticketType, StudentType studentType);
 
     Optional<PriceConfig> findByTicketTypeAndStudentType(TicketType type, StudentType studentType);
+
+    List<PriceConfig> findByStudentTypeAndTicketType(StudentType studentType, TicketType ticketType);
+
 }

@@ -56,7 +56,6 @@ public class TicketTypeServiceImpl implements TicketTypeService {
 
         // Set timestamps and default values
         entity.setCreatedAt(LocalDateTime.now());
-        entity.setUpdatedAt(LocalDateTime.now());
 
         if (entity.getAvailable() == null) {
             entity.setAvailable(false);

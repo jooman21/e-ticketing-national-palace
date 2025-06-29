@@ -30,7 +30,7 @@ public class PriceConfigForStudentMapper {
         config.setPrice(dto.getPrice());
         config.setActive(dto.getActive());
         config.setCreatedAt(dto.getCreatedAt());
-        config.setUpdatedAt(dto.getUpdatedAt());
+       // config.setUpdatedAt(dto.getUpdatedAt());
         return config;
     }
 }

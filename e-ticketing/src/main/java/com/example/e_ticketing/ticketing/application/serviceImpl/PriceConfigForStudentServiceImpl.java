@@ -66,17 +66,23 @@ public class PriceConfigForStudentServiceImpl implements PriceConfigForStudentSe
         PriceConfig existing = getPriceConfigById(id);
         TicketType ticketType = getTicketTypeByName(dto.getName());
 
+        // Check if a different PriceConfig with same TicketType & StudentType exists
+        List<PriceConfig> duplicates = priceConfigRepository.findByStudentTypeAndTicketType(dto.getStudentType(), ticketType);
+        boolean exists = duplicates.stream().anyMatch(pc -> !pc.getId().equals(id));
+
+        if (exists) {
+            throw new PriceConfigAlreadyExistsException("Price configuration with this ticket type and student type already exists.");
+        }
+
+
+        // Update fields
+        existing.setTicketType(ticketType);
         existing.setCurrency(dto.getCurrency());
         existing.setStudentType(dto.getStudentType());
         existing.setPrice(dto.getPrice());
+        existing.setActive(Boolean.TRUE.equals(dto.getActive())); // defaults to true if null
         existing.setUpdatedAt(LocalDateTime.now());
-        existing.setTicketType(ticketType);
-        if (dto.getActive() == null) {
-            existing.setActive(true);
-        } else {
-            existing.setActive(dto.getActive());
-        }
-        existing.setUpdatedAt(LocalDateTime.now());
+
         PriceConfig updated = priceConfigRepository.save(existing);
         return PriceConfigForStudentMapper.MapPriceConfigForStudentToPriceConfigForStudentDto(updated);
     }
@@ -133,4 +139,3 @@ public class PriceConfigForStudentServiceImpl implements PriceConfigForStudentSe
         }
     }
 }
-

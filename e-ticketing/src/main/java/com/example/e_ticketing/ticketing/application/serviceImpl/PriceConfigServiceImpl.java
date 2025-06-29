@@ -49,9 +49,8 @@ public class PriceConfigServiceImpl implements PriceConfigService {
         }
 
         dto.setCreatedAt(LocalDateTime.now());
-        dto.setUpdatedAt(LocalDateTime.now());
         if (dto.getActive() == null) {
-            dto.setActive(false);
+            dto.setActive(true);
         }
 
         PriceConfig entity = PriceConfigMapper.MapPriceConfigDtoToPriceConfig(dto, ticketType);
