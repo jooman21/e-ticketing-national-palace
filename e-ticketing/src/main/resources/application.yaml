@@ -5,7 +5,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/e_ticketing
+    url: jdbc:postgresql://0.0.0.0:5432/e_ticketing
     username: postgres
     password: admin
     driver-class-name: org.postgresql.Driver
@@ -19,7 +19,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
   flyway:
-    url: jdbc:postgresql://localhost:5432/e_ticketing
+    url: jdbc:postgresql://0.0.0.0:5432/e_ticketing
     user: postgres
     password: admin
     locations: classpath:/db/migration
