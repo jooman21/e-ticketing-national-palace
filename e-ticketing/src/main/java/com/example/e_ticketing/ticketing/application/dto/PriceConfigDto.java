@@ -18,6 +18,7 @@ public class PriceConfigDto {
     private UUID id;
     private String name;
     private Residency residency;
+    private String visitorType;
     private Currency currency;
     private Double price;
     private Boolean active;

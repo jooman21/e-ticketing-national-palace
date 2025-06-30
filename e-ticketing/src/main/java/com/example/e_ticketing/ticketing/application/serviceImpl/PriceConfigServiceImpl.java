@@ -43,10 +43,11 @@ public class PriceConfigServiceImpl implements PriceConfigService {
         Residency residency = dto.getResidency();
 
         // Check for duplicate config
-        if (priceConfigRepository.existsByTicketTypeAndResidency(ticketType, residency)) {
+        if (priceConfigRepository.existsByTicketTypeAndResidencyAndVisitorType(ticketType, residency, dto.getVisitorType())) {
             throw new PriceConfigAlreadyExistsException("Price config already exists for ticket type '" +
-                    ticketType.getName() + "' and residency '" + residency + "'");
+                    ticketType.getName() + "', residency '" + residency + "', and visitor type '" + dto.getVisitorType() + "'");
         }
+
 
         dto.setCreatedAt(LocalDateTime.now());
         if (dto.getActive() == null) {
@@ -107,22 +108,37 @@ public class PriceConfigServiceImpl implements PriceConfigService {
     public PriceConfigDto updatePriceConfig(UUID id, PriceConfigDto dto) {
         validatePriceConfigDto(dto);
 
+        // Fetch existing config
         PriceConfig existing = priceConfigRepository.findById(id)
                 .orElseThrow(() -> new PriceConfigDoesNotFoundException("Price config with ID " + id + " not found."));
 
-        TicketType ticketType = (TicketType) ticketTypeRepository.findByName(dto.getName())
-                .orElseThrow(() -> new TicketTypeDoesNotExistException(
-                        "Ticket Type '" + dto.getName() + "' not found"));
+        // Find the TicketType
+        TicketType ticketType = ticketTypeRepository.findByName(dto.getName())
+                .orElseThrow(() -> new TicketTypeDoesNotExistException("Ticket Type '" + dto.getName() + "' not found"));
 
-        existing.setCurrency(dto.getCurrency());
-        existing.setResidency(dto.getResidency());
-        existing.setPrice(dto.getPrice());
-        existing.setUpdatedAt(LocalDateTime.now());
+        // Check for duplicate config (excluding current one)
+        boolean duplicateExists = priceConfigRepository
+                .findByTicketTypeAndResidencyAndVisitorType(ticketType, dto.getResidency(), dto.getVisitorType())
+                .stream()
+                .anyMatch(pc -> !pc.getId().equals(id));
+
+        if (duplicateExists) {
+            throw new PriceConfigAlreadyExistsException("Another config already exists with the same ticket type, residency, and visitor type.");
+        }
+
+        // Apply updates
         existing.setTicketType(ticketType);
-        existing.setActive(dto.getActive());
+        existing.setResidency(dto.getResidency());
+        existing.setVisitorType(dto.getVisitorType());
+        existing.setCurrency(dto.getCurrency());
+        existing.setPrice(dto.getPrice());
+        existing.setActive(Boolean.TRUE.equals(dto.getActive()));
+        existing.setUpdatedAt(LocalDateTime.now());
+
         PriceConfig updated = priceConfigRepository.save(existing);
         return PriceConfigMapper.MapPriceConfigToPriceConfigDto(updated);
     }
+
     @Override
     public void deletePriceConfig(UUID id) {
         PriceConfig config = priceConfigRepository.findById(id)

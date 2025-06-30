@@ -11,6 +11,7 @@ public class PriceConfigMapper {
                 .id(priceConfig.getId())
                 .name(priceConfig.getTicketType() != null ? priceConfig.getTicketType().getName() : null)
                 .residency(priceConfig.getResidency())
+                .visitorType(priceConfig.getVisitorType())
                 .currency(priceConfig.getCurrency())
                 .price(priceConfig.getPrice())
                 .active(priceConfig.getActive())
@@ -25,6 +26,7 @@ public class PriceConfigMapper {
         config.setId(dto.getId());
         config.setTicketType(ticketType);
         config.setResidency(dto.getResidency());
+        config.setVisitorType(dto.getVisitorType());
         config.setCurrency(dto.getCurrency());
         config.setPrice(dto.getPrice());
         config.setActive(dto.getActive());
