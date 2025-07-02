@@ -6,10 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 
 @Repository
@@ -19,4 +16,13 @@ public interface TicketTypeRepository extends JpaRepository<TicketType, UUID> {
 
 
     List<TicketType> findAllByOrderByCreatedAtDesc();
+
+
+    @Query("""
+    SELECT DISTINCT tt FROM TicketType tt
+    JOIN tt.visitPlaces vp
+    WHERE vp.id IN :placeIds
+    ORDER BY tt.createdAt DESC
+    """)
+    List<TicketType> findByVisitPlaceIds(@Param("placeIds") Set<UUID> placeIds);
 }

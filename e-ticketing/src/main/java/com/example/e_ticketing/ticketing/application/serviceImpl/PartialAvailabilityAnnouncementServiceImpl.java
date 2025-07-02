@@ -87,7 +87,7 @@ public class PartialAvailabilityAnnouncementServiceImpl implements AnnouncementP
                 VisitSchedule schedule = visitScheduleRepository.findByDate(closureDate)
                         .orElseGet(() -> VisitSchedule.builder()
                                 .date(closureDate)
-                                .isOpen(true)
+                                .isOpen(false)
                                 .reasonForClosing("Visit Place Closed due to announcement: " + dto.getSubject())
                                 .createdAt(LocalDateTime.now())
                                 .updatedAt(LocalDateTime.now())
@@ -96,7 +96,7 @@ public class PartialAvailabilityAnnouncementServiceImpl implements AnnouncementP
                 if (schedule.getId() == null) {
                     visitScheduleRepository.save(schedule);
                 } else {
-                    schedule.setIsOpen(true);
+                    schedule.setIsOpen(false);
                     schedule.setReasonForClosing("Visit Place Closed due to announcement: " + dto.getSubject());
                     schedule.setUpdatedAt(LocalDateTime.now());
                 }
@@ -113,7 +113,7 @@ public class PartialAvailabilityAnnouncementServiceImpl implements AnnouncementP
                         VisitSchedulePlaceStatus status = VisitSchedulePlaceStatus.builder()
                                 .visitSchedule(schedule)
                                 .visitPlace(place)
-                                .isOpen(true)
+                                .isOpen(false)
                                 .reasonForClosing("Visit Place Closed due to announcement: " + dto.getSubject())
                                 .createdAt(LocalDateTime.now())
                                 .updatedAt(LocalDateTime.now())

@@ -2,18 +2,16 @@ package com.example.e_ticketing.ticketing.application.serviceImpl;
 import com.example.e_ticketing.ticketing.application.dto.TicketTypeDto;
 import com.example.e_ticketing.ticketing.application.dto.VisitPlaceDto;
 import com.example.e_ticketing.ticketing.application.mapper.TicketTypeMapper;
-import com.example.e_ticketing.ticketing.application.repository.TicketPolicyRepository;
-import com.example.e_ticketing.ticketing.application.repository.TicketTypeRepository;
-import com.example.e_ticketing.ticketing.application.repository.VisitPlaceRepository;
+import com.example.e_ticketing.ticketing.application.mapper.VisitPlaceMapper;
+import com.example.e_ticketing.ticketing.application.repository.*;
 import com.example.e_ticketing.ticketing.application.service.TicketTypeService;
-import com.example.e_ticketing.ticketing.domain.entity.TicketPolicy;
-import com.example.e_ticketing.ticketing.domain.entity.TicketType;
-import com.example.e_ticketing.ticketing.domain.entity.VisitPlace;
+import com.example.e_ticketing.ticketing.domain.entity.*;
 import com.example.e_ticketing.ticketing.excpetion.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,6 +23,9 @@ public class TicketTypeServiceImpl implements TicketTypeService {
     private final TicketTypeRepository ticketTypeRepository;
     private final VisitPlaceRepository visitPlaceRepository;
     private final TicketPolicyRepository ticketPolicyRepository;
+    private final VisitSchedulePlaceStatusRepository visitSchedulePlaceStatusRepository;
+    private final VisitPlaceMapper visitPlaceMapper;
+
 
     @Override
     @Transactional
@@ -82,6 +83,76 @@ public class TicketTypeServiceImpl implements TicketTypeService {
                 .map(TicketTypeMapper::MapTicketTypeToTicketTypeDto)
                 .collect(Collectors.toList());
     }
+
+
+    @Override
+    public List<TicketTypeDto> getTicketTypesWithPartialAvailabilityImpact(LocalDate date) {
+        System.out.println("🔍 Checking ticket types for date: " + date);
+
+        // 1. Get schedule for the date
+        List<VisitSchedule> schedules = visitSchedulePlaceStatusRepository.findByDateWithStatuses(date);
+        System.out.println("📅 Found schedules for the date: " + schedules.size());
+
+        if (schedules.isEmpty()) {
+            System.out.println("⚠️ No schedules found — returning all ticket types as-is");
+            return ticketTypeRepository.findAllByOrderByCreatedAtDesc()
+                    .stream()
+                    .map(TicketTypeMapper::MapTicketTypeToTicketTypeDto)
+                    .collect(Collectors.toList());
+        }
+
+        VisitSchedule schedule = schedules.get(0); // assuming one schedule per date
+        System.out.println("✅ Loaded VisitSchedule ID: " + schedule.getId() + ", isOpen: " + schedule.getIsOpen());
+
+        // 2. Full closure
+        if (Boolean.FALSE.equals(schedule.getIsOpen())) {
+            System.out.println("🚫 Full closure detected — no ticket types available.");
+            return List.of();
+        }
+
+        // 3. Collect IDs of visit places that are partially closed (isOpen == false)
+        Set<UUID> closedVisitPlaceIds = schedule.getPlaceStatuses().stream()
+                .filter(status -> Boolean.FALSE.equals(status.getIsOpen()))
+                .peek(status -> System.out.println("❌ Partially closed: " + status.getVisitPlace().getName() + " (ID: " + status.getVisitPlace().getId() + ")"))
+                .map(status -> status.getVisitPlace().getId())
+                .collect(Collectors.toSet());
+
+        System.out.println("🛑 Total closed visit places: " + closedVisitPlaceIds.size());
+
+        // 4. Fetch all ticket types
+        List<TicketType> allTicketTypes = ticketTypeRepository.findAllByOrderByCreatedAtDesc();
+        System.out.println("🎟️ Fetched ticket types: " + allTicketTypes.size());
+
+        // 5. Filter out closed visit places per ticket type and map them
+        return allTicketTypes.stream()
+                .map(ticketType -> {
+                    System.out.println("\n➡️ Processing ticket type: " + ticketType.getName());
+
+                    List<VisitPlace> availablePlaces = ticketType.getVisitPlaces().stream()
+                            .filter(place -> !closedVisitPlaceIds.contains(place.getId()))
+                            .peek(place -> System.out.println("   ✅ Included place: " + place.getName()))
+                            .toList();
+
+                    if (availablePlaces.isEmpty()) {
+                        System.out.println("   ⚠️ Skipping ticket type '" + ticketType.getName() + "' — all visit places are closed");
+                        return null;
+                    }
+
+                    TicketTypeDto dto = TicketTypeMapper.MapTicketTypeToTicketTypeDto(ticketType);
+                    dto.setVisitPlaces(availablePlaces.stream()
+                            .map(place -> {
+                                VisitPlaceDto mapped = VisitPlaceMapper.MapVisitPlaceToVisitPlaceDto(place, closedVisitPlaceIds);
+                                System.out.println("      🗂️ Mapped place: " + mapped.getName() + " | Available: " + mapped.getAvailable());
+                                return mapped;
+                            })
+                            .toList());
+
+                    return dto;
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
 
 
     @Override

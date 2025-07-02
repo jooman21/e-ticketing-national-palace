@@ -21,4 +21,7 @@ public interface VisitScheduleRepository extends JpaRepository<VisitSchedule, UU
     // Find all VisitSchedule where isOpen = false
     @Query("SELECT v.date FROM VisitSchedule v WHERE v.isOpen = false")
     List<LocalDate> findAllClosedDates();
+
+
+
 }
