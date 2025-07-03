@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,32 +37,41 @@ public class TimeSlotServiceImpl implements TimeSlotService {
         private static final LocalTime CLOSE_TIME = LocalTime.of(17, 0); // 5:00 PM
 
 
-        @Override
-        @Transactional
-        public List<TimeslotDto> createDailyTimeSlots(Integer maxTickets) {
-            if (maxTickets == null || maxTickets <= 0) {
-                throw new InvalidTimeSlotException("Max tickets must be greater than 0");
-            }
-
-            List<TimeslotDto> result = new ArrayList<>();
-
-            LocalTime current = OPEN_TIME;
-            while (current.plusHours(1).compareTo(CLOSE_TIME) <= 0) {
-                TimeSlot slot = new TimeSlot();
-                slot.setStartTime(current);
-                slot.setEndTime(current.plusHours(1));
-                slot.setIsActive(true);
-                slot.setMaxTickets(maxTickets);
-                slot.setCreatedAt(LocalDateTime.now());
-                slot.setUpdatedAt(LocalDateTime.now());
-
-                TimeSlot saved = timeSlotRepository.save(slot);
-                result.add(timeSlotMapper.MapTimeSlotEntityToTimeSlotDto(saved));
-                current = current.plusHours(1);
-            }
-
-            return result;
+    @Override
+    @Transactional
+    public List<TimeslotDto> createDailyTimeSlots(Integer maxTickets) {
+        if (maxTickets == null || maxTickets <= 0) {
+            throw new InvalidTimeSlotException("Max tickets must be greater than 0");
         }
+
+        List<TimeslotDto> result = new ArrayList<>();
+
+        LocalTime current = OPEN_TIME;
+        while (current.plusHours(1).compareTo(CLOSE_TIME) <= 0) {
+            LocalTime end = current.plusHours(1);
+
+            // ✅ Check if a time slot with same time and maxTickets already exists
+            boolean alreadyExists = timeSlotRepository.existsByStartTimeAndEndTimeAndMaxTicketsAndIsActiveTrue(current, end, maxTickets);
+            if (alreadyExists) {
+                throw new InvalidTimeSlotException("Time slot from " + current + " to " + end + " with max tickets " + maxTickets + " already exists.");
+            }
+
+            TimeSlot slot = new TimeSlot();
+            slot.setStartTime(current);
+            slot.setEndTime(end);
+            slot.setIsActive(true);
+            slot.setMaxTickets(maxTickets);
+            slot.setCreatedAt(LocalDateTime.now());
+            slot.setUpdatedAt(LocalDateTime.now());
+
+            TimeSlot saved = timeSlotRepository.save(slot);
+            result.add(timeSlotMapper.MapTimeSlotEntityToTimeSlotDto(saved));
+
+            current = end;
+        }
+
+        return result;
+    }
 
 
     // 🔽 Add this method here
@@ -98,6 +108,26 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 
 
 
+    @Override
+    @Transactional
+    public TimeslotDto updateMaxTicketsForTimeSlot(UUID timeSlotId, Integer newMaxTickets) {
+        if (newMaxTickets == null || newMaxTickets <= 0) {
+            throw new InvalidTimeSlotException("Max tickets must be greater than 0");
+        }
+
+        // ✅ Correct usage of timeSlotId
+        TimeSlot slot = timeSlotRepository.findById(timeSlotId)
+                .orElseThrow(() -> new InvalidTimeSlotException("Time slot not found with ID: " + timeSlotId));
+
+        // Update the maxTickets
+        slot.setMaxTickets(newMaxTickets);
+        slot.setUpdatedAt(LocalDateTime.now());
+
+        // Save changes
+        TimeSlot updated = timeSlotRepository.save(slot);
+
+        return timeSlotMapper.MapTimeSlotEntityToTimeSlotDto(updated);
+    }
 
 
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/timeslots")
@@ -50,5 +51,22 @@ public class TimeSotController {
         GenericResponse response = new GenericResponse(true, "Time slot availability fetched.", availability);
         return ResponseEntity.ok(response);
     }
+
+    @PatchMapping("/{id}/max-tickets")
+    public ResponseEntity<GenericResponse> updateMaxTickets(
+            @PathVariable("id") UUID id,
+            @Valid @RequestBody MaxTicketRequest request
+    ) {
+        TimeslotDto updatedSlot = timeSlotService.updateMaxTicketsForTimeSlot(id, request.getMaxTickets());
+
+        GenericResponse response = new GenericResponse(
+                true,
+                "Time slot max tickets updated successfully.",
+                updatedSlot
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
 
 }

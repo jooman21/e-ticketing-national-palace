@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 public interface TimeSlotService {
 
@@ -17,6 +18,10 @@ public interface TimeSlotService {
     TimeSlot findNextAvailableTimeSlot(LocalDate date, TimeSlot currentSlot);
 
     List<TimeslotDto> getAllActiveTimeSlots();
+
+
+    @Transactional
+    TimeslotDto updateMaxTicketsForTimeSlot(UUID timeSlotId, Integer newMaxTickets);
 
     List<TimeSlotAvailabilityDto> getAvailableTimeSlotsForDay(LocalDate date);
 }
