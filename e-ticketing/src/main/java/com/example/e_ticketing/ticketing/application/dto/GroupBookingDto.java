@@ -1,6 +1,7 @@
 package com.example.e_ticketing.ticketing.application.dto;
 
-import com.example.e_ticketing.ticketing.domain.valueobject.StudentType;
+
+import com.example.e_ticketing.ticketing.domain.valueobject.Residency;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ public class GroupBookingDto {
     private UUID ticketTypeId;            // Student-specific ticket type
     private LocalDate visitDate;
     private UUID timeSlotId;
-    private VisitorType studentType;
+    private Residency residency;
+    private String visitorType;
     private int quantity;                 // Number of students
 }

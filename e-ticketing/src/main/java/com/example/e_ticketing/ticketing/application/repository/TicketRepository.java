@@ -18,4 +18,6 @@ public interface TicketRepository extends JpaRepository<Ticket, UUID> {
     List<Ticket> findByTicketStatus(TicketStatus status);
 
     int countByTimeSlotAndVisitDateAndTicketStatus(TimeSlot timeSlot, LocalDate visitDate, TicketStatus ticketStatus);
+
+    int countByTimeSlotAndVisitDateAndTicketStatusIn(TimeSlot slot, LocalDate date, List<TicketStatus> pending);
 }

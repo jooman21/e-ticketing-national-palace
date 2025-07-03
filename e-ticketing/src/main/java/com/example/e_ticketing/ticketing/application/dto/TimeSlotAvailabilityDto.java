@@ -19,4 +19,15 @@ public class TimeSlotAvailabilityDto {
     private Integer currentTickets;
     private Boolean isActive;   // from entity
     private Boolean isAvailable;  // computed at runtime
+
+    // Add this:
+    private Integer remainingTickets;
+
+    public Integer getRemainingTickets() {
+        return remainingTickets;
+    }
+
+    public void setRemainingTickets(Integer remainingTickets) {
+        this.remainingTickets = remainingTickets;
+    }
 }

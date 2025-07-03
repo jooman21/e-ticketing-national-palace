@@ -86,7 +86,7 @@ public class TimeSlotServiceImpl implements TimeSlotService {
                 continue;
             }
             if (passedCurrent) {
-                int count = ticketRepository.countByTimeSlotAndVisitDateAndTicketStatus(slot, date, TicketStatus.VALID);
+                int count = ticketRepository.countByTimeSlotAndVisitDateAndTicketStatus(slot, date, TicketStatus.PENDING);
                 int queueCount = queueEntryRepository.countByTimeSlotAndVisitSchedule_Date(slot, date);
                 if (count + queueCount < slot.getMaxTickets()) {
                     return slot;
@@ -166,18 +166,14 @@ public class TimeSlotServiceImpl implements TimeSlotService {
 
     @Override
     public List<TimeSlotAvailabilityDto> getAvailableTimeSlotsForDay(LocalDate date) {
-        if (date == null) {
-            throw new InvalidDateException("Date must be provided");
-        }
+        if (date == null) throw new InvalidDateException("Date must be provided");
 
         List<TimeSlot> timeSlots = timeSlotRepository.findAllByIsActiveTrue();
 
-        if (timeSlots.isEmpty()) {
-            throw new ActiveTimeSlotNotFoundException("No active time slots found");
-        }
+        if (timeSlots.isEmpty()) throw new ActiveTimeSlotNotFoundException("No active time slots found");
 
         return timeSlots.stream().map(slot -> {
-            int ticketCount =  ticketRepository.countByTimeSlotAndVisitDateAndTicketStatus(slot, date, TicketStatus.VALID);
+            int ticketCount = ticketRepository.countByTimeSlotAndVisitDateAndTicketStatusIn(slot, date, List.of(TicketStatus.PENDING));
             int queueCount = queueEntryRepository.countByTimeSlotAndVisitSchedule_Date(slot, date);
             int total = ticketCount + queueCount;
 
@@ -187,11 +183,14 @@ public class TimeSlotServiceImpl implements TimeSlotService {
             dto.setEndTime(slot.getEndTime());
             dto.setMaxTickets(slot.getMaxTickets());
             dto.setCurrentTickets(total);
-            dto.setIsActive(slot.getIsActive());
+            dto.setRemainingTickets(Math.max(0, slot.getMaxTickets() - total));
             dto.setIsAvailable(total < slot.getMaxTickets());
+            dto.setIsActive(slot.getIsActive());
+
             return dto;
         }).collect(Collectors.toList());
     }
+
 
 
 }
