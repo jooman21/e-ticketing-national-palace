@@ -44,6 +44,10 @@ public class TicketTypeServiceImpl implements TicketTypeService {
                             "Visit Place '" + visitPlaceDto.getName() + "' not found"));
             persistedVisitPlaces.add(persisted);
         }
+        // ✅ Ensure ticketCategory is provided
+        if (dto.getTicketCategory() == null) {
+            throw new TicketCategoryNotFoundException("Ticket category (INDIVIDUAL or GROUP) must be specified.");
+        }
 
         // Load persisted TicketPolicy
         TicketPolicy persistedTicketPolicy = ticketPolicyRepository.findById(dto.getTicketPolicyId())
@@ -183,6 +187,10 @@ public class TicketTypeServiceImpl implements TicketTypeService {
         // Optional: validate fields of updatedDto
         validateTicketTypeDto(updatedDto);
 
+        // ✅ Ensure ticketCategory is provided
+        if (updatedDto.getTicketCategory() == null) {
+            throw new TicketCategoryNotFoundException("Ticket category (INDIVIDUAL or GROUP) must be specified.");
+        }
 
         // Validate unique name if the name is being updated and changed
         if (updatedDto.getName() != null && !updatedDto.getName().equals(ticketType.getName())) {

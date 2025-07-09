@@ -2,9 +2,11 @@ package com.example.e_ticketing.ticketing.controller;
 
 
 import com.example.e_ticketing.ticketing.application.dto.AnnouncementDto;
+import com.example.e_ticketing.ticketing.application.dto.InformationalAnnouncementDto;
 import com.example.e_ticketing.ticketing.application.mapper.AnnouncementMapper;
 import com.example.e_ticketing.ticketing.application.service.AnnouncementPartialClosure;
 import com.example.e_ticketing.ticketing.application.service.AnnouncementTotalClosure;
+import com.example.e_ticketing.ticketing.application.service.InformationalAnnouncementService;
 import com.example.e_ticketing.ticketing.controller.GlobalResponse.GenericResponse;
 import com.example.e_ticketing.ticketing.domain.entity.Announcement;
 import com.example.e_ticketing.ticketing.domain.valueobject.AnnouncementType;
@@ -26,6 +28,7 @@ public class AnnouncementController {
 
     private final AnnouncementPartialClosure announcementPartialClosure;
     private final AnnouncementTotalClosure announcementTotalClosure;
+    private final InformationalAnnouncementService informationalAnnouncementService;
 
     @PostMapping("/total-closure")
     public ResponseEntity<GenericResponse> createTotalClosure(@Valid @RequestBody AnnouncementDto dto) {
@@ -62,6 +65,22 @@ public class AnnouncementController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+
+
+    @PostMapping("/info")
+    public ResponseEntity<GenericResponse> createInformationalAnnouncement(@Valid @RequestBody InformationalAnnouncementDto dto) {
+        InformationalAnnouncementDto created = informationalAnnouncementService.createInformationalAnnouncement(dto);
+
+        GenericResponse response = new GenericResponse(
+                true,
+                "Informational announcement created successfully.",
+                created
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
 
     @GetMapping("/partial-availability")
     public ResponseEntity<GenericResponse> getPartialAvailabilityAnnouncements(

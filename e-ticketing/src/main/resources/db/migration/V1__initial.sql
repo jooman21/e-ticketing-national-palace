@@ -4,8 +4,8 @@ EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TYPE residency AS ENUM ('LOCAL', 'INTERNATIONAL');
 CREATE TYPE currency AS ENUM ('ETB', 'USD', 'EURO'); -- extend if needed
 CREATE TYPE ticket_status AS ENUM ('PENDING', 'VALID', 'IN-VALID', 'EXPIRED'); -- example statuses
-CREATE TYPE announcement_type as ENUM (' PARTIAL_AVAILABILITY' , 'TOTAL_CLOSURE');
-
+CREATE TYPE announcement_type as ENUM (' PARTIAL_AVAILABILITY' , 'TOTAL_CLOSURE', 'INFORMATIONAL_NOTICE');
+CREATE TYPE ticket_category as ENUM (' INDIVIDUAL' , 'GROUP');
 
 
 
@@ -18,6 +18,7 @@ CREATE TABLE ticket_types (
                               name VARCHAR(100) NOT NULL UNIQUE,
                               description TEXT,
                               is_recommended BOOLEAN DEFAULT FALSE,
+                              ticket_category ticket_category NOT NULL,
                               available BOOLEAN DEFAULT TRUE,
                               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                               updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

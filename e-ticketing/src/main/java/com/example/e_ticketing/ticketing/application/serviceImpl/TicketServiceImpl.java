@@ -6,6 +6,7 @@ import com.example.e_ticketing.ticketing.application.repository.*;
 import com.example.e_ticketing.ticketing.application.service.TicketService;
 import com.example.e_ticketing.ticketing.application.service.VisitorService;
 import com.example.e_ticketing.ticketing.domain.entity.*;
+import com.example.e_ticketing.ticketing.domain.valueobject.TicketCategory;
 import com.example.e_ticketing.ticketing.domain.valueobject.TicketStatus;
 import com.example.e_ticketing.ticketing.excpetion.*;
 import jakarta.transaction.Transactional;
@@ -67,6 +68,12 @@ public class TicketServiceImpl  implements TicketService {
         // 5. Fetch ticket type
         TicketType ticketType = ticketTypeRepository.findById(ticketDto.getTicketTypeId())
                 .orElseThrow(() -> new InvalidTicketTypeException("Ticket type not found"));
+
+        // ✅ Enforce ticket type must be INDIVIDUAL for individual booking
+        if (ticketType.getTicketCategory() != TicketCategory.INDIVIDUAL) {
+            throw new InvalidTicketTypeException("Selected ticket type does not support individual booking.");
+        }
+
 
         // 6. Get policy from ticket type
         TicketPolicy policy = ticketType.getTicketPolicy();

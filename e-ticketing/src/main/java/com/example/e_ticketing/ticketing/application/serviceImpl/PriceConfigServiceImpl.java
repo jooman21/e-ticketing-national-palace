@@ -10,6 +10,7 @@ import com.example.e_ticketing.ticketing.domain.entity.TicketType;
 import com.example.e_ticketing.ticketing.domain.valueobject.Currency;
 import com.example.e_ticketing.ticketing.domain.valueobject.Residency;
 
+import com.example.e_ticketing.ticketing.domain.valueobject.TicketCategory;
 import com.example.e_ticketing.ticketing.excpetion.InvalidPriceConfigException;
 import com.example.e_ticketing.ticketing.excpetion.PriceConfigAlreadyExistsException;
 import com.example.e_ticketing.ticketing.excpetion.PriceConfigDoesNotFoundException;
@@ -36,18 +37,30 @@ public class PriceConfigServiceImpl implements PriceConfigService {
     public PriceConfigDto createPriceConfig(PriceConfigDto dto) {
         validatePriceConfigDto(dto);
 
-        TicketType ticketType = (TicketType) ticketTypeRepository.findByName(dto.getName())
+        TicketType ticketType = ticketTypeRepository.findByName(dto.getName())
                 .orElseThrow(() -> new TicketTypeDoesNotExistException(
                         "Ticket Type '" + dto.getName() + "' not found"));
 
+        // ✅ Enforce visitorType rules based on ticket category
+        if (ticketType.getTicketCategory() == TicketCategory.GROUP) {
+            if (dto.getVisitorType() == null || dto.getVisitorType().trim().isEmpty()) {
+                throw new InvalidPriceConfigException("Visitor type is required for group ticket pricing.");
+            }
+        } else if (ticketType.getTicketCategory() == TicketCategory.INDIVIDUAL) {
+            if (dto.getVisitorType() != null && !dto.getVisitorType().trim().isEmpty()) {
+                throw new InvalidPriceConfigException("Visitor type must not be provided for individual ticket pricing.");
+            }
+            // Optional: clear it if client sends it
+            dto.setVisitorType(null);
+        }
+
         Residency residency = dto.getResidency();
 
-        // Check for duplicate config
+        // ✅ Check for duplicate config
         if (priceConfigRepository.existsByTicketTypeAndResidencyAndVisitorType(ticketType, residency, dto.getVisitorType())) {
             throw new PriceConfigAlreadyExistsException("Price config already exists for ticket type '" +
                     ticketType.getName() + "', residency '" + residency + "', and visitor type '" + dto.getVisitorType() + "'");
         }
-
 
         dto.setCreatedAt(LocalDateTime.now());
         if (dto.getActive() == null) {
@@ -59,6 +72,7 @@ public class PriceConfigServiceImpl implements PriceConfigService {
 
         return PriceConfigMapper.MapPriceConfigToPriceConfigDto(saved);
     }
+
 
     private void validatePriceConfigDto(PriceConfigDto dto) {
         if (dto.getName() == null || dto.getName().trim().isEmpty()) {

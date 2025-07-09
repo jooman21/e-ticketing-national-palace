@@ -1,5 +1,6 @@
 package com.example.e_ticketing.ticketing.domain.entity;
 
+import com.example.e_ticketing.ticketing.domain.valueobject.TicketCategory;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -44,6 +45,9 @@ public class TicketType {
     )
     @Builder.Default
     private List<VisitPlace> visitPlaces = new ArrayList<>();
+
+     @Enumerated(EnumType.STRING)
+     private  TicketCategory ticketCategory;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "ticket_policy_id")

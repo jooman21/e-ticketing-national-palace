@@ -13,10 +13,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class GroupBookingDto {
-    private UUID ticketTypeId;            // Student-specific ticket type
+    private UUID ticketTypeId;
     private LocalDate visitDate;
     private UUID timeSlotId;
     private Residency residency;
     private String visitorType;
-    private int quantity;                 // Number of students
+    private int quantity;
+    private VisitorDto representative;
 }

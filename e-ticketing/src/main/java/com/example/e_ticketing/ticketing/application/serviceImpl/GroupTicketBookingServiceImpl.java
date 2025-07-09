@@ -5,7 +5,9 @@ import com.example.e_ticketing.ticketing.application.mapper.TicketMapper;
 import com.example.e_ticketing.ticketing.application.repository.*;
 import com.example.e_ticketing.ticketing.application.response.TicketGroupBookingResponse;
 import com.example.e_ticketing.ticketing.application.service.GroupBookingService;
+import com.example.e_ticketing.ticketing.application.service.VisitorService;
 import com.example.e_ticketing.ticketing.domain.entity.*;
+import com.example.e_ticketing.ticketing.domain.valueobject.TicketCategory;
 import com.example.e_ticketing.ticketing.domain.valueobject.TicketStatus;
 import com.example.e_ticketing.ticketing.excpetion.*;
 import jakarta.transaction.Transactional;
@@ -21,11 +23,13 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class GroupTicketBookingServiceImpl implements GroupBookingService {
+    private final VisitorService visitorService;
     private final TicketRepository ticketRepository;
     private final VisitScheduleRepository visitScheduleRepository;
     private final TimeSlotRepository timeSlotRepository;
     private final TicketTypeRepository ticketTypeRepository;
     private final PriceConfigRepository priceConfigRepository;
+
 
     @Transactional
     @Override
@@ -33,6 +37,17 @@ public class GroupTicketBookingServiceImpl implements GroupBookingService {
         // 1. Validate ticket type
         TicketType ticketType = ticketTypeRepository.findById(dto.getTicketTypeId())
                 .orElseThrow(() -> new InvalidTicketTypeException("Ticket type not found"));
+
+        // ✅ Enforce ticket type must be GROUP for group booking
+        if (ticketType.getTicketCategory() != TicketCategory.GROUP) {
+            throw new InvalidTicketTypeException("Selected ticket type does not support group booking.");
+        }
+
+        // ✅ Handle representative (required)
+        if (dto.getRepresentative() == null) {
+            throw new InvalidBookingException("Group representative information is required.");
+        }
+        Visitor representative = visitorService.handleVisitor(dto.getRepresentative());
 
         // 2. Check visit date open/closed
         Optional<VisitSchedule> visitScheduleOpt = visitScheduleRepository.findByDate(dto.getVisitDate());
@@ -75,6 +90,7 @@ public class GroupTicketBookingServiceImpl implements GroupBookingService {
                     .ticketStatus(TicketStatus.PENDING)
                     .issuedAt(LocalDateTime.now())
                     .expiresAt(LocalDateTime.now().plusDays(ticketType.getTicketPolicy().getValidityDays()))
+                    .visitor(representative) // ✅ Associate the representative
                     .build();
 
             tickets.add(ticket);
@@ -82,13 +98,15 @@ public class GroupTicketBookingServiceImpl implements GroupBookingService {
 
         List<Ticket> savedTickets = ticketRepository.saveAll(tickets);
 
-        // 6. Return response (optional: update response class to show visitorType)
+        // 6. Return response (optional: include representative info later if needed)
         return TicketGroupBookingResponse.builder()
                 .ticketTypeName(ticketType.getName())
-                .visitorType(dto.getVisitorType()) // You may rename this field to visitorType in the response DTO
+                .visitorType(dto.getVisitorType())
                 .totalTickets(dto.getQuantity())
                 .totalPrice(totalPrice)
                 .tickets(savedTickets.stream().map(TicketMapper::MapTicketEntityToTicketDto).toList())
                 .build();
     }
+
+
 }

@@ -128,4 +128,12 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+
+
+
+    @ExceptionHandler(TicketCategoryNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleTicketCategoryNotFound(TicketCategoryNotFoundException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }
