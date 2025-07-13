@@ -1,3 +1,4 @@
+BEGIN;
 -- ENUMS
 CREATE
 EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -200,7 +201,7 @@ CREATE TABLE announcement_target_places (
 );
 
 
-
+COMMIT;
 
 
 

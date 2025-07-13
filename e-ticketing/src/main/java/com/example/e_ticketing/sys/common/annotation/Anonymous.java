@@ -1,0 +1,10 @@
+package com.example.e_ticketing.sys.common.annotation;
+
+import java.lang.annotation.*;
+
+@Target({ ElementType.METHOD, ElementType.TYPE })
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Anonymous
+{
+}

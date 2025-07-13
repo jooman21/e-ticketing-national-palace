@@ -1,29 +1,38 @@
-
 server:
   port: 8091
-
+  servlet:
+    context-path: /
+    tomcat:
+      uri-encoding: UTF-8
+      accept-count: 1000
+      threads:
+        max: 800
+        min-spare: 100
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/e_ticketing
-    username: postgres
-    password: admin
+    url: jdbc:postgresql://196.188.240.66:5432/palace
+    username: root
+    password: PalaceM5432
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
   flyway:
-    url: jdbc:postgresql://localhost:5432/e_ticketing
-    user: postgres
-    password: admin
+    enabled: true
+    url: jdbc:postgresql://196.188.240.66:5432/palace
+    user: root
+    password: PalaceM5432
     locations: classpath:/db/migration
     baseline-on-migrate: true
+    level:
+      org.flywaydb: DEBUG
 
 #debug: true
 
