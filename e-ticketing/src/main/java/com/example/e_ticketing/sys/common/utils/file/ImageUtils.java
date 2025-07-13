@@ -1,8 +1,8 @@
 package com.example.e_ticketing.sys.common.utils.file;
 
-import com.palace.museum.common.config.NationalPalaceConfig;
-import com.palace.museum.common.constant.Constants;
-import com.palace.museum.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.config.NationalPalaceConfig;
+import com.example.e_ticketing.sys.common.constant.Constants;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
 import org.apache.poi.util.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

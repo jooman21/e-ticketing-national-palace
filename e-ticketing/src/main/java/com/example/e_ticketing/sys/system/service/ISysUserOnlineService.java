@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.system.service;
 
-import com.palace.museum.common.core.domain.dto.LoginUser;
-import com.palace.museum.system.domain.SysUserOnline;
+import com.example.e_ticketing.sys.common.core.domain.dto.LoginUser;
+import com.example.e_ticketing.sys.system.domain.SysUserOnline;
 
 public interface ISysUserOnlineService
 {

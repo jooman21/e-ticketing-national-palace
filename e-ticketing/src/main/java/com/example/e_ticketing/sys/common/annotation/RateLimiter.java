@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.common.annotation;
 
-import com.palace.museum.common.constant.CacheConstants;
-import com.palace.museum.common.enums.LimitType;
+import com.example.e_ticketing.sys.common.constant.CacheConstants;
+import com.example.e_ticketing.sys.common.enums.LimitType;
 
 import java.lang.annotation.*;
 

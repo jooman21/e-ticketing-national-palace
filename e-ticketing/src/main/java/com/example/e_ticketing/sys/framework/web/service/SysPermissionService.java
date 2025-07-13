@@ -1,11 +1,11 @@
 package com.example.e_ticketing.sys.framework.web.service;
 
-import com.palace.museum.common.constant.UserConstants;
-import com.palace.museum.common.core.domain.entity.SysRole;
-import com.palace.museum.common.core.domain.entity.SysUser;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.system.service.ISysMenuService;
-import com.palace.museum.system.service.ISysRoleService;
+import com.example.e_ticketing.sys.common.constant.UserConstants;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysRole;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysUser;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.system.service.ISysMenuService;
+import com.example.e_ticketing.sys.system.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;

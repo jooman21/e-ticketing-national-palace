@@ -1,12 +1,12 @@
 package com.example.e_ticketing.sys.framework.web.service;
 
-import com.palace.museum.common.constant.CacheConstants;
-import com.palace.museum.common.core.domain.entity.SysUser;
-import com.palace.museum.common.core.redis.RedisCache;
-import com.palace.museum.common.exception.user.UserPasswordNotMatchException;
-import com.palace.museum.common.exception.user.UserPasswordRetryLimitExceedException;
-import com.palace.museum.common.utils.SecurityUtils;
-import com.palace.museum.framework.security.context.AuthenticationContextHolder;
+import com.example.e_ticketing.sys.common.constant.CacheConstants;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysUser;
+import com.example.e_ticketing.sys.common.core.redis.RedisCache;
+import com.example.e_ticketing.sys.common.exception.user.UserPasswordNotMatchException;
+import com.example.e_ticketing.sys.common.exception.user.UserPasswordRetryLimitExceedException;
+import com.example.e_ticketing.sys.common.utils.SecurityUtils;
+import com.example.e_ticketing.sys.framework.security.context.AuthenticationContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;

@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.common.utils.http;
 
-import com.palace.museum.common.constant.Constants;
-import com.palace.museum.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.constant.Constants;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.common.enums;
 
-import com.palace.museum.common.utils.DesensitizedUtil;
+import com.example.e_ticketing.sys.common.utils.DesensitizedUtil;
 
 import java.util.function.Function;
 

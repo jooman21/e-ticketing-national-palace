@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.common.utils.sql;
 
-import com.palace.museum.common.exception.UtilException;
-import com.palace.museum.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.exception.UtilException;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
 
 public class SqlUtil
 {

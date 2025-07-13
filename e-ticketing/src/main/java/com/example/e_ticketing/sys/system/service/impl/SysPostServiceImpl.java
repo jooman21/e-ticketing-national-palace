@@ -1,12 +1,12 @@
 package com.example.e_ticketing.sys.system.service.impl;
 
-import com.palace.museum.common.constant.UserConstants;
-import com.palace.museum.common.exception.ServiceException;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.system.domain.SysPost;
-import com.palace.museum.system.mapper.SysPostMapper;
-import com.palace.museum.system.mapper.SysUserPostMapper;
-import com.palace.museum.system.service.ISysPostService;
+import com.example.e_ticketing.sys.common.constant.UserConstants;
+import com.example.e_ticketing.sys.common.exception.ServiceException;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.system.domain.SysPost;
+import com.example.e_ticketing.sys.system.mapper.SysPostMapper;
+import com.example.e_ticketing.sys.system.mapper.SysUserPostMapper;
+import com.example.e_ticketing.sys.system.service.ISysPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.common.utils;
 
-import com.palace.museum.common.constant.Constants;
-import com.palace.museum.common.core.text.Convert;
+import com.example.e_ticketing.sys.common.constant.Constants;
+import com.example.e_ticketing.sys.common.core.text.Convert;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

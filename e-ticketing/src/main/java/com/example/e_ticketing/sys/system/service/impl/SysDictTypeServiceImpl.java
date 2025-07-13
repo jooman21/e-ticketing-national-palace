@@ -1,14 +1,14 @@
 package com.example.e_ticketing.sys.system.service.impl;
 
-import com.palace.museum.common.constant.UserConstants;
-import com.palace.museum.common.core.domain.entity.SysDictData;
-import com.palace.museum.common.core.domain.entity.SysDictType;
-import com.palace.museum.common.exception.ServiceException;
-import com.palace.museum.common.utils.DictUtils;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.system.mapper.SysDictDataMapper;
-import com.palace.museum.system.mapper.SysDictTypeMapper;
-import com.palace.museum.system.service.ISysDictTypeService;
+import com.example.e_ticketing.sys.common.constant.UserConstants;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysDictData;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysDictType;
+import com.example.e_ticketing.sys.common.exception.ServiceException;
+import com.example.e_ticketing.sys.common.utils.DictUtils;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.system.mapper.SysDictDataMapper;
+import com.example.e_ticketing.sys.system.mapper.SysDictTypeMapper;
+import com.example.e_ticketing.sys.system.service.ISysDictTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

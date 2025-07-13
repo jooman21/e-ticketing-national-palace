@@ -22,7 +22,7 @@ import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.util.ClassUtils;
-import com.palace.museum.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
 
 @Configuration
 public class MyBatisConfig

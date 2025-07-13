@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.framework.security.context;
 
-import com.palace.museum.common.core.text.Convert;
+import com.example.e_ticketing.sys.common.core.text.Convert;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 

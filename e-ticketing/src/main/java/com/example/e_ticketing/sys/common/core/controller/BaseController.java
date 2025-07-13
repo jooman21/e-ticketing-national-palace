@@ -9,17 +9,17 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.palace.museum.common.constant.HttpStatus;
-import com.palace.museum.common.core.domain.AjaxResult;
-import com.palace.museum.common.core.domain.dto.LoginUser;
-import com.palace.museum.common.core.page.PageDomain;
-import com.palace.museum.common.core.page.TableDataInfo;
-import com.palace.museum.common.core.page.TableSupport;
-import com.palace.museum.common.utils.DateUtils;
-import com.palace.museum.common.utils.PageUtils;
-import com.palace.museum.common.utils.SecurityUtils;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.common.utils.sql.SqlUtil;
+import com.example.e_ticketing.sys.common.constant.HttpStatus;
+import com.example.e_ticketing.sys.common.core.domain.AjaxResult;
+import com.example.e_ticketing.sys.common.core.domain.dto.LoginUser;
+import com.example.e_ticketing.sys.common.core.page.PageDomain;
+import com.example.e_ticketing.sys.common.core.page.TableDataInfo;
+import com.example.e_ticketing.sys.common.core.page.TableSupport;
+import com.example.e_ticketing.sys.common.utils.DateUtils;
+import com.example.e_ticketing.sys.common.utils.PageUtils;
+import com.example.e_ticketing.sys.common.utils.SecurityUtils;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.utils.sql.SqlUtil;
 
 public class BaseController
 {

@@ -1,8 +1,8 @@
 package com.example.e_ticketing.sys.controller.tool;
 
-import com.palace.museum.common.core.controller.BaseController;
-import com.palace.museum.common.core.domain.Response;
-import com.palace.museum.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.core.controller.BaseController;
+import com.example.e_ticketing.sys.common.core.domain.Response;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 

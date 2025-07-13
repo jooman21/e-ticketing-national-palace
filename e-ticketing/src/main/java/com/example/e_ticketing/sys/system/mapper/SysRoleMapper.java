@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.system.mapper;
 
-import com.palace.museum.common.core.domain.entity.SysRole;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysRole;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.common.core.domain;
 
-import com.palace.museum.common.constant.HttpStatus;
-import com.palace.museum.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.constant.HttpStatus;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
 
 import java.util.HashMap;
 import java.util.Objects;

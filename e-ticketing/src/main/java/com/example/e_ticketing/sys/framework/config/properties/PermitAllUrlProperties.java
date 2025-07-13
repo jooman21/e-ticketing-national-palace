@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.framework.config.properties;
 
-import com.palace.museum.common.annotation.Anonymous;
+import com.example.e_ticketing.sys.common.annotation.Anonymous;
 import org.apache.commons.lang3.RegExUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;

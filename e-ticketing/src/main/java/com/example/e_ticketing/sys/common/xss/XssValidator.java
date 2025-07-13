@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.common.xss;
 
-import com.palace.museum.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

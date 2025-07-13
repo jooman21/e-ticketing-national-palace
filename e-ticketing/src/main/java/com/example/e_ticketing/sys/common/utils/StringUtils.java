@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.common.utils;
 
-import com.palace.museum.common.constant.Constants;
-import com.palace.museum.common.core.text.StrFormatter;
+import com.example.e_ticketing.sys.common.constant.Constants;
+import com.example.e_ticketing.sys.common.core.text.StrFormatter;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.*;

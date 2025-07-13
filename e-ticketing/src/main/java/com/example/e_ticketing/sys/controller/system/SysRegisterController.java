@@ -1,11 +1,11 @@
 package com.example.e_ticketing.sys.controller.system;
 
-import com.palace.museum.common.core.controller.BaseController;
-import com.palace.museum.common.core.domain.AjaxResult;
-import com.palace.museum.common.core.domain.dto.RegisterDto;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.framework.web.service.SysRegisterService;
-import com.palace.museum.system.service.ISysConfigService;
+import com.example.e_ticketing.sys.common.core.controller.BaseController;
+import com.example.e_ticketing.sys.common.core.domain.AjaxResult;
+import com.example.e_ticketing.sys.common.core.domain.dto.RegisterDto;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.framework.web.service.SysRegisterService;
+import com.example.e_ticketing.sys.system.service.ISysConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

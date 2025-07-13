@@ -1,8 +1,8 @@
 package com.example.e_ticketing.sys.framework.config;
 
-import com.palace.museum.common.config.NationalPalaceConfig;
-import com.palace.museum.common.constant.Constants;
-import com.palace.museum.framework.interceptor.RepeatSubmitInterceptor;
+import com.example.e_ticketing.sys.common.config.NationalPalaceConfig;
+import com.example.e_ticketing.sys.common.constant.Constants;
+import com.example.e_ticketing.sys.framework.interceptor.RepeatSubmitInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

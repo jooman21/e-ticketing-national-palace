@@ -1,8 +1,8 @@
 package com.example.e_ticketing.sys.framework.aspectj;
 
-import com.palace.museum.common.annotation.DataSource;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.framework.datasource.DynamicDataSourceContextHolder;
+import com.example.e_ticketing.sys.common.annotation.DataSource;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.framework.datasource.DynamicDataSourceContextHolder;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -23,8 +23,8 @@ public class DataSourceAspect
 {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Pointcut("@annotation(com.palace.museum.common.annotation.DataSource)"
-            + "|| @within(com.palace.museum.common.annotation.DataSource)")
+    @Pointcut("@annotation(com.example.e_ticketing.sys.common.annotation.DataSource)"
+            + "|| @within(com.example.e_ticketing.sys.common.annotation.DataSource)")
     public void dsPointCut()
     {
 

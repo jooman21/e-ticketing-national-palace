@@ -1,9 +1,9 @@
 package com.example.e_ticketing.sys.controller.monitor;
 
-import com.palace.museum.common.constant.CacheConstants;
-import com.palace.museum.common.core.domain.AjaxResult;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.system.domain.SysCache;
+import com.example.e_ticketing.sys.common.constant.CacheConstants;
+import com.example.e_ticketing.sys.common.core.domain.AjaxResult;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.system.domain.SysCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;

@@ -1,16 +1,16 @@
 package com.example.e_ticketing.sys.framework.manager.factory;
 
-import com.palace.museum.common.constant.Constants;
-import com.palace.museum.common.utils.LogUtils;
-import com.palace.museum.common.utils.ServletUtils;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.common.utils.ip.AddressUtils;
-import com.palace.museum.common.utils.ip.IpUtils;
-import com.palace.museum.common.utils.spring.SpringUtils;
-import com.palace.museum.system.domain.SysLogininfor;
-import com.palace.museum.system.domain.SysOperLog;
-import com.palace.museum.system.service.ISysLogininforService;
-import com.palace.museum.system.service.ISysOperLogService;
+import com.example.e_ticketing.sys.common.constant.Constants;
+import com.example.e_ticketing.sys.common.utils.LogUtils;
+import com.example.e_ticketing.sys.common.utils.ServletUtils;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.utils.ip.AddressUtils;
+import com.example.e_ticketing.sys.common.utils.ip.IpUtils;
+import com.example.e_ticketing.sys.common.utils.spring.SpringUtils;
+import com.example.e_ticketing.sys.system.domain.SysLogininfor;
+import com.example.e_ticketing.sys.system.domain.SysOperLog;
+import com.example.e_ticketing.sys.system.service.ISysLogininforService;
+import com.example.e_ticketing.sys.system.service.ISysOperLogService;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,19 +1,19 @@
 package com.example.e_ticketing.sys.system.service.impl;
 
-import com.palace.museum.common.constant.Constants;
-import com.palace.museum.common.constant.UserConstants;
-import com.palace.museum.common.core.domain.TreeSelect;
-import com.palace.museum.common.core.domain.entity.SysMenu;
-import com.palace.museum.common.core.domain.entity.SysRole;
-import com.palace.museum.common.core.domain.entity.SysUser;
-import com.palace.museum.common.utils.SecurityUtils;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.system.domain.vo.MetaVo;
-import com.palace.museum.system.domain.vo.RouterVo;
-import com.palace.museum.system.mapper.SysMenuMapper;
-import com.palace.museum.system.mapper.SysRoleMapper;
-import com.palace.museum.system.mapper.SysRoleMenuMapper;
-import com.palace.museum.system.service.ISysMenuService;
+import com.example.e_ticketing.sys.common.constant.Constants;
+import com.example.e_ticketing.sys.common.constant.UserConstants;
+import com.example.e_ticketing.sys.common.core.domain.TreeSelect;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysMenu;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysRole;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysUser;
+import com.example.e_ticketing.sys.common.utils.SecurityUtils;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.system.domain.vo.MetaVo;
+import com.example.e_ticketing.sys.system.domain.vo.RouterVo;
+import com.example.e_ticketing.sys.system.mapper.SysMenuMapper;
+import com.example.e_ticketing.sys.system.mapper.SysRoleMapper;
+import com.example.e_ticketing.sys.system.mapper.SysRoleMenuMapper;
+import com.example.e_ticketing.sys.system.service.ISysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,10 +1,10 @@
 package com.example.e_ticketing.sys.framework.security.handle;
 
 import com.alibaba.fastjson2.JSON;
-import com.palace.museum.common.constant.HttpStatus;
-import com.palace.museum.common.core.domain.AjaxResult;
-import com.palace.museum.common.utils.ServletUtils;
-import com.palace.museum.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.constant.HttpStatus;
+import com.example.e_ticketing.sys.common.core.domain.AjaxResult;
+import com.example.e_ticketing.sys.common.utils.ServletUtils;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;

@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.common.core.page;
 
-import com.palace.museum.common.core.text.Convert;
-import com.palace.museum.common.utils.ServletUtils;
+import com.example.e_ticketing.sys.common.core.text.Convert;
+import com.example.e_ticketing.sys.common.utils.ServletUtils;
 
 public class TableSupport
 {

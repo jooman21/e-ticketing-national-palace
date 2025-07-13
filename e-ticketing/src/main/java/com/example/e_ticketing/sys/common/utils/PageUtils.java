@@ -1,9 +1,9 @@
 package com.example.e_ticketing.sys.common.utils;
 
 import com.github.pagehelper.PageHelper;
-import com.palace.museum.common.core.page.PageDomain;
-import com.palace.museum.common.core.page.TableSupport;
-import com.palace.museum.common.utils.sql.SqlUtil;
+import com.example.e_ticketing.sys.common.core.page.PageDomain;
+import com.example.e_ticketing.sys.common.core.page.TableSupport;
+import com.example.e_ticketing.sys.common.utils.sql.SqlUtil;
 
 public class PageUtils extends PageHelper
 {

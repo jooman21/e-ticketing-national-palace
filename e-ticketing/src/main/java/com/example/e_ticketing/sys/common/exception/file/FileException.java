@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.common.exception.file;
 
-import com.palace.museum.common.exception.base.BaseException;
+import com.example.e_ticketing.sys.common.exception.base.BaseException;
 
 public class FileException extends BaseException
 {

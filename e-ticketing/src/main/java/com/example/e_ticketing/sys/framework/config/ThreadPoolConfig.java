@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.framework.config;
 
-import com.palace.museum.common.utils.Threads;
+import com.example.e_ticketing.sys.common.utils.Threads;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

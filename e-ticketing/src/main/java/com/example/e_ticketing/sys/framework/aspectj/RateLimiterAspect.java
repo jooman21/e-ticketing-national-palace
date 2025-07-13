@@ -1,10 +1,10 @@
 package com.example.e_ticketing.sys.framework.aspectj;
 
-import com.palace.museum.common.annotation.RateLimiter;
-import com.palace.museum.common.enums.LimitType;
-import com.palace.museum.common.exception.ServiceException;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.common.utils.ip.IpUtils;
+import com.example.e_ticketing.sys.common.annotation.RateLimiter;
+import com.example.e_ticketing.sys.common.enums.LimitType;
+import com.example.e_ticketing.sys.common.exception.ServiceException;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.utils.ip.IpUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;

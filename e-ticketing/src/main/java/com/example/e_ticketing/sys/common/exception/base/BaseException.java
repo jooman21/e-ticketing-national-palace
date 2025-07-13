@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.common.exception.base;
 
-import com.palace.museum.common.utils.MessageUtils;
-import com.palace.museum.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.utils.MessageUtils;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
 
 public class BaseException extends RuntimeException
 {

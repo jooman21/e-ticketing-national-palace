@@ -1,19 +1,19 @@
 package com.example.e_ticketing.sys.system.service.impl;
 
-import com.palace.museum.common.annotation.DataScope;
-import com.palace.museum.common.constant.UserConstants;
-import com.palace.museum.common.core.domain.TreeSelect;
-import com.palace.museum.common.core.domain.entity.SysDept;
-import com.palace.museum.common.core.domain.entity.SysRole;
-import com.palace.museum.common.core.domain.entity.SysUser;
-import com.palace.museum.common.core.text.Convert;
-import com.palace.museum.common.exception.ServiceException;
-import com.palace.museum.common.utils.SecurityUtils;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.common.utils.spring.SpringUtils;
-import com.palace.museum.system.mapper.SysDeptMapper;
-import com.palace.museum.system.mapper.SysRoleMapper;
-import com.palace.museum.system.service.ISysDeptService;
+import com.example.e_ticketing.sys.common.annotation.DataScope;
+import com.example.e_ticketing.sys.common.constant.UserConstants;
+import com.example.e_ticketing.sys.common.core.domain.TreeSelect;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysDept;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysRole;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysUser;
+import com.example.e_ticketing.sys.common.core.text.Convert;
+import com.example.e_ticketing.sys.common.exception.ServiceException;
+import com.example.e_ticketing.sys.common.utils.SecurityUtils;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.utils.spring.SpringUtils;
+import com.example.e_ticketing.sys.system.mapper.SysDeptMapper;
+import com.example.e_ticketing.sys.system.mapper.SysRoleMapper;
+import com.example.e_ticketing.sys.system.service.ISysDeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

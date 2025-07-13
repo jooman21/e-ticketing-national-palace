@@ -1,11 +1,11 @@
 package com.example.e_ticketing.sys.common.core.domain.entity;
 
-import com.palace.museum.common.core.domain.BaseEntity;
-import com.palace.museum.common.xss.Xss;
-import com.palace.museum.common.annotation.Excel;
-import com.palace.museum.common.annotation.Excel.ColumnType;
-import com.palace.museum.common.annotation.Excel.Type;
-import com.palace.museum.common.annotation.Excels;
+import com.example.e_ticketing.sys.common.core.domain.BaseEntity;
+import com.example.e_ticketing.sys.common.xss.Xss;
+import com.example.e_ticketing.sys.common.annotation.Excel;
+import com.example.e_ticketing.sys.common.annotation.Excel.ColumnType;
+import com.example.e_ticketing.sys.common.annotation.Excel.Type;
+import com.example.e_ticketing.sys.common.annotation.Excels;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 

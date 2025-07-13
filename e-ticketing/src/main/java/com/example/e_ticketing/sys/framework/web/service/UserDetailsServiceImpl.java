@@ -7,13 +7,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import com.palace.museum.common.core.domain.entity.SysUser;
-import com.palace.museum.common.core.domain.dto.LoginUser;
-import com.palace.museum.common.enums.UserStatus;
-import com.palace.museum.common.exception.ServiceException;
-import com.palace.museum.common.utils.MessageUtils;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.system.service.ISysUserService;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysUser;
+import com.example.e_ticketing.sys.common.core.domain.dto.LoginUser;
+import com.example.e_ticketing.sys.common.enums.UserStatus;
+import com.example.e_ticketing.sys.common.exception.ServiceException;
+import com.example.e_ticketing.sys.common.utils.MessageUtils;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.system.service.ISysUserService;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService

@@ -1,12 +1,12 @@
 package com.example.e_ticketing.sys.controller.common;
 
-import com.palace.museum.common.config.NationalPalaceConfig;
-import com.palace.museum.common.constant.Constants;
-import com.palace.museum.common.core.domain.AjaxResult;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.common.utils.file.FileUploadUtils;
-import com.palace.museum.common.utils.file.FileUtils;
-import com.palace.museum.framework.config.ServerConfig;
+import com.example.e_ticketing.sys.common.config.NationalPalaceConfig;
+import com.example.e_ticketing.sys.common.constant.Constants;
+import com.example.e_ticketing.sys.common.core.domain.AjaxResult;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.utils.file.FileUploadUtils;
+import com.example.e_ticketing.sys.common.utils.file.FileUtils;
+import com.example.e_ticketing.sys.framework.config.ServerConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.system.mapper;
 
-import com.palace.museum.system.domain.SysOperLog;
+import com.example.e_ticketing.sys.system.domain.SysOperLog;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

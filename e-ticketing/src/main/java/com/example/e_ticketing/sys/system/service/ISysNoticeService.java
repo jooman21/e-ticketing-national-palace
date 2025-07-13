@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.system.service;
 
-import com.palace.museum.system.domain.SysNotice;
+import com.example.e_ticketing.sys.system.domain.SysNotice;
 
 import java.util.List;
 

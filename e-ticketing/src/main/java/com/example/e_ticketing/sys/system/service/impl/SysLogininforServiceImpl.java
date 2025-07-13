@@ -1,8 +1,8 @@
 package com.example.e_ticketing.sys.system.service.impl;
 
-import com.palace.museum.system.domain.SysLogininfor;
-import com.palace.museum.system.mapper.SysLogininforMapper;
-import com.palace.museum.system.service.ISysLogininforService;
+import com.example.e_ticketing.sys.system.domain.SysLogininfor;
+import com.example.e_ticketing.sys.system.mapper.SysLogininforMapper;
+import com.example.e_ticketing.sys.system.service.ISysLogininforService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

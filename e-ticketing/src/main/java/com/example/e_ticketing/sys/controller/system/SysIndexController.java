@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.controller.system;
 
-import com.palace.museum.common.config.NationalPalaceConfig;
-import com.palace.museum.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.config.NationalPalaceConfig;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

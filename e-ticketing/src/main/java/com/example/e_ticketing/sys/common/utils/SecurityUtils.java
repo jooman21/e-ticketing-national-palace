@@ -7,11 +7,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.PatternMatchUtils;
-import com.palace.museum.common.constant.Constants;
-import com.palace.museum.common.constant.HttpStatus;
-import com.palace.museum.common.core.domain.entity.SysRole;
-import com.palace.museum.common.core.domain.dto.LoginUser;
-import com.palace.museum.common.exception.ServiceException;
+import com.example.e_ticketing.sys.common.constant.Constants;
+import com.example.e_ticketing.sys.common.constant.HttpStatus;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysRole;
+import com.example.e_ticketing.sys.common.core.domain.dto.LoginUser;
+import com.example.e_ticketing.sys.common.exception.ServiceException;
 
 public class SecurityUtils
 {

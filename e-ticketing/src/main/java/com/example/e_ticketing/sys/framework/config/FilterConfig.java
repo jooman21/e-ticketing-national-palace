@@ -1,8 +1,8 @@
 package com.example.e_ticketing.sys.framework.config;
 
-import com.palace.museum.common.filter.RepeatableFilter;
-import com.palace.museum.common.filter.XssFilter;
-import com.palace.museum.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.filter.RepeatableFilter;
+import com.example.e_ticketing.sys.common.filter.XssFilter;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
 import jakarta.servlet.DispatcherType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

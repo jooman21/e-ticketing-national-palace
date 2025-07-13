@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.common.filter;
 
-import com.palace.museum.common.constant.Constants;
-import com.palace.museum.common.utils.http.HttpHelper;
+import com.example.e_ticketing.sys.common.constant.Constants;
+import com.example.e_ticketing.sys.common.utils.http.HttpHelper;
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.ServletResponse;

@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.common.annotation;
 
-import com.palace.museum.common.enums.RequestType;
-import com.palace.museum.common.enums.OperatorType;
+import com.example.e_ticketing.sys.common.enums.RequestType;
+import com.example.e_ticketing.sys.common.enums.OperatorType;
 
 import java.lang.annotation.*;
 

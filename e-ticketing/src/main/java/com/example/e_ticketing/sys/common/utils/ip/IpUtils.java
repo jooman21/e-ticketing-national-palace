@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.common.utils.ip;
 
-import com.palace.museum.common.utils.ServletUtils;
-import com.palace.museum.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.utils.ServletUtils;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.net.InetAddress;

@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.system.service;
 
-import com.palace.museum.common.core.domain.entity.SysRole;
-import com.palace.museum.system.domain.SysUserRole;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysRole;
+import com.example.e_ticketing.sys.system.domain.SysUserRole;
 
 import java.util.List;
 import java.util.Set;

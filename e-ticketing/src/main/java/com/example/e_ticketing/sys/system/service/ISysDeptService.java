@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.system.service;
 
-import com.palace.museum.common.core.domain.TreeSelect;
-import com.palace.museum.common.core.domain.entity.SysDept;
+import com.example.e_ticketing.sys.common.core.domain.TreeSelect;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysDept;
 
 import java.util.List;
 

@@ -1,16 +1,16 @@
 package com.example.e_ticketing.sys.controller.monitor;
 
-import com.palace.museum.common.annotation.Log;
-import com.palace.museum.common.constant.CacheConstants;
-import com.palace.museum.common.core.controller.BaseController;
-import com.palace.museum.common.core.domain.AjaxResult;
-import com.palace.museum.common.core.domain.dto.LoginUser;
-import com.palace.museum.common.core.page.TableDataInfo;
-import com.palace.museum.common.core.redis.RedisCache;
-import com.palace.museum.common.enums.RequestType;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.system.domain.SysUserOnline;
-import com.palace.museum.system.service.ISysUserOnlineService;
+import com.example.e_ticketing.sys.common.annotation.Log;
+import com.example.e_ticketing.sys.common.constant.CacheConstants;
+import com.example.e_ticketing.sys.common.core.controller.BaseController;
+import com.example.e_ticketing.sys.common.core.domain.AjaxResult;
+import com.example.e_ticketing.sys.common.core.domain.dto.LoginUser;
+import com.example.e_ticketing.sys.common.core.page.TableDataInfo;
+import com.example.e_ticketing.sys.common.core.redis.RedisCache;
+import com.example.e_ticketing.sys.common.enums.RequestType;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.system.domain.SysUserOnline;
+import com.example.e_ticketing.sys.system.service.ISysUserOnlineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

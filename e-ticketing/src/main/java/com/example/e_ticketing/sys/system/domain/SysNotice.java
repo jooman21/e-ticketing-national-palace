@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.system.domain;
 
-import com.palace.museum.common.core.domain.BaseEntity;
-import com.palace.museum.common.xss.Xss;
+import com.example.e_ticketing.sys.common.core.domain.BaseEntity;
+import com.example.e_ticketing.sys.common.xss.Xss;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 

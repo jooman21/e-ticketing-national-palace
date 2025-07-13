@@ -1,8 +1,8 @@
 package com.example.e_ticketing.sys.common.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.palace.museum.common.core.domain.entity.SysDept;
-import com.palace.museum.common.core.domain.entity.SysMenu;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysDept;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysMenu;
 
 import java.io.Serializable;
 import java.util.List;

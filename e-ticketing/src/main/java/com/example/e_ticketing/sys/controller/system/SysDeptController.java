@@ -1,13 +1,13 @@
 package com.example.e_ticketing.sys.controller.system;
 
-import com.palace.museum.common.annotation.Log;
-import com.palace.museum.common.constant.UserConstants;
-import com.palace.museum.common.core.controller.BaseController;
-import com.palace.museum.common.core.domain.AjaxResult;
-import com.palace.museum.common.core.domain.entity.SysDept;
-import com.palace.museum.common.enums.RequestType;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.system.service.ISysDeptService;
+import com.example.e_ticketing.sys.common.annotation.Log;
+import com.example.e_ticketing.sys.common.constant.UserConstants;
+import com.example.e_ticketing.sys.common.core.controller.BaseController;
+import com.example.e_ticketing.sys.common.core.domain.AjaxResult;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysDept;
+import com.example.e_ticketing.sys.common.enums.RequestType;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.system.service.ISysDeptService;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

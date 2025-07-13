@@ -11,14 +11,14 @@ import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.google.code.kaptcha.Producer;
-import com.palace.museum.common.config.NationalPalaceConfig;
-import com.palace.museum.common.constant.CacheConstants;
-import com.palace.museum.common.constant.Constants;
-import com.palace.museum.common.core.domain.AjaxResult;
-import com.palace.museum.common.core.redis.RedisCache;
-import com.palace.museum.common.utils.sign.Base64;
-import com.palace.museum.common.utils.uuid.IdUtils;
-import com.palace.museum.system.service.ISysConfigService;
+import com.example.e_ticketing.sys.common.config.NationalPalaceConfig;
+import com.example.e_ticketing.sys.common.constant.CacheConstants;
+import com.example.e_ticketing.sys.common.constant.Constants;
+import com.example.e_ticketing.sys.common.core.domain.AjaxResult;
+import com.example.e_ticketing.sys.common.core.redis.RedisCache;
+import com.example.e_ticketing.sys.common.utils.sign.Base64;
+import com.example.e_ticketing.sys.common.utils.uuid.IdUtils;
+import com.example.e_ticketing.sys.system.service.ISysConfigService;
 
 @RestController
 public class CaptchaController

@@ -1,20 +1,20 @@
 package com.example.e_ticketing.sys.framework.web.service;
 
-import com.palace.museum.common.constant.CacheConstants;
-import com.palace.museum.common.constant.Constants;
-import com.palace.museum.common.constant.UserConstants;
-import com.palace.museum.common.core.domain.entity.SysUser;
-import com.palace.museum.common.core.domain.dto.RegisterDto;
-import com.palace.museum.common.core.redis.RedisCache;
-import com.palace.museum.common.exception.user.CaptchaException;
-import com.palace.museum.common.exception.user.CaptchaExpireException;
-import com.palace.museum.common.utils.MessageUtils;
-import com.palace.museum.common.utils.SecurityUtils;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.framework.manager.AsyncManager;
-import com.palace.museum.framework.manager.factory.AsyncFactory;
-import com.palace.museum.system.service.ISysConfigService;
-import com.palace.museum.system.service.ISysUserService;
+import com.example.e_ticketing.sys.common.constant.CacheConstants;
+import com.example.e_ticketing.sys.common.constant.Constants;
+import com.example.e_ticketing.sys.common.constant.UserConstants;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysUser;
+import com.example.e_ticketing.sys.common.core.domain.dto.RegisterDto;
+import com.example.e_ticketing.sys.common.core.redis.RedisCache;
+import com.example.e_ticketing.sys.common.exception.user.CaptchaException;
+import com.example.e_ticketing.sys.common.exception.user.CaptchaExpireException;
+import com.example.e_ticketing.sys.common.utils.MessageUtils;
+import com.example.e_ticketing.sys.common.utils.SecurityUtils;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.framework.manager.AsyncManager;
+import com.example.e_ticketing.sys.framework.manager.factory.AsyncFactory;
+import com.example.e_ticketing.sys.system.service.ISysConfigService;
+import com.example.e_ticketing.sys.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

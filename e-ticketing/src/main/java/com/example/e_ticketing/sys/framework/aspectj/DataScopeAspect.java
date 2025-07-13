@@ -1,15 +1,15 @@
 package com.example.e_ticketing.sys.framework.aspectj;
 
-import com.palace.museum.common.annotation.DataScope;
-import com.palace.museum.common.constant.UserConstants;
-import com.palace.museum.common.core.domain.BaseEntity;
-import com.palace.museum.common.core.domain.entity.SysRole;
-import com.palace.museum.common.core.domain.entity.SysUser;
-import com.palace.museum.common.core.domain.dto.LoginUser;
-import com.palace.museum.common.core.text.Convert;
-import com.palace.museum.common.utils.SecurityUtils;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.framework.security.context.PermissionContextHolder;
+import com.example.e_ticketing.sys.common.annotation.DataScope;
+import com.example.e_ticketing.sys.common.constant.UserConstants;
+import com.example.e_ticketing.sys.common.core.domain.BaseEntity;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysRole;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysUser;
+import com.example.e_ticketing.sys.common.core.domain.dto.LoginUser;
+import com.example.e_ticketing.sys.common.core.text.Convert;
+import com.example.e_ticketing.sys.common.utils.SecurityUtils;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.framework.security.context.PermissionContextHolder;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;

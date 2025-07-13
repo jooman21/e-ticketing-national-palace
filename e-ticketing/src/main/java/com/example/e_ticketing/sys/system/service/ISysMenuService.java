@@ -1,8 +1,8 @@
 package com.example.e_ticketing.sys.system.service;
 
-import com.palace.museum.common.core.domain.TreeSelect;
-import com.palace.museum.common.core.domain.entity.SysMenu;
-import com.palace.museum.system.domain.vo.RouterVo;
+import com.example.e_ticketing.sys.common.core.domain.TreeSelect;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysMenu;
+import com.example.e_ticketing.sys.system.domain.vo.RouterVo;
 
 import java.util.List;
 import java.util.Set;

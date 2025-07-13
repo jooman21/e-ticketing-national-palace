@@ -2,8 +2,8 @@ package com.example.e_ticketing.sys.common.annotation;
 
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.palace.museum.common.config.serializer.SensitiveJsonSerializer;
-import com.palace.museum.common.enums.DesensitizedType;
+import com.example.e_ticketing.sys.common.config.serializer.SensitiveJsonSerializer;
+import com.example.e_ticketing.sys.common.enums.DesensitizedType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

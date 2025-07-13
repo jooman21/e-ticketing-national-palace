@@ -1,9 +1,9 @@
 package com.example.e_ticketing.sys.framework.interceptor;
 
 import com.alibaba.fastjson2.JSON;
-import com.palace.museum.common.annotation.RepeatSubmit;
-import com.palace.museum.common.core.domain.AjaxResult;
-import com.palace.museum.common.utils.ServletUtils;
+import com.example.e_ticketing.sys.common.annotation.RepeatSubmit;
+import com.example.e_ticketing.sys.common.core.domain.AjaxResult;
+import com.example.e_ticketing.sys.common.utils.ServletUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;

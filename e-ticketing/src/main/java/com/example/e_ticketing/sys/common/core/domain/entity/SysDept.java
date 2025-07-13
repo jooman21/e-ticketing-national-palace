@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.common.core.domain.entity;
 
-import com.palace.museum.common.core.domain.BaseEntity;
+import com.example.e_ticketing.sys.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 

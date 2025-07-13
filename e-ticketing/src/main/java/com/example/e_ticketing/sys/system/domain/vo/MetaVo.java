@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.system.domain.vo;
 
-import com.palace.museum.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
 
 public class MetaVo
 {

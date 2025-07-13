@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.framework.manager;
 
-import com.palace.museum.common.utils.Threads;
-import com.palace.museum.common.utils.spring.SpringUtils;
+import com.example.e_ticketing.sys.common.utils.Threads;
+import com.example.e_ticketing.sys.common.utils.spring.SpringUtils;
 
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;

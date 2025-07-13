@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.common.utils.spring;
 
-import com.palace.museum.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;

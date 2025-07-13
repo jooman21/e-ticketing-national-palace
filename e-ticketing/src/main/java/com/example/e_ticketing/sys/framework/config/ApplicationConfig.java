@@ -10,7 +10,7 @@ import java.util.TimeZone;
 
 @Configuration
 @EnableAspectJAutoProxy(exposeProxy = true)
-@MapperScan("com.palace.museum.**.mapper")
+@MapperScan("com.example.e_ticketing.sys.**.mapper")
 public class ApplicationConfig
 {
     @Bean

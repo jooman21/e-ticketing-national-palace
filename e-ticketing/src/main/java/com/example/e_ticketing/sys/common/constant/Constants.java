@@ -67,5 +67,5 @@ public class Constants
     public static final String[] JOB_WHITELIST_STR = { "com.ruoyi.quartz.task" };
 
     public static final String[] JOB_ERROR_STR = { "java.net.URL", "jakarta.naming.InitialContext",
-            "org.springframework", "org.apache", "com.palace.museum.common.utils.file", "com.palace.museum.common.config", "com.palace.museum.generator" };
+            "org.springframework", "org.apache", "com.example.e_ticketing.sys.common.utils.file", "com.example.e_ticketing.sys.common.config", "com.example.e_ticketing.sys.generator" };
 }

@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.framework.config;
 
-import com.palace.museum.common.utils.ServletUtils;
+import com.example.e_ticketing.sys.common.utils.ServletUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 

@@ -1,13 +1,13 @@
 package com.example.e_ticketing.sys.common.utils.file;
 
-import com.palace.museum.common.config.NationalPalaceConfig;
-import com.palace.museum.common.constant.Constants;
-import com.palace.museum.common.exception.file.FileNameLengthLimitExceededException;
-import com.palace.museum.common.exception.file.FileSizeLimitExceededException;
-import com.palace.museum.common.exception.file.InvalidExtensionException;
-import com.palace.museum.common.utils.DateUtils;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.common.utils.uuid.Seq;
+import com.example.e_ticketing.sys.common.config.NationalPalaceConfig;
+import com.example.e_ticketing.sys.common.constant.Constants;
+import com.example.e_ticketing.sys.common.exception.file.FileNameLengthLimitExceededException;
+import com.example.e_ticketing.sys.common.exception.file.FileSizeLimitExceededException;
+import com.example.e_ticketing.sys.common.exception.file.InvalidExtensionException;
+import com.example.e_ticketing.sys.common.utils.DateUtils;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.utils.uuid.Seq;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 

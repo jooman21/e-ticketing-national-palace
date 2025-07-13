@@ -4,17 +4,17 @@ import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.palace.museum.common.constant.Constants;
-import com.palace.museum.common.core.domain.AjaxResult;
-import com.palace.museum.common.core.domain.entity.SysMenu;
-import com.palace.museum.common.core.domain.entity.SysUser;
-import com.palace.museum.common.core.domain.dto.LoginDto;
-import com.palace.museum.common.core.domain.dto.LoginUser;
-import com.palace.museum.common.utils.SecurityUtils;
-import com.palace.museum.framework.web.service.SysLoginService;
-import com.palace.museum.framework.web.service.SysPermissionService;
-import com.palace.museum.framework.web.service.TokenService;
-import com.palace.museum.system.service.ISysMenuService;
+import com.example.e_ticketing.sys.common.constant.Constants;
+import com.example.e_ticketing.sys.common.core.domain.AjaxResult;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysMenu;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysUser;
+import com.example.e_ticketing.sys.common.core.domain.dto.LoginDto;
+import com.example.e_ticketing.sys.common.core.domain.dto.LoginUser;
+import com.example.e_ticketing.sys.common.utils.SecurityUtils;
+import com.example.e_ticketing.sys.framework.web.service.SysLoginService;
+import com.example.e_ticketing.sys.framework.web.service.SysPermissionService;
+import com.example.e_ticketing.sys.framework.web.service.TokenService;
+import com.example.e_ticketing.sys.system.service.ISysMenuService;
 
 @RestController
 @RequestMapping("/auth")

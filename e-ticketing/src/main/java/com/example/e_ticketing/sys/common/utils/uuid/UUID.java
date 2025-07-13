@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.common.utils.uuid;
 
-import com.palace.museum.common.exception.UtilException;
+import com.example.e_ticketing.sys.common.exception.UtilException;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

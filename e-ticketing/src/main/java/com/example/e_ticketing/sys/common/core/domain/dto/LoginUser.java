@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.common.core.domain.dto;
 
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.palace.museum.common.core.domain.entity.SysUser;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;

@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.common.filter;
 
-import com.palace.museum.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.MediaType;

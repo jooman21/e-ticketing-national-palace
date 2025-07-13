@@ -1,9 +1,9 @@
 package com.example.e_ticketing.sys.system.service.impl;
 
-import com.palace.museum.common.core.domain.dto.LoginUser;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.system.domain.SysUserOnline;
-import com.palace.museum.system.service.ISysUserOnlineService;
+import com.example.e_ticketing.sys.common.core.domain.dto.LoginUser;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.system.domain.SysUserOnline;
+import com.example.e_ticketing.sys.system.service.ISysUserOnlineService;
 import org.springframework.stereotype.Service;
 
 @Service

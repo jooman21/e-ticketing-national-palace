@@ -1,9 +1,9 @@
 package com.example.e_ticketing.sys.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.palace.museum.common.annotation.Excel;
-import com.palace.museum.common.annotation.Excel.ColumnType;
-import com.palace.museum.common.core.domain.BaseEntity;
+import com.example.e_ticketing.sys.common.annotation.Excel;
+import com.example.e_ticketing.sys.common.annotation.Excel.ColumnType;
+import com.example.e_ticketing.sys.common.core.domain.BaseEntity;
 
 import java.util.Date;
 

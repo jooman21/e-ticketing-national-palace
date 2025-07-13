@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.common.core.domain;
 
-import com.palace.museum.common.constant.HttpStatus;
+import com.example.e_ticketing.sys.common.constant.HttpStatus;
 
 import java.io.Serializable;
 

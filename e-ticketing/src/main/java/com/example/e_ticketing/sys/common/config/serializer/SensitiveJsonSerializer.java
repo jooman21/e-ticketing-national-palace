@@ -6,10 +6,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
-import com.palace.museum.common.annotation.Sensitive;
-import com.palace.museum.common.core.domain.dto.LoginUser;
-import com.palace.museum.common.enums.DesensitizedType;
-import com.palace.museum.common.utils.SecurityUtils;
+import com.example.e_ticketing.sys.common.annotation.Sensitive;
+import com.example.e_ticketing.sys.common.core.domain.dto.LoginUser;
+import com.example.e_ticketing.sys.common.enums.DesensitizedType;
+import com.example.e_ticketing.sys.common.utils.SecurityUtils;
 
 import java.io.IOException;
 import java.util.Objects;

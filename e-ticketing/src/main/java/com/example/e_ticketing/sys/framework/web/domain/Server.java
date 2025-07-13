@@ -1,8 +1,8 @@
 package com.example.e_ticketing.sys.framework.web.domain;
 
-import com.palace.museum.common.utils.Arith;
-import com.palace.museum.common.utils.ip.IpUtils;
-import com.palace.museum.framework.web.domain.server.*;
+import com.example.e_ticketing.sys.common.utils.Arith;
+import com.example.e_ticketing.sys.common.utils.ip.IpUtils;
+import com.example.e_ticketing.sys.framework.web.domain.server.*;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.CentralProcessor.TickType;

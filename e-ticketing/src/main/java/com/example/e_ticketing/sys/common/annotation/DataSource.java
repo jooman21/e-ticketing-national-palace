@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.common.annotation;
 
-import com.palace.museum.common.enums.DataSourceType;
+import com.example.e_ticketing.sys.common.enums.DataSourceType;
 
 import java.lang.annotation.*;
 

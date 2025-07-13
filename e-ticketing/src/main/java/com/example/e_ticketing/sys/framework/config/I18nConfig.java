@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.framework.config;
 
-import com.palace.museum.common.constant.Constants;
+import com.example.e_ticketing.sys.common.constant.Constants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;

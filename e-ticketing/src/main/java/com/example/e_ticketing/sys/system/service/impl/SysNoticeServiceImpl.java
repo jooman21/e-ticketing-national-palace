@@ -1,8 +1,8 @@
 package com.example.e_ticketing.sys.system.service.impl;
 
-import com.palace.museum.system.domain.SysNotice;
-import com.palace.museum.system.mapper.SysNoticeMapper;
-import com.palace.museum.system.service.ISysNoticeService;
+import com.example.e_ticketing.sys.system.domain.SysNotice;
+import com.example.e_ticketing.sys.system.mapper.SysNoticeMapper;
+import com.example.e_ticketing.sys.system.service.ISysNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

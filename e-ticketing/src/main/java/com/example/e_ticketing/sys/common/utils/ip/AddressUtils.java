@@ -2,10 +2,10 @@ package com.example.e_ticketing.sys.common.utils.ip;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.palace.museum.common.config.NationalPalaceConfig;
-import com.palace.museum.common.constant.Constants;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.common.utils.http.HttpUtils;
+import com.example.e_ticketing.sys.common.config.NationalPalaceConfig;
+import com.example.e_ticketing.sys.common.constant.Constants;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.utils.http.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

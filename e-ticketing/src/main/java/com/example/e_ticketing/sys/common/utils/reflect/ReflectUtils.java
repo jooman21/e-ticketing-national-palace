@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.common.utils.reflect;
 
-import com.palace.museum.common.core.text.Convert;
-import com.palace.museum.common.utils.DateUtils;
+import com.example.e_ticketing.sys.common.core.text.Convert;
+import com.example.e_ticketing.sys.common.utils.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.poi.ss.usermodel.DateUtil;

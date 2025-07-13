@@ -1,13 +1,13 @@
 package com.example.e_ticketing.sys.framework.interceptor.impl;
 
 import com.alibaba.fastjson2.JSON;
-import com.palace.museum.common.annotation.RepeatSubmit;
-import com.palace.museum.common.constant.CacheConstants;
-import com.palace.museum.common.core.redis.RedisCache;
-import com.palace.museum.common.filter.RepeatedlyRequestWrapper;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.common.utils.http.HttpHelper;
-import com.palace.museum.framework.interceptor.RepeatSubmitInterceptor;
+import com.example.e_ticketing.sys.common.annotation.RepeatSubmit;
+import com.example.e_ticketing.sys.common.constant.CacheConstants;
+import com.example.e_ticketing.sys.common.core.redis.RedisCache;
+import com.example.e_ticketing.sys.common.filter.RepeatedlyRequestWrapper;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.common.utils.http.HttpHelper;
+import com.example.e_ticketing.sys.framework.interceptor.RepeatSubmitInterceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.system.mapper;
 
-import com.palace.museum.system.domain.SysUserRole;
+import com.example.e_ticketing.sys.system.domain.SysUserRole;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

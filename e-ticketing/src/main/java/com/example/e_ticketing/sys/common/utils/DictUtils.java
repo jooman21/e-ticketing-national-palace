@@ -1,10 +1,10 @@
 package com.example.e_ticketing.sys.common.utils;
 
 import com.alibaba.fastjson2.JSONArray;
-import com.palace.museum.common.constant.CacheConstants;
-import com.palace.museum.common.core.domain.entity.SysDictData;
-import com.palace.museum.common.core.redis.RedisCache;
-import com.palace.museum.common.utils.spring.SpringUtils;
+import com.example.e_ticketing.sys.common.constant.CacheConstants;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysDictData;
+import com.example.e_ticketing.sys.common.core.redis.RedisCache;
+import com.example.e_ticketing.sys.common.utils.spring.SpringUtils;
 
 import java.util.Collection;
 import java.util.List;

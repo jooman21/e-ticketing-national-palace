@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.system.service;
 
-import com.palace.museum.system.domain.SysLogininfor;
+import com.example.e_ticketing.sys.system.domain.SysLogininfor;
 
 import java.util.List;
 

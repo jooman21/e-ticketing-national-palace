@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.system.service;
 
-import com.palace.museum.common.core.domain.entity.SysDictData;
-import com.palace.museum.common.core.domain.entity.SysDictType;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysDictData;
+import com.example.e_ticketing.sys.common.core.domain.entity.SysDictType;
 
 import java.util.List;
 

@@ -1,16 +1,16 @@
 package com.example.e_ticketing.sys.system.service.impl;
 
-import com.palace.museum.common.annotation.DataSource;
-import com.palace.museum.common.constant.CacheConstants;
-import com.palace.museum.common.constant.UserConstants;
-import com.palace.museum.common.core.redis.RedisCache;
-import com.palace.museum.common.core.text.Convert;
-import com.palace.museum.common.enums.DataSourceType;
-import com.palace.museum.common.exception.ServiceException;
-import com.palace.museum.common.utils.StringUtils;
-import com.palace.museum.system.domain.SysConfig;
-import com.palace.museum.system.mapper.SysConfigMapper;
-import com.palace.museum.system.service.ISysConfigService;
+import com.example.e_ticketing.sys.common.annotation.DataSource;
+import com.example.e_ticketing.sys.common.constant.CacheConstants;
+import com.example.e_ticketing.sys.common.constant.UserConstants;
+import com.example.e_ticketing.sys.common.core.redis.RedisCache;
+import com.example.e_ticketing.sys.common.core.text.Convert;
+import com.example.e_ticketing.sys.common.enums.DataSourceType;
+import com.example.e_ticketing.sys.common.exception.ServiceException;
+import com.example.e_ticketing.sys.common.utils.StringUtils;
+import com.example.e_ticketing.sys.system.domain.SysConfig;
+import com.example.e_ticketing.sys.system.mapper.SysConfigMapper;
+import com.example.e_ticketing.sys.system.service.ISysConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

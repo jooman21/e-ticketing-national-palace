@@ -1,7 +1,7 @@
 package com.example.e_ticketing.sys.framework.web.domain.server;
 
-import com.palace.museum.common.utils.Arith;
-import com.palace.museum.common.utils.DateUtils;
+import com.example.e_ticketing.sys.common.utils.Arith;
+import com.example.e_ticketing.sys.common.utils.DateUtils;
 
 import java.lang.management.ManagementFactory;
 

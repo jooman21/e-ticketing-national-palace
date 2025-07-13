@@ -1,6 +1,6 @@
 package com.example.e_ticketing.sys.config;
 
-import com.palace.museum.common.config.NationalPalaceConfig;
+import com.example.e_ticketing.sys.common.config.NationalPalaceConfig;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
