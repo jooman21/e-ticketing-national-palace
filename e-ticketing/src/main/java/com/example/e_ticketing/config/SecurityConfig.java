@@ -78,7 +78,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((requests) -> {
                     permitAllUrl.getUrls().forEach(url -> requests.requestMatchers(url).permitAll());
-                    requests.requestMatchers("/auth/**", "/system/**","/profile/avatar/**","/ticket/**","/monitor/**", "/register", "/captchaImage").permitAll()
+                    requests.requestMatchers("/auth/**", "/system/**","/profile/avatar/**","/tickets/**","/ticket/**","/ticket-policy/**","/ticketType/**","/timeslots/**","/visitPlace/**","/visit-schedules/**","/announcements/**","/priceConfig/**","/monitor/**", "/register", "/captchaImage").permitAll()
                             .requestMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
                             .requestMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**").permitAll()
                             .anyRequest().authenticated();
