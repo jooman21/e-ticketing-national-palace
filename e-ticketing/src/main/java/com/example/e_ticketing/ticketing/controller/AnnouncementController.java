@@ -113,7 +113,7 @@ public class AnnouncementController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<GenericResponse> getAllAnnouncements() { @Valid
         List<AnnouncementDto> announcements = announcementTotalClosure.getAllAnnouncements();
 

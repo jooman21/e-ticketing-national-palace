@@ -18,7 +18,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/visitPlace")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5174"})
 public class VisitPlaceController {
     private final VisitPlaceService visitPlaceService;
 
@@ -36,7 +36,7 @@ public class VisitPlaceController {
         return ResponseEntity.ok(new GenericResponse<>(true, "Visit place fetched successfully.", dto));
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<GenericResponse<List<VisitPlaceDto>>> getAllVisitPlaces() {
         List<VisitPlaceDto> visitPlaces = visitPlaceService.getAllVisitPlaces();
         return ResponseEntity.ok(new GenericResponse<>(true, "Visit places fetched successfully.", visitPlaces));
