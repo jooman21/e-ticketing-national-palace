@@ -22,7 +22,7 @@ CREATE TABLE ticket_types (
                               ticket_category ticket_category NOT NULL,
                               available BOOLEAN DEFAULT TRUE,
                               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                              updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                              updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 --                               CONSTRAINT fk_ticket_policy
 --                                   FOREIGN KEY (ticket_policy_id)
 --                                       REFERENCES ticket_policy(id)
@@ -91,6 +91,17 @@ CREATE TABLE visit_schedule_place_status (
                                              FOREIGN KEY (visit_place_id) REFERENCES visit_places(id) ON DELETE CASCADE
 );
 
+CREATE TABLE visitors (
+                          id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                          full_name VARCHAR(100) NOT NULL,
+                          email VARCHAR(100)  NOT NULL,
+                          phone_number VARCHAR(20),
+                          nationality VARCHAR(100),
+                          residency VARCHAR(20) NOT NULL, -- e.g., 'LOCAL' or 'INTERNATIONAL'
+                          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE tickets (
                          id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                          visitor_id UUID NULL REFERENCES visitors(id) ON DELETE CASCADE,
@@ -102,16 +113,6 @@ CREATE TABLE tickets (
                          qr_code VARCHAR(255),
                          issued_at TIMESTAMP,
                          expires_at TIMESTAMP
-);
-CREATE TABLE visitors (
-                          id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-                          full_name VARCHAR(100) NOT NULL,
-                          email VARCHAR(100)  NOT NULL,
-                          phone_number VARCHAR(20),
-                          nationality VARCHAR(100),
-                          residency VARCHAR(20) NOT NULL, -- e.g., 'LOCAL' or 'INTERNATIONAL'
-                          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -136,7 +137,7 @@ CREATE TABLE ticket_policy (
                              id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                              validityDays INTEGER NOT NULL,
                              created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
 );
 

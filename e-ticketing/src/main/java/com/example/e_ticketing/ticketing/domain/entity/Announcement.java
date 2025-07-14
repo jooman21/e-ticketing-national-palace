@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "announcement")
+@Table(name = "announcements")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -29,7 +29,7 @@ public class Announcement {
 
     @ManyToMany
     @JoinTable(
-            name = "announcement_places",
+            name = "announcement_target_places",
             joinColumns = @JoinColumn(name = "announcement_id"),
             inverseJoinColumns = @JoinColumn(name = "visit_place_id")
     )
