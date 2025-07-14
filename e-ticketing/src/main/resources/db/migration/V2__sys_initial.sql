@@ -154,11 +154,11 @@ CREATE TABLE sys_menu (
 );
 
 INSERT INTO sys_menu (menu_name,parent_id,order_num,"path",component,query,route_name,is_frame,is_cache,menu_type,visible,status,perms,icon,create_by,create_time,update_by,update_time,remark) VALUES
-	 ('System Management',0,2,'/admin/system/user',NULL,NULL,'','1','0','M','0','0','system:user:list','Settings','admin','2025-07-14 16:50:21.274859','',NULL,''),
+	 ('Dashboard',0,1,'/admin',NULL,NULL,'','1','0','C','0','0','admin:dashboard:list','Gauge','admin','2025-07-14 16:48:34.509985','admin','2025-07-14 16:53:37.272895',''),
+     ('System Management',0,2,'/admin/system/user',NULL,NULL,'','1','0','M','0','0','system:user:list','Settings','admin','2025-07-14 16:50:21.274859','',NULL,''),
 	 ('System Monitoring',0,3,'',NULL,NULL,'','1','0','M','0','0','system:monitoring:list','Monitor','admin','2025-07-14 16:51:19.500095','',NULL,''),
 	 ('Ticket Management',0,4,'',NULL,NULL,'','1','0','M','0','0','ticket:management:list','Ticket','admin','2025-07-14 16:52:49.368966','',NULL,''),
-	 ('Dashboard',0,1,'/admin',NULL,NULL,'','1','0','C','0','0','admin:dashboard:list','Gauge','admin','2025-07-14 16:48:34.509985','admin','2025-07-14 16:53:37.272895',''),
-	 ('Users',2,1,'/admin/system/user','layout/admin/system/user',NULL,'','1','1','C','0','0','system:user:list','User','admin','2025-07-14 17:00:18.436984','',NULL,''),
+     ('Users',2,1,'/admin/system/user','layout/admin/system/user',NULL,'','1','1','C','0','0','system:user:list','User','admin','2025-07-14 17:00:18.436984','',NULL,''),
 	 ('Roles',2,2,'',NULL,NULL,'','1','1','C','0','0','system:role:list','ShieldCheck','admin','2025-07-14 17:02:31.732709','',NULL,''),
 	 ('Menus',2,3,'',NULL,NULL,'','1','1','C','0','0','system:menu:list','List','admin','2025-07-14 17:05:15.344897','',NULL,''),
 	 ('Dictionary',2,4,'',NULL,NULL,'','1','1','C','0','0','system:dict:list','BookOpen','admin','2025-07-14 17:07:34.751692','',NULL,''),
