@@ -19,7 +19,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
@@ -31,7 +31,7 @@ spring:
     user: root
     password: PalaceM5432
     locations: classpath:/db/migration
-    baseline-on-migrate: false
+    baseline-on-migrate: true
     level:
       org.flywaydb: DEBUG
 
