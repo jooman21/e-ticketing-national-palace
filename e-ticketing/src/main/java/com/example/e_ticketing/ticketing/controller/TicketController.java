@@ -40,7 +40,7 @@ public class TicketController {
     }
 
     // 3. Get All Tickets
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<GenericResponse<List<TicketDto>>> getAllTickets() {
         List<TicketDto> tickets = ticketService.getAllTickets();
         return ResponseEntity.ok(
